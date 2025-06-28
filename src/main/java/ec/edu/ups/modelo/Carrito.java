@@ -1,48 +1,92 @@
-// src/main/java/ec/edu/ups/modelo/Carrito.java
 package ec.edu.ups.modelo;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Carrito {
-    private int codigo;
-    private Usuario usuario;
-    private final List<ItemCarrito> items = new ArrayList<>();
-    private static final double IVA_RATE = 0.12;
 
-    public Carrito(int codigo, Usuario usuario) {
-        this.codigo  = codigo;
-        this.usuario = usuario;
+    private final double IVA = 0.12;
+
+    private static int contador = 1;
+
+    private int codigo;
+
+    private Date fechaCreacion;
+
+    private List<ItemCarrito> items;
+
+    public Carrito() {
+        codigo = contador++;
+        items = new ArrayList<>();
+        fechaCreacion = new Date();
     }
 
-    public int getCodigo() { return codigo; }
-    public Usuario getUsuario() { return usuario; }
+    public int getCodigo() {
+        return codigo;
+    }
 
-    public void agregarProducto(Producto p, int cantidad) {
-        for (ItemCarrito it : items) {
-            if (it.getProducto().getCodigo() == p.getCodigo()) {
-                it.setCantidad(it.getCantidad() + cantidad);
-                return;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public void agregarProducto(Producto producto, int cantidad) {
+        items.add(new ItemCarrito(producto, cantidad));
+    }
+
+    public void eliminarProducto(int codigoProducto) {
+        Iterator<ItemCarrito> it = items.iterator();
+        while (it.hasNext()) {
+            if (it.next().getProducto().getCodigo() == codigoProducto) {
+                it.remove();
+                break;
             }
         }
-        items.add(new ItemCarrito(p, cantidad));
+    }
+
+    public void vaciarCarrito() {
+        items.clear();
     }
 
     public List<ItemCarrito> obtenerItems() {
         return items;
     }
 
+    public boolean estaVacio() {
+        return items.isEmpty();
+    }
+
     public double calcularSubtotal() {
-        return items.stream()
-                .mapToDouble(ItemCarrito::getSubtotal)
-                .sum();
+        double subtotal = 0;
+        for (ItemCarrito item : items) {
+            subtotal += item.getProducto().getPrecio() * item.getCantidad();
+        }
+        return subtotal;
     }
 
     public double calcularIVA() {
-        return calcularSubtotal() * IVA_RATE;
+        double subtotal = calcularSubtotal();
+        return subtotal * IVA;
     }
 
     public double calcularTotal() {
         return calcularSubtotal() + calcularIVA();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Carrito #%d | Fecha: %s | Items: %d | Subtotal: $%.2f | IVA: $%.2f | Total: $%.2f",
+                codigo,
+                fechaCreacion.toString(),
+                items.size(),
+                calcularSubtotal(),
+                calcularIVA(),
+                calcularTotal());
     }
 }
