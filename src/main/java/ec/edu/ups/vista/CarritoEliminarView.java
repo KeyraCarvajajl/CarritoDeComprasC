@@ -3,7 +3,7 @@ package ec.edu.ups.vista;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class    CarritoEliminarView extends JInternalFrame {
+public class CarritoEliminarView extends JInternalFrame {
     private JTextField txtCodigo;
     private JButton btnBuscar;
     private JTable tblLProductos;
@@ -11,7 +11,7 @@ public class    CarritoEliminarView extends JInternalFrame {
     private JButton btnVaciar;
     private JPanel panelPrincipal;
 
-    CarritoEliminarView() {
+    public CarritoEliminarView() {
         super("Eliminar Carrito", true, true, false, true);
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);

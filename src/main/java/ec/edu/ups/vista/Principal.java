@@ -248,7 +248,8 @@ public class Principal extends JFrame {
         menuIdioma.add(menuItemIdiomaEspanol);
         menuIdioma.add(menuItemIdiomaIngles);
         menuIdioma.add(menuItemIdiomaFrances);
-
+        menuSalir.add(menuItemSalir);
+        menuSalir.add(menuItemCerrarSesion);
 
         setJMenuBar(menuBar);
         setContentPane(jDesktopPane);
@@ -263,6 +264,13 @@ public class Principal extends JFrame {
         panelSuperior.add(lblUsuario, BorderLayout.EAST);
 
         add(panelSuperior, BorderLayout.NORTH);
+
+        menuItemSalir.addActionListener(e -> System.exit(0));
+        menuItemCerrarSesion.addActionListener(e -> {
+            dispose();
+            new LoginView().setVisible(true); // Abre el login nuevamente
+        });
+
     }
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);

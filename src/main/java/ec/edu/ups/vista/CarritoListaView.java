@@ -13,7 +13,7 @@ public class CarritoListaView  extends JInternalFrame{
     private JTextField txtTotal;
     DefaultTableModel modelo;
 
-    CarritoListaView(){
+    public CarritoListaView(){
         super("Listado de Carritos", true, true, false, true);
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);

@@ -14,12 +14,10 @@ public class ProductoEliminarView extends JInternalFrame {
         setContentPane(panelPrincipal);
         setTitle("Eliminar Producto");
         setSize(500, 500);
-        //setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
-        //setVisible(true);
     }
 
     public JPanel getPanelPrincipal() {
