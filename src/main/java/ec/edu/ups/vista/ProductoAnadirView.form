@@ -18,7 +18,7 @@
         <children>
           <component id="e9652" class="javax.swing.JLabel">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Productos"/>
@@ -39,15 +39,15 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="69e3a" class="javax.swing.JLabel">
+          <component id="69e3a" class="javax.swing.JLabel" binding="lblCodigo">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Codigo"/>
+              <text value="Codigo:"/>
             </properties>
           </component>
-          <component id="bce5e" class="javax.swing.JLabel">
+          <component id="bce5e" class="javax.swing.JLabel" binding="lblNombre">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -55,12 +55,12 @@
               <text value="Nombre:"/>
             </properties>
           </component>
-          <component id="b8a6a" class="javax.swing.JLabel">
+          <component id="b8a6a" class="javax.swing.JLabel" binding="lblPrecio">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Precio"/>
+              <text value="Precio:"/>
             </properties>
           </component>
           <component id="39e1f" class="javax.swing.JTextField" binding="txtCodigo">

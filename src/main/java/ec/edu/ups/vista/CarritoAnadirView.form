@@ -8,7 +8,7 @@
     <properties/>
     <border type="none" title="Datos del Producto"/>
     <children>
-      <component id="ee5e6" class="javax.swing.JLabel">
+      <component id="ee5e6" class="javax.swing.JLabel" binding="lblCodigo">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -24,7 +24,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="21d7e" class="javax.swing.JLabel">
+      <component id="21d7e" class="javax.swing.JLabel" binding="lblNombre">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -40,7 +40,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="84a69" class="javax.swing.JLabel">
+      <component id="84a69" class="javax.swing.JLabel" binding="lblPrecio">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -56,7 +56,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="ac754" class="javax.swing.JLabel">
+      <component id="ac754" class="javax.swing.JLabel" binding="lblCantidad">
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -101,7 +101,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="1a0b0" class="javax.swing.JLabel">
+          <component id="1a0b0" class="javax.swing.JLabel" binding="lblSubTotal">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -117,7 +117,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="fd013" class="javax.swing.JLabel">
+          <component id="fd013" class="javax.swing.JLabel" binding="lblIva">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -133,7 +133,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="2c0d2" class="javax.swing.JLabel">
+          <component id="2c0d2" class="javax.swing.JLabel" binding="lblTotal">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>

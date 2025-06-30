@@ -1,5 +1,7 @@
 package ec.edu.ups.vista;
 
+import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,19 +21,37 @@ public class CarritoAnadirView extends JInternalFrame {
     private JComboBox<String> cbxCantidad;
     private JButton btnGuardar;
     private JButton btnLimpiar;
+    private JLabel lblCodigo;
+    private JLabel lblNombre;
+    private JLabel lblPrecio;
+    private JLabel lblCantidad;
+    private JLabel lblSubTotal;
+    private JLabel lblIva;
+    private JLabel lblTotal;
+    private MensajeInternacionalizacionHandler mensajeHandler;
 
-    public CarritoAnadirView(){
-        super("Añadir al Carrito", true, true, false, true);
+
+    public CarritoAnadirView(MensajeInternacionalizacionHandler mensajeHandler) {
+        super(mensajeHandler.get("ventana.carrito.anadir"), true, true, false, true);
+        this.mensajeHandler = mensajeHandler;
+
         setContentPane(panelPrincipal);
         setSize(500, 550);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         DefaultTableModel modelo = new DefaultTableModel();
-        Object[] columnas = {"Codigo", "Nombre", "Precio", "Cantidad", "SubTotal"};
+        Object[] columnas = {
+                mensajeHandler.get("tabla.columna.codigo"),
+                mensajeHandler.get("tabla.columna.nombre"),
+                mensajeHandler.get("tabla.columna.precio"),
+                mensajeHandler.get("tabla.columna.cantidad"),
+                mensajeHandler.get("tabla.columna.subtotal")
+        };
         modelo.setColumnIdentifiers(columnas);
         tblProductos.setModel(modelo);
 
         cargarDatos();
+        cambiarIdioma();
     }
 
     private void cargarDatos(){
@@ -166,5 +186,41 @@ public class CarritoAnadirView extends JInternalFrame {
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
-}
 
+    public void cambiarIdioma() {
+        setTitle(mensajeHandler.get("ventana.carrito.anadir"));
+
+        lblCodigo.setText(mensajeHandler.get("etiqueta.codigo"));
+        lblNombre.setText(mensajeHandler.get("etiqueta.nombre"));
+        lblPrecio.setText(mensajeHandler.get("etiqueta.precio"));
+        lblCantidad.setText(mensajeHandler.get("tabla.columna.cantidad"));
+        lblSubTotal.setText(mensajeHandler.get("etiqueta.subtotal"));
+        lblIva.setText(mensajeHandler.get("etiqueta.iva"));
+        lblTotal.setText(mensajeHandler.get("etiqueta.total"));
+
+        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
+        btnAñadir.setText(mensajeHandler.get("boton.anadir"));
+        btnGuardar.setText(mensajeHandler.get("boton.guardar"));
+        btnLimpiar.setText(mensajeHandler.get("boton.limpiar"));
+
+        String[] columnas = {
+                mensajeHandler.get("tabla.columna.codigo"),
+                mensajeHandler.get("tabla.columna.nombre"),
+                mensajeHandler.get("tabla.columna.precio"),
+                mensajeHandler.get("tabla.columna.cantidad"),
+                mensajeHandler.get("tabla.columna.subtotal")
+        };
+
+        if (tblProductos.getColumnCount() == columnas.length) {
+            for (int i = 0; i < columnas.length; i++) {
+                tblProductos.getColumnModel().getColumn(i).setHeaderValue(columnas[i]);
+            }
+            tblProductos.getTableHeader().repaint();
+        }
+    }
+
+    public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
+        this.mensajeHandler = mensajeHandler;
+    }
+
+}

@@ -10,6 +10,7 @@ import ec.edu.ups.dao.impl.CarritoDAOMemoria;
 import ec.edu.ups.dao.impl.ProductoDAOMemoria;
 import ec.edu.ups.dao.impl.UsuarioDAOMemoria;
 import ec.edu.ups.modelo.Usuario;
+import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -36,14 +37,16 @@ public class Main {
                         CarritoDAO carritoDAO = new CarritoDAOMemoria();
 
                         Principal principalView = new Principal();
+                        MensajeInternacionalizacionHandler mensajeHandler = principalView.getMensajeInternacionalizacionHandler();
 
-                        ProductoAnadirView productoAnadirView = new ProductoAnadirView();
+
+                        ProductoAnadirView productoAnadirView = new ProductoAnadirView(mensajeHandler);
                         ProductoListaView productoListaView = new ProductoListaView();
                         ProductoModificarView productoModificarView = new ProductoModificarView();
                         ProductoEliminarView productoEliminarView = new ProductoEliminarView();
-                        CarritoAnadirView carritoAnadirView = new CarritoAnadirView();
-                        CarritoListaView carritoListarView = new CarritoListaView();
-                        CarritoEliminarView carritoEliminarView = new CarritoEliminarView();
+                        CarritoAnadirView carritoAnadirView = new CarritoAnadirView(mensajeHandler);
+                        CarritoListaView carritoListarView = new CarritoListaView(mensajeHandler);
+                        CarritoEliminarView carritoEliminarView = new CarritoEliminarView(mensajeHandler);
 
                         ProductoController productoController = new ProductoController(
                                 productoAnadirView,
@@ -61,6 +64,8 @@ public class Main {
                         productoController.setCarritoAnadirView(carritoAnadirView);
                         carritoController.setCarritoListaView(carritoListarView);
                         carritoController.setCarritoEliminarView(carritoEliminarView);
+                        principalView.setCarritoAnadirView(carritoAnadirView);
+                        principalView.setCarritoEliminarView(carritoEliminarView);
 
                         principalView.getMenuItemBuscarCarrito().addActionListener(e1 -> {
                             if (!carritoListarView.isVisible()) {
