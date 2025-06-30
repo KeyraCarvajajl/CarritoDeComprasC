@@ -1,16 +1,20 @@
-package ec.edu.ups.vista;
+package ec.edu.ups.vista.usuario;
 
 import javax.swing.*;
 
-public class RegistrarseView extends JFrame {
+public class UsuarioRegistroView extends JFrame {
     private JPanel panelPrincipal;
     private JTextField txtUsuario;
     private JPasswordField txtContrasenia;
     private JPasswordField txtConfirmarContrasenia;
     private JButton btnRegistrarse;
+    private JLabel lblRegistrarse;
+    private JLabel lblUsuario;
+    private JLabel lblContrasenia;
+    private JLabel lblConfirmarContraseña;
 
 
-    public RegistrarseView() {
+    public UsuarioRegistroView() {
         setContentPane(panelPrincipal);
         setTitle("Registrarse");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

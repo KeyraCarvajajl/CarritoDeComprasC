@@ -1,6 +1,14 @@
 package ec.edu.ups.vista;
 
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.vista.carrito.CarritoAnadirView;
+import ec.edu.ups.vista.carrito.CarritoEliminarView;
+import ec.edu.ups.vista.carrito.CarritoListaView;
+import ec.edu.ups.vista.producto.ProductoAnadirView;
+import ec.edu.ups.vista.producto.ProductoEliminarView;
+import ec.edu.ups.vista.producto.ProductoListaView;
+import ec.edu.ups.vista.producto.ProductoModificarView;
+import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,13 +41,17 @@ public class Principal extends JFrame {
     private JMenuItem menuItemCerrarSesion;
 
 
-    private JDesktopPane jDesktopPane;
+    private MiJDesktopPane jDesktopPane;
     private JLabel lblUsuario;
 
     private ProductoAnadirView productoAnadirView;
     private CarritoAnadirView carritoAnadirView;
     private CarritoEliminarView carritoEliminarView;
     private CarritoListaView carritoListaView;
+    private ProductoEliminarView productoEliminarView;
+    private ProductoModificarView productoModificarView;
+    private ProductoListaView productoListaView;
+
 
     public Principal() {
         mensajeInternacionalizacionHandler = new MensajeInternacionalizacionHandler("es","EC");
@@ -119,7 +131,7 @@ public class Principal extends JFrame {
         return jDesktopPane;
     }
 
-    public void setjDesktopPane(JDesktopPane jDesktopPane) {
+    public void setjDesktopPane(MiJDesktopPane jDesktopPane) {
         this.jDesktopPane = jDesktopPane;
     }
 
@@ -212,7 +224,8 @@ public class Principal extends JFrame {
     }
 
     private void initComponents() {
-        jDesktopPane = new JDesktopPane();
+        jDesktopPane = new MiJDesktopPane();
+        setContentPane(jDesktopPane); // o usa add(jDesktopPane) si estás usando Layouts
         menuBar = new JMenuBar();
 
 
@@ -272,9 +285,8 @@ public class Principal extends JFrame {
         menuItemSalir.addActionListener(e -> System.exit(0));
         menuItemCerrarSesion.addActionListener(e -> {
             dispose();
-            loginView().setVisible(true);
-            LoginView loginView = new LoginView();
-            loginView.actualizarIdioma(mensajeInternacionalizacionHandler);
+            LoginView loginView = new LoginView(mensajeInternacionalizacionHandler);
+            loginView.cambiarIdioma();
             loginView.setVisible(true);
         });
 
@@ -315,6 +327,8 @@ public class Principal extends JFrame {
         menuItemSalir.setText(mensajeInternacionalizacionHandler.get("menu.salir.salir"));
         menuItemCerrarSesion.setText(mensajeInternacionalizacionHandler.get("menu.salir.cerrar"));
 
+        jDesktopPane.setMensajeHandler(mensajeInternacionalizacionHandler);
+
 
         if (carritoAnadirView != null && !carritoAnadirView.isClosed()) {
             carritoAnadirView.setMensajeHandler(mensajeInternacionalizacionHandler);
@@ -337,9 +351,27 @@ public class Principal extends JFrame {
         if (carritoListaView != null) carritoListaView.setMensajeHandler(mensajeInternacionalizacionHandler);
         if (carritoListaView != null) carritoListaView.cambiarIdioma();
 
-        if (loginView != null) {
-            loginView.setMensajeHandler(mensajeHandler);
+        if (productoAnadirView != null) productoAnadirView.setMensajeHandler(mensajeInternacionalizacionHandler);
+        if (carritoAnadirView != null) carritoAnadirView.setMensajeHandler(mensajeInternacionalizacionHandler);
+        if (carritoEliminarView != null) carritoEliminarView.setMensajeHandler(mensajeInternacionalizacionHandler);
+        if (carritoListaView != null) carritoListaView.setMensajeHandler(mensajeInternacionalizacionHandler);
+
+        if (productoEliminarView != null && productoEliminarView.isVisible()) {
+            productoEliminarView.setMensajeHandler(mensajeInternacionalizacionHandler);
+            productoEliminarView.cambiarIdioma();
         }
+
+        if (productoModificarView != null && productoModificarView.isVisible()) {
+            productoModificarView.setMensajeHandler(mensajeInternacionalizacionHandler);
+            productoModificarView.cambiarIdioma();
+        }
+
+        if (productoListaView != null && productoListaView.isVisible()) {
+            productoListaView.setMensajeHandler(mensajeInternacionalizacionHandler);
+            productoListaView.cambiarIdioma();
+        }
+
+
     }
 
     public void setCarritoAnadirView(CarritoAnadirView carritoAnadirView) {
@@ -352,5 +384,21 @@ public class Principal extends JFrame {
 
     public void setCarritoListaView(CarritoListaView carritoListaView) {
         this.carritoListaView = carritoListaView;
+    }
+
+    public void setProductoAnadirView(ProductoAnadirView productoAnadirView) {
+        this.productoAnadirView = productoAnadirView;
+    }
+
+    public void setProductoEliminarView(ProductoEliminarView productoEliminarView) {
+        this.productoEliminarView = productoEliminarView;
+    }
+
+    public void setProductoModificarView(ProductoModificarView productoModificarView) {
+        this.productoModificarView = productoModificarView;
+    }
+
+    public void setProductoListaView(ProductoListaView productoListaView) {
+        this.productoListaView = productoListaView;
     }
 }

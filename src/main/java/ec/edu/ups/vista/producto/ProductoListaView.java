@@ -1,6 +1,7 @@
-package ec.edu.ups.vista;
+package ec.edu.ups.vista.producto;
 
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,22 +14,25 @@ public class ProductoListaView extends JInternalFrame {
     private JTable tblProductos;
     private JPanel panelPrincipal;
     private JButton btnListar;
+    private JLabel lblNombre;
     private DefaultTableModel modelo;
+    private MensajeInternacionalizacionHandler mensajeHandler;
 
-    public ProductoListaView() {
+    public ProductoListaView(MensajeInternacionalizacionHandler mensajeHandler) {
+        super(mensajeHandler.get("ventana.producto.lista"), true, true, false, true);
+        this.mensajeHandler = mensajeHandler;
 
         setContentPane(panelPrincipal);
-        setTitle("Listado de Productos");
-        setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         setSize(500, 500);
+        setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
 
         modelo = new DefaultTableModel();
-        Object[] columnas = {"Codigo", "Nombre", "Precio"};
-        modelo.setColumnIdentifiers(columnas);
         tblProductos.setModel(modelo);
+
+        cambiarIdioma();
     }
 
     public JTextField getTxtBuscar() {
@@ -89,5 +93,22 @@ public class ProductoListaView extends JInternalFrame {
             };
             modelo.addRow(fila);
         }
+    }
+
+    public void cambiarIdioma() {
+        setTitle(mensajeHandler.get("ventana.producto.lista"));
+        lblNombre.setText(mensajeHandler.get("etiqueta.lista.productos"));
+
+        String[] columnas = {
+                mensajeHandler.get("etiqueta.codigo"),
+                mensajeHandler.get("etiqueta.nombre"),
+                mensajeHandler.get("etiqueta.precio")
+        };
+        modelo.setColumnIdentifiers(columnas);
+    }
+
+    public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
+        this.mensajeHandler = mensajeHandler;
+        cambiarIdioma();
     }
 }

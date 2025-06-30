@@ -22,7 +22,7 @@ public class UsuarioDAOMemoria implements UsuarioDAO {
     @Override
     public Usuario autenticar(String username, String contrasenia) {
         for (Usuario usuario : usuarios) {
-            if(usuario.getUsername().equals(username) && usuario.getContrasenia().equals(contrasenia)){
+            if (usuario.getUsername().equals(username) && usuario.getContrasenia().equals(contrasenia)) {
                 return usuario;
             }
         }
@@ -33,15 +33,17 @@ public class UsuarioDAOMemoria implements UsuarioDAO {
     public void crear(Usuario usuario) {
         usuarios.add(usuario);
     }
+
     @Override
     public Usuario buscarPorUsername(String username) {
         for (Usuario usuario : usuarios) {
-            if (usuario.getUsername().equals(username)) {
+            if (usuario.getUsername().equalsIgnoreCase(username)) {
                 return usuario;
             }
         }
         return null;
     }
+
     @Override
     public void eliminar(String username) {
         Iterator<Usuario> iterator = usuarios.iterator();
@@ -53,16 +55,18 @@ public class UsuarioDAOMemoria implements UsuarioDAO {
             }
         }
     }
+
     @Override
     public void actualizar(Usuario usuario) {
-        for(int i = 0; i < usuarios.size(); i++){
+        for (int i = 0; i < usuarios.size(); i++) {
             Usuario usuarioAux = usuarios.get(i);
-            if(usuarioAux.getUsername().equals(usuario.getUsername())){
+            if (usuarioAux.getUsername().equals(usuario.getUsername())) {
                 usuarios.set(i, usuario);
                 break;
             }
         }
     }
+
     @Override
     public List<Usuario> listarTodos() {
         return usuarios;
@@ -70,19 +74,23 @@ public class UsuarioDAOMemoria implements UsuarioDAO {
 
     @Override
     public List<Usuario> listarAdministradores() {
-        return List.of();
+        List<Usuario> admins = new ArrayList<>();
+        for (Usuario usuario : usuarios) {
+            if (usuario.getRol() == Rol.Administrador) {
+                admins.add(usuario);
+            }
+        }
+        return admins;
     }
 
     @Override
     public List<Usuario> listarPorRol(Rol rol) {
         List<Usuario> usuariosEncontrados = new ArrayList<>();
-
         for (Usuario usuario : usuarios) {
             if (usuario.getRol().equals(rol)) {
                 usuariosEncontrados.add(usuario);
             }
         }
-
         return usuariosEncontrados;
     }
 }

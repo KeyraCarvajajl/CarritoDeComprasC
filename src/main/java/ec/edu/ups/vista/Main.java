@@ -11,6 +11,15 @@ import ec.edu.ups.dao.impl.ProductoDAOMemoria;
 import ec.edu.ups.dao.impl.UsuarioDAOMemoria;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.vista.carrito.CarritoAnadirView;
+import ec.edu.ups.vista.carrito.CarritoEliminarView;
+import ec.edu.ups.vista.carrito.CarritoListaView;
+import ec.edu.ups.vista.producto.ProductoAnadirView;
+import ec.edu.ups.vista.producto.ProductoEliminarView;
+import ec.edu.ups.vista.producto.ProductoListaView;
+import ec.edu.ups.vista.producto.ProductoModificarView;
+import ec.edu.ups.vista.usuario.LoginView;
+import ec.edu.ups.vista.usuario.UsuarioRegistroView;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -22,10 +31,12 @@ public class Main {
         java.awt.EventQueue.invokeLater(() -> {
 
             UsuarioDAO usuarioDAO = new UsuarioDAOMemoria();
-            LoginView loginView = new LoginView();
+            MensajeInternacionalizacionHandler mensajeHandler = new MensajeInternacionalizacionHandler("es", "EC");
+            LoginView loginView = new LoginView(mensajeHandler);
             loginView.setVisible(true);
 
-            UsuarioController usuarioController = new UsuarioController(usuarioDAO, loginView);
+            UsuarioRegistroView registrarseView = new UsuarioRegistroView();
+            UsuarioController usuarioController = new UsuarioController(usuarioDAO, loginView, registrarseView);
 
             loginView.addWindowListener(new WindowAdapter() {
                 @Override
@@ -41,12 +52,14 @@ public class Main {
 
 
                         ProductoAnadirView productoAnadirView = new ProductoAnadirView(mensajeHandler);
-                        ProductoListaView productoListaView = new ProductoListaView();
-                        ProductoModificarView productoModificarView = new ProductoModificarView();
-                        ProductoEliminarView productoEliminarView = new ProductoEliminarView();
+                        ProductoListaView productoListaView = new ProductoListaView(mensajeHandler);
+                        ProductoModificarView productoModificarView = new ProductoModificarView(mensajeHandler);
+                        ProductoEliminarView productoEliminarView = new ProductoEliminarView(mensajeHandler);
                         CarritoAnadirView carritoAnadirView = new CarritoAnadirView(mensajeHandler);
                         CarritoListaView carritoListarView = new CarritoListaView(mensajeHandler);
                         CarritoEliminarView carritoEliminarView = new CarritoEliminarView(mensajeHandler);
+                        UsuarioRegistroView registrarseView = new UsuarioRegistroView();
+
 
                         ProductoController productoController = new ProductoController(
                                 productoAnadirView,
@@ -56,6 +69,7 @@ public class Main {
                                 carritoAnadirView,
                                 productoDAO
                         );
+
                         CarritoController carritoController = new CarritoController(carritoDAO, productoDAO, carritoAnadirView);
                         productoController.setProductoAnadirView(productoAnadirView);
                         productoController.setProductoListaView(productoListaView);
@@ -64,8 +78,14 @@ public class Main {
                         productoController.setCarritoAnadirView(carritoAnadirView);
                         carritoController.setCarritoListaView(carritoListarView);
                         carritoController.setCarritoEliminarView(carritoEliminarView);
+
                         principalView.setCarritoAnadirView(carritoAnadirView);
                         principalView.setCarritoEliminarView(carritoEliminarView);
+                        principalView.setCarritoListaView(carritoListarView);
+                        principalView.setProductoAnadirView(productoAnadirView);
+                        principalView.setProductoEliminarView(productoEliminarView);
+                        principalView.setProductoModificarView(productoModificarView);
+                        principalView.setProductoListaView(productoListaView);
 
                         principalView.getMenuItemBuscarCarrito().addActionListener(e1 -> {
                             if (!carritoListarView.isVisible()) {

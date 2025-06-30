@@ -5,14 +5,12 @@ import ec.edu.ups.dao.ProductoDAO;
 import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
-import ec.edu.ups.vista.CarritoAnadirView;
-import ec.edu.ups.vista.CarritoEliminarView;
-import ec.edu.ups.vista.CarritoListaView;
+import ec.edu.ups.vista.carrito.CarritoAnadirView;
+import ec.edu.ups.vista.carrito.CarritoEliminarView;
+import ec.edu.ups.vista.carrito.CarritoListaView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public class CarritoController {

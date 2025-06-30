@@ -1,23 +1,24 @@
-package ec.edu.ups.vista;
+package ec.edu.ups.vista.carrito;
+
 
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class CarritoEliminarView extends JInternalFrame {
+public class CarritoListaView  extends JInternalFrame{
     private JTextField txtCodigo;
     private JButton btnBuscar;
-    private JTable tblLProductos;
-    private JButton btnEliminar;
-    private JButton btnVaciar;
+    private JButton btnListar;
+    private JTable tblPCarrito;
     private JPanel panelPrincipal;
-    private JLabel lblCodigo;
+    private JLabel lblCarrito;
+    private JTextField txtTotal;
+    DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mensajeHandler;
 
-
-    public CarritoEliminarView(MensajeInternacionalizacionHandler mensajeHandler) {
-        super(mensajeHandler.get("ventana.carrito.eliminar"), true, true, false, true);
+    public CarritoListaView(MensajeInternacionalizacionHandler mensajeHandler) {
+        super(mensajeHandler.get("ventana.carrito.lista"), true, true, false, true);
         this.mensajeHandler = mensajeHandler;
 
         setContentPane(panelPrincipal);
@@ -30,14 +31,13 @@ public class CarritoEliminarView extends JInternalFrame {
                 mensajeHandler.get("tabla.columna.nombre"),
                 mensajeHandler.get("tabla.columna.precio"),
                 mensajeHandler.get("tabla.columna.cantidad"),
-                mensajeHandler.get("tabla.columna.subtotal") // o "total" si usas otra clave
+                mensajeHandler.get("tabla.columna.total")
         };
         modelo.setColumnIdentifiers(columnas);
-        tblLProductos.setModel(modelo);
+        tblPCarrito.setModel(modelo);
 
         cambiarIdioma();
     }
-
 
     public JTextField getTxtCodigo() {
         return txtCodigo;
@@ -55,28 +55,20 @@ public class CarritoEliminarView extends JInternalFrame {
         this.panelPrincipal = panelPrincipal;
     }
 
-    public JButton getBtnVaciar() {
-        return btnVaciar;
+    public JTable getTblPCarrito() {
+        return tblPCarrito;
     }
 
-    public void setBtnVaciar(JButton btnVaciar) {
-        this.btnVaciar = btnVaciar;
+    public void setTblPCarrito(JTable tblPCarrito) {
+        this.tblPCarrito = tblPCarrito;
     }
 
-    public JButton getBtnEliminar() {
-        return btnEliminar;
+    public JButton getBtnListar() {
+        return btnListar;
     }
 
-    public void setBtnEliminar(JButton btnEliminar) {
-        this.btnEliminar = btnEliminar;
-    }
-
-    public JTable getTblLProductos() {
-        return tblLProductos;
-    }
-
-    public void setTblLProductos(JTable tblLProductos) {
-        this.tblLProductos = tblLProductos;
+    public void setBtnListar(JButton btnListar) {
+        this.btnListar = btnListar;
     }
 
     public JButton getBtnBuscar() {
@@ -86,39 +78,52 @@ public class CarritoEliminarView extends JInternalFrame {
     public void setBtnBuscar(JButton btnBuscar) {
         this.btnBuscar = btnBuscar;
     }
+
+    public DefaultTableModel getModelo() {
+        return modelo;
+    }
+
+    public JTextField getTxtTotal() {
+        return txtTotal;
+    }
+
+    public void setTxtTotal(JTextField txtTotal) {
+        this.txtTotal = txtTotal;
+    }
+
+    public void setModelo(DefaultTableModel modelo) {
+        this.modelo = modelo;
+    }
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
-    public void limpiarCampos() {
-        txtCodigo.setText("");
+    public void cargarCarrito(){
     }
 
     public void cambiarIdioma() {
-        setTitle(mensajeHandler.get("ventana.carrito.eliminar"));
+        setTitle(mensajeHandler.get("ventana.carrito.lista"));
 
-        lblCodigo.setText(mensajeHandler.get("etiqueta.codigo"));
+        lblCarrito.setText(mensajeHandler.get("etiqueta.codigo.carrito"));
         btnBuscar.setText(mensajeHandler.get("boton.buscar"));
-        btnEliminar.setText(mensajeHandler.get("boton.eliminar"));
-        btnVaciar.setText(mensajeHandler.get("boton.vaciar"));
+        btnListar.setText(mensajeHandler.get("boton.listar"));
 
         String[] columnas = {
                 mensajeHandler.get("tabla.columna.codigo"),
                 mensajeHandler.get("tabla.columna.nombre"),
                 mensajeHandler.get("tabla.columna.precio"),
                 mensajeHandler.get("tabla.columna.cantidad"),
-                mensajeHandler.get("tabla.columna.subtotal") // O "total" si esa es tu clave
+                mensajeHandler.get("tabla.columna.total")
         };
 
-        if (tblLProductos.getColumnCount() == columnas.length) {
+        if (tblPCarrito.getColumnCount() == columnas.length) {
             for (int i = 0; i < columnas.length; i++) {
-                tblLProductos.getColumnModel().getColumn(i).setHeaderValue(columnas[i]);
+                tblPCarrito.getColumnModel().getColumn(i).setHeaderValue(columnas[i]);
             }
-            tblLProductos.getTableHeader().repaint();
+            tblPCarrito.getTableHeader().repaint();
         }
     }
 
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
     }
-
 }

@@ -25,4 +25,9 @@ public class MensajeInternacionalizacionHandler {
     public Locale getLocale() {
         return this.locale;
     }
+
+    public void setLocale(Locale locale) {
+        this.bundle = ResourceBundle.getBundle("mensajes", locale);
+    }
+
 }
