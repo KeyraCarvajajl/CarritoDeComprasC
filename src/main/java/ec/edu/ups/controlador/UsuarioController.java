@@ -3,7 +3,7 @@ package ec.edu.ups.controlador;
 import ec.edu.ups.dao.UsuarioDAO;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
-import ec.edu.ups.vista.usuario.LoginView;
+import ec.edu.ups.vista.LoginView;
 import ec.edu.ups.vista.Principal;
 import ec.edu.ups.vista.usuario.UsuarioRegistroView;
 
@@ -46,6 +46,12 @@ public class UsuarioController {
                 registrarUsuario();
             }
         });
+
+        loginView.getBtnOlvidarContrasenia().addActionListener(e -> {
+            RecuperarContrasenaView recuperarView = new RecuperarContrasenaView(mensajeHandler);
+            recuperarView.setVisible(true);
+        });
+
     }
 
     private void autenticar() {

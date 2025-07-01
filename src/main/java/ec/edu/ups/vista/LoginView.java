@@ -1,4 +1,4 @@
-package ec.edu.ups.vista.usuario;
+package ec.edu.ups.vista;
 
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 

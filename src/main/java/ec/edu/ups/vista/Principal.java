@@ -8,7 +8,6 @@ import ec.edu.ups.vista.producto.ProductoAnadirView;
 import ec.edu.ups.vista.producto.ProductoEliminarView;
 import ec.edu.ups.vista.producto.ProductoListaView;
 import ec.edu.ups.vista.producto.ProductoModificarView;
-import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
 import java.awt.*;
