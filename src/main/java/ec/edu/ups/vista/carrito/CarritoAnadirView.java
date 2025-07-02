@@ -4,6 +4,8 @@ import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.net.URL;
 
 public class CarritoAnadirView extends JInternalFrame {
 
@@ -37,7 +39,49 @@ public class CarritoAnadirView extends JInternalFrame {
 
         setContentPane(panelPrincipal);
         setSize(500, 550);
+
+        // ---------- ICONO: Buscar ----------
+        URL urlBuscar = getClass().getResource("/images/buscar.png");
+        if (urlBuscar != null) {
+            ImageIcon iconBuscar = new ImageIcon(urlBuscar);
+            Image scaledBuscar = iconBuscar.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            btnBuscar.setIcon(new ImageIcon(scaledBuscar));
+        } else {
+            System.err.println("No se encontró el ícono: /images/buscar.png");
+        }
+
+// ---------- ICONO: Añadir ----------
+        URL urlAnadir = getClass().getResource("/images/anadir.png");
+        if (urlAnadir != null) {
+            ImageIcon iconAnadir = new ImageIcon(urlAnadir);
+            Image scaledAnadir = iconAnadir.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            btnAñadir.setIcon(new ImageIcon(scaledAnadir));
+        } else {
+            System.err.println("No se encontró el ícono: /images/anadir.png");
+        }
+
+// ---------- ICONO: Guardar ----------
+        URL urlGuardar = getClass().getResource("/images/guardar.png");
+        if (urlGuardar != null) {
+            ImageIcon iconGuardar = new ImageIcon(urlGuardar);
+            Image scaledGuardar = iconGuardar.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            btnGuardar.setIcon(new ImageIcon(scaledGuardar));
+        } else {
+            System.err.println("No se encontró el ícono: /images/guardar.png");
+        }
+
+// ---------- ICONO: Limpiar ----------
+        URL urlLimpiar = getClass().getResource("/images/limpiar.png");
+        if (urlLimpiar != null) {
+            ImageIcon iconLimpiar = new ImageIcon(urlLimpiar);
+            Image scaledLimpiar = iconLimpiar.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            btnLimpiar.setIcon(new ImageIcon(scaledLimpiar));
+        } else {
+            System.err.println("No se encontró el ícono: /images/limpiar.png");
+        }
+
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.pack(); // Ajusta el tamaño según el contenido
 
         DefaultTableModel modelo = new DefaultTableModel();
         Object[] columnas = {

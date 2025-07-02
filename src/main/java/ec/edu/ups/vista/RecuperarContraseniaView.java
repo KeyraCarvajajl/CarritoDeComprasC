@@ -32,10 +32,10 @@ public class RecuperarContraseniaView extends JFrame {
         this.mensajeHandler = mensajeHandler;
 
         setContentPane(panelPrincipal);
-        setLocationRelativeTo(null);
         setResizable(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(600, 450);
+        setLocationRelativeTo(null);
         cambiarIdioma();
 
         cbxPregunta1.addItem("¿Color favorito?");
