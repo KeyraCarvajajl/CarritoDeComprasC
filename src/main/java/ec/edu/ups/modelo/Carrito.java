@@ -1,5 +1,6 @@
 package ec.edu.ups.modelo;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class Carrito {
@@ -9,15 +10,13 @@ public class Carrito {
     private static int contador = 1;
 
     private int codigo;
-
     private Date fechaCreacion;
-
     private List<ItemCarrito> items;
 
     public Carrito() {
-        codigo = contador++;
-        items = new ArrayList<>();
-        fechaCreacion = new Date();
+        this.codigo = contador++;
+        this.items = new ArrayList<>();
+        this.fechaCreacion = new Date();
     }
 
     public int getCodigo() {
@@ -71,8 +70,7 @@ public class Carrito {
     }
 
     public double calcularIVA() {
-        double subtotal = calcularSubtotal();
-        return subtotal * IVA;
+        return calcularSubtotal() * IVA;
     }
 
     public double calcularTotal() {
@@ -81,12 +79,17 @@ public class Carrito {
 
     @Override
     public String toString() {
-        return String.format("Carrito #%d | Fecha: %s | Items: %d | Subtotal: $%.2f | IVA: $%.2f | Total: $%.2f",
+        DecimalFormat df = new DecimalFormat("#0.00");
+        double subtotal = calcularSubtotal();
+        double iva = subtotal * IVA;
+        double total = subtotal + iva;
+
+        return String.format("Carrito #%d | Fecha: %s | Items: %d | Subtotal: $%s | IVA: $%s | Total: $%s",
                 codigo,
                 fechaCreacion.toString(),
                 items.size(),
-                calcularSubtotal(),
-                calcularIVA(),
-                calcularTotal());
+                df.format(subtotal),
+                df.format(iva),
+                df.format(total));
     }
 }

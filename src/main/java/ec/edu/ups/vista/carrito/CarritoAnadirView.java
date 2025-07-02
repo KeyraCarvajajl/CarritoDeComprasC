@@ -223,4 +223,29 @@ public class CarritoAnadirView extends JInternalFrame {
         this.mensajeHandler = mensajeHandler;
     }
 
+    public void calcularTotales() {
+        double subtotal = 0.0;
+
+        for (int i = 0; i < tblProductos.getRowCount(); i++) {
+            Object valor = tblProductos.getValueAt(i, 4); // Columna subtotal
+            if (valor != null) {
+                try {
+                    double valorSubtotal = Double.parseDouble(valor.toString());
+                    subtotal += valorSubtotal;
+                } catch (NumberFormatException e) {
+                    // Ignorar fila si hay error
+                }
+            }
+        }
+
+        double iva = subtotal * 0.12;
+        double total = subtotal + iva;
+
+        // Mostrar con 2 decimales
+        txtSubTotal.setText(String.format("%.2f", subtotal));
+        txtIVA.setText(String.format("%.2f", iva));
+        txtTotal.setText(String.format("%.2f", total));
+    }
+
+
 }
