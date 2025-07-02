@@ -58,8 +58,6 @@ public class LoginView extends JFrame {
 
     public JComboBox getComboBox1() {return comboBox1;}
 
-    public JComboBox setComboBox1(JComboBox comboBox1) {this.comboBox1 = comboBox1; return comboBox1;}
-
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
     }

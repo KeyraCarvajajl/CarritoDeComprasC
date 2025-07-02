@@ -1,5 +1,7 @@
 package ec.edu.ups.vista;
 
+import ec.edu.ups.dao.UsuarioDAO;
+import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.carrito.CarritoAnadirView;
 import ec.edu.ups.vista.carrito.CarritoEliminarView;
@@ -50,12 +52,18 @@ public class Principal extends JFrame {
     private ProductoEliminarView productoEliminarView;
     private ProductoModificarView productoModificarView;
     private ProductoListaView productoListaView;
+    private RecuperarContraseniaView recuperarView;
+    private Usuario usuario;
+    private UsuarioDAO usuarioDAO;
 
 
-    public Principal() {
-        mensajeInternacionalizacionHandler = new MensajeInternacionalizacionHandler("es","EC");
+    public Principal(Usuario usuario, MensajeInternacionalizacionHandler mensajeHandler, UsuarioDAO usuarioDAO) {
+        this.usuario = usuario;
+        this.mensajeInternacionalizacionHandler = mensajeHandler;
+        this.usuarioDAO = usuarioDAO;
         initComponents();
     }
+
 
     public JMenuBar getBarraMenu() {
         return menuBar;
@@ -370,6 +378,10 @@ public class Principal extends JFrame {
             productoListaView.cambiarIdioma();
         }
 
+        if (recuperarView != null && recuperarView.isVisible()) {
+            recuperarView.setMensajeHandler(mensajeInternacionalizacionHandler);
+            recuperarView.cambiarIdioma();
+        }
 
     }
 

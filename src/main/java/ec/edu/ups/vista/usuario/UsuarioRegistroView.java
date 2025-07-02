@@ -12,15 +12,17 @@ public class UsuarioRegistroView extends JFrame {
     private JTextField txtUsuario;
     private JPasswordField txtContrasenia;
     private JPasswordField txtConfirmarContrasenia;
-    private JTextField txtCorreoElectronico;
-    private JTextField txtTelefono;
     private JFormattedTextField jFormatedFecha;
-    private JComboBox<String> cbxPregunta1;
+    private JTextField txtCorreoElectrónico;
+    private JTextField txtTeléfono;
+
+    private JComboBox cbxPregunta1;
     private JTextField txtPregunta1;
-    private JComboBox<String> cbxPregunta2;
+    private JComboBox cbxPregunta2;
     private JTextField txtPregunta2;
-    private JComboBox<String> cbxPregunta3;
+    private JComboBox cbxPregunta3;
     private JTextField txtPregunta3;
+
     private JButton btnRegistrarse;
     private JButton btnCancelar;
 
@@ -28,9 +30,10 @@ public class UsuarioRegistroView extends JFrame {
     private JLabel lblUsuario;
     private JLabel lblContrasenia;
     private JLabel lblConfirmarContrasenia;
-    private JLabel lblCorreoElectronico;
-    private JLabel lblTelefono;
-    private JLabel lblFechaNacimiento;
+    private JLabel lblFechaDeNacimiento;
+    private JLabel lblCorreoElectrónico;
+    private JLabel lblTeléfono;
+    private JLabel lblRegistrar;
     private JLabel lblPregunta1;
     private JLabel lblPregunta2;
     private JLabel lblPregunta3;
@@ -39,30 +42,63 @@ public class UsuarioRegistroView extends JFrame {
 
     public UsuarioRegistroView(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
-
         setContentPane(panelPrincipal);
+        setResizable(true);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setSize(800, 800);
         setTitle(mensajeHandler.get("usuario.view.registrar.titulo"));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(650, 500);
         setLocationRelativeTo(null);
-        actualizarTextos(mensajeHandler);
+        cambiarIdioma();
+        cargarPreguntas();
     }
 
-    public void actualizarTextos(MensajeInternacionalizacionHandler mensajes) {
-        setTitle(mensajes.get("usuario.view.registrar.titulo"));
-        lblNombre.setText(mensajes.get("usuario.nombre"));
-        lblUsuario.setText(mensajes.get("usuario.usuario"));
-        lblContrasenia.setText(mensajes.get("usuario.contrasena"));
-        lblConfirmarContrasenia.setText(mensajes.get("usuario.confirmar.contrasena"));
-        lblCorreoElectronico.setText(mensajes.get("usuario.correo"));
-        lblTelefono.setText(mensajes.get("usuario.telefono"));
-        lblFechaNacimiento.setText(mensajes.get("usuario.fecha.nacimiento"));
-        lblPregunta1.setText(mensajes.get("usuario.pregunta1"));
-        lblPregunta2.setText(mensajes.get("usuario.pregunta2"));
-        lblPregunta3.setText(mensajes.get("usuario.pregunta3"));
-        btnRegistrarse.setText(mensajes.get("usuario.registrar"));
-        btnCancelar.setText(mensajes.get("boton.cancelar"));
+    public void cambiarIdioma() {
+        setTitle(mensajeHandler.get("usuario.view.registrar.titulo"));
+        lblNombre.setText(mensajeHandler.get("usuario.nombre"));
+        lblUsuario.setText(mensajeHandler.get("usuario.usuario"));
+        lblContrasenia.setText(mensajeHandler.get("usuario.contrasena"));
+        lblConfirmarContrasenia.setText(mensajeHandler.get("usuario.confirmar"));
+        lblFechaDeNacimiento.setText(mensajeHandler.get("usuario.fecha"));
+        lblCorreoElectrónico.setText(mensajeHandler.get("usuario.correo"));
+        lblTeléfono.setText(mensajeHandler.get("usuario.telefono"));
+        lblPregunta1.setText(mensajeHandler.get("usuario.pregunta1"));
+        lblPregunta2.setText(mensajeHandler.get("usuario.pregunta2"));
+        lblPregunta3.setText(mensajeHandler.get("usuario.pregunta3"));
+        lblRegistrar.setText(mensajeHandler.get("usuario.registrar"));
+        btnRegistrarse.setText(mensajeHandler.get("usuario.registrar"));
+        btnCancelar.setText(mensajeHandler.get("boton.cancelar"));
     }
+
+    // Getters
+    public JTextField getTxtNombreCompleto() { return txtNombreCompleto; }
+
+    public JTextField getTxtUsuario() { return txtUsuario; }
+
+    public JPasswordField getTxtContrasenia() { return txtContrasenia; }
+
+    public JPasswordField getTxtConfirmarContrasenia() { return txtConfirmarContrasenia; }
+
+    public JFormattedTextField getTxtFechaNacimiento() { return jFormatedFecha; }
+
+    public JTextField getTxtCorreo() { return txtCorreoElectrónico; }
+
+    public JTextField getTxtTelefono() { return txtTeléfono; }
+
+    public JComboBox getCbxPregunta1() { return cbxPregunta1; }
+
+    public JComboBox getCbxPregunta2() { return cbxPregunta2; }
+
+    public JComboBox getCbxPregunta3() { return cbxPregunta3; }
+
+    public JTextField getTxtPregunta1() { return txtPregunta1; }
+
+    public JTextField getTxtPregunta2() { return txtPregunta2; }
+
+    public JTextField getTxtPregunta3() { return txtPregunta3; }
+
+    public JButton getBtnRegistrarse() { return btnRegistrarse; }
+
+    public JButton getBtnCancelar() { return btnCancelar; }
 
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
@@ -73,31 +109,59 @@ public class UsuarioRegistroView extends JFrame {
         txtUsuario.setText("");
         txtContrasenia.setText("");
         txtConfirmarContrasenia.setText("");
-        txtCorreoElectronico.setText("");
-        txtTelefono.setText("");
         jFormatedFecha.setText("");
+        txtCorreoElectrónico.setText("");
+        txtTeléfono.setText("");
         txtPregunta1.setText("");
         txtPregunta2.setText("");
         txtPregunta3.setText("");
     }
 
-    // Getters
-    public JTextField getTxtNombreCompleto() { return txtNombreCompleto; }
-    public JTextField getTxtUsuario() { return txtUsuario; }
-    public JPasswordField getTxtContrasenia() { return txtContrasenia; }
-    public JPasswordField getTxtConfirmarContrasenia() { return txtConfirmarContrasenia; }
-    public JTextField getTxtCorreoElectronico() { return txtCorreoElectronico; }
-    public JTextField getTxtTelefono() { return txtTelefono; }
-    public JFormattedTextField getjFormatedFecha() { return jFormatedFecha; }
-    public JComboBox<String> getCbxPregunta1() { return cbxPregunta1; }
-    public JTextField getTxtPregunta1() { return txtPregunta1; }
-    public JComboBox<String> getCbxPregunta2() { return cbxPregunta2; }
-    public JTextField getTxtPregunta2() { return txtPregunta2; }
-    public JComboBox<String> getCbxPregunta3() { return cbxPregunta3; }
-    public JTextField getTxtPregunta3() { return txtPregunta3; }
-    public JButton getBtnRegistrarse() { return btnRegistrarse; }
-    public JButton getBtnCancelar() { return btnCancelar; }
+    public void cargarPreguntas() {
+        cbxPregunta1.removeAllItems();
+        cbxPregunta2.removeAllItems();
+        cbxPregunta3.removeAllItems();
 
+        String idioma = mensajeHandler.getLocale().getLanguage();
+
+        if (idioma.equals("es")) {
+            cbxPregunta1.addItem("¿Color favorito?");
+            cbxPregunta1.addItem("¿Nombre de tu mascota?");
+            cbxPregunta1.addItem("¿Ciudad natal?");
+
+            cbxPregunta2.addItem("¿Color favorito?");
+            cbxPregunta2.addItem("¿Nombre de tu mascota?");
+            cbxPregunta2.addItem("¿Ciudad natal?");
+
+            cbxPregunta3.addItem("¿Color favorito?");
+            cbxPregunta3.addItem("¿Nombre de tu mascota?");
+            cbxPregunta3.addItem("¿Ciudad natal?");
+        } else if (idioma.equals("en")) {
+            cbxPregunta1.addItem("Favorite color?");
+            cbxPregunta1.addItem("Pet's name?");
+            cbxPregunta1.addItem("Hometown?");
+
+            cbxPregunta2.addItem("Favorite color?");
+            cbxPregunta2.addItem("Pet's name?");
+            cbxPregunta2.addItem("Hometown?");
+
+            cbxPregunta3.addItem("Favorite color?");
+            cbxPregunta3.addItem("Pet's name?");
+            cbxPregunta3.addItem("Hometown?");
+        } else if (idioma.equals("fr")) {
+            cbxPregunta1.addItem("Couleur préférée ?");
+            cbxPregunta1.addItem("Nom de votre animal de compagnie ?");
+            cbxPregunta1.addItem("Ville natale ?");
+
+            cbxPregunta2.addItem("Couleur préférée ?");
+            cbxPregunta2.addItem("Nom de votre animal de compagnie ?");
+            cbxPregunta2.addItem("Ville natale ?");
+
+            cbxPregunta3.addItem("Couleur préférée ?");
+            cbxPregunta3.addItem("Nom de votre animal de compagnie ?");
+            cbxPregunta3.addItem("Ville natale ?");
+        }
+    }
 
 
 }

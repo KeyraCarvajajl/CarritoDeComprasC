@@ -4,9 +4,11 @@ import ec.edu.ups.controlador.CarritoController;
 import ec.edu.ups.controlador.ProductoController;
 import ec.edu.ups.controlador.UsuarioController;
 import ec.edu.ups.dao.CarritoDAO;
+import ec.edu.ups.dao.PreguntaDAO;
 import ec.edu.ups.dao.ProductoDAO;
 import ec.edu.ups.dao.UsuarioDAO;
 import ec.edu.ups.dao.impl.CarritoDAOMemoria;
+import ec.edu.ups.dao.impl.PreguntaDAOMemoria;
 import ec.edu.ups.dao.impl.ProductoDAOMemoria;
 import ec.edu.ups.dao.impl.UsuarioDAOMemoria;
 import ec.edu.ups.modelo.Usuario;
@@ -32,10 +34,19 @@ public class Main {
             UsuarioDAO usuarioDAO = new UsuarioDAOMemoria();
             MensajeInternacionalizacionHandler mensajeHandler = new MensajeInternacionalizacionHandler("es", "EC");
             LoginView loginView = new LoginView(mensajeHandler);
-            loginView.setVisible(true);
 
-            UsuarioRegistroView registrarseView = new UsuarioRegistroView();
-            UsuarioController usuarioController = new UsuarioController(usuarioDAO, loginView, registrarseView);
+            UsuarioRegistroView registrarseView = new UsuarioRegistroView(mensajeHandler);
+            PreguntaDAO preguntaDAO = new PreguntaDAOMemoria();
+
+            UsuarioController usuarioController = new UsuarioController(
+                    usuarioDAO,
+                    preguntaDAO,
+                    loginView,
+                    registrarseView,
+                    mensajeHandler
+            );
+
+            loginView.setVisible(true); // Solo aquí debe ir
 
             loginView.addWindowListener(new WindowAdapter() {
                 @Override
@@ -46,9 +57,8 @@ public class Main {
                         ProductoDAO productoDAO = new ProductoDAOMemoria();
                         CarritoDAO carritoDAO = new CarritoDAOMemoria();
 
-                        Principal principalView = new Principal();
+                        Principal principalView = new Principal(usuarioAutenticado, mensajeHandler, usuarioDAO);
                         MensajeInternacionalizacionHandler mensajeHandler = principalView.getMensajeInternacionalizacionHandler();
-
 
                         ProductoAnadirView productoAnadirView = new ProductoAnadirView(mensajeHandler);
                         ProductoListaView productoListaView = new ProductoListaView(mensajeHandler);
@@ -57,8 +67,7 @@ public class Main {
                         CarritoAnadirView carritoAnadirView = new CarritoAnadirView(mensajeHandler);
                         CarritoListaView carritoListarView = new CarritoListaView(mensajeHandler);
                         CarritoEliminarView carritoEliminarView = new CarritoEliminarView(mensajeHandler);
-                        UsuarioRegistroView registrarseView = new UsuarioRegistroView();
-
+                        UsuarioRegistroView registrarseView = new UsuarioRegistroView(mensajeHandler);
 
                         ProductoController productoController = new ProductoController(
                                 productoAnadirView,
@@ -160,3 +169,4 @@ public class Main {
         });
     }
 }
+

@@ -1,3 +1,4 @@
+// Clase actualizada: Pregunta.java
 package ec.edu.ups.modelo;
 
 public class Pregunta {

@@ -3,26 +3,42 @@ package ec.edu.ups.controlador;
 import ec.edu.ups.dao.PreguntaDAO;
 import ec.edu.ups.modelo.Pregunta;
 
+import java.util.List;
+
 public class PreguntaController {
 
-    private PreguntaDAO preguntaDAO;
+    private final PreguntaDAO preguntaDAO;
 
     public PreguntaController(PreguntaDAO preguntaDAO) {
         this.preguntaDAO = preguntaDAO;
     }
 
-    public void registrarPregunta(String username, String pregunta, String respuesta) {
-        Pregunta p = new Pregunta(username, pregunta, respuesta);
-        preguntaDAO.guardarPregunta(p);
+    public void registrarPreguntas(List<Pregunta> preguntas) {
+        for (Pregunta p : preguntas) {
+            preguntaDAO.guardarPregunta(p);
+        }
     }
 
-    public boolean validarRespuesta(String username, String respuestaIngresada) {
-        Pregunta p = preguntaDAO.buscarPorUsername(username);
-        return p != null && p.getRespuesta().equalsIgnoreCase(respuestaIngresada);
+    public boolean validarRespuestas(String username, List<Pregunta> respuestasUsuario) {
+        List<Pregunta> preguntasGuardadas = preguntaDAO.buscarPorUsername(username);
+
+        if (preguntasGuardadas == null || preguntasGuardadas.size() != respuestasUsuario.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < preguntasGuardadas.size(); i++) {
+            String respuestaCorrecta = preguntasGuardadas.get(i).getRespuesta();
+            String respuestaIngresada = respuestasUsuario.get(i).getRespuesta();
+
+            if (!respuestaCorrecta.equalsIgnoreCase(respuestaIngresada)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    public String obtenerPregunta(String username) {
-        Pregunta p = preguntaDAO.buscarPorUsername(username);
-        return (p != null) ? p.getPregunta() : null;
+    public List<Pregunta> obtenerPreguntas(String username) {
+        return preguntaDAO.buscarPorUsername(username);
     }
 }

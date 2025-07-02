@@ -1,24 +1,28 @@
 package ec.edu.ups.modelo;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class Usuario {
     private String username;
-    private String password;
+    private String contrasenia;
     private Rol rol;
 
-    // Nuevos campos solicitados:
     private String nombreCompleto;
     private LocalDate fechaNacimiento;
     private String correo;
     private String telefono;
-    private List<Pregunta> preguntasDeSeguridad;
 
-    // Constructor original
-    public Usuario(String username, String password, Rol rol) {
+    private String pregunta1;
+    private String respuesta1;
+    private String pregunta2;
+    private String respuesta2;
+    private String pregunta3;
+    private String respuesta3;
+
+    // Constructor
+    public Usuario(String username, String contrasenia, Rol rol) {
         this.username = username;
-        this.password = password;
+        this.contrasenia = contrasenia;
         this.rol = rol;
     }
 
@@ -31,12 +35,12 @@ public class Usuario {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getContrasenia() {
+        return contrasenia;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     public Rol getRol() {
@@ -79,12 +83,52 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public List<Pregunta> getPreguntasDeSeguridad() {
-        return preguntasDeSeguridad;
+    public String getPregunta1() {
+        return pregunta1;
     }
 
-    public void setPreguntasDeSeguridad(List<Pregunta> preguntasDeSeguridad) {
-        this.preguntasDeSeguridad = preguntasDeSeguridad;
+    public void setPregunta1(String pregunta1) {
+        this.pregunta1 = pregunta1;
+    }
+
+    public String getRespuesta1() {
+        return respuesta1;
+    }
+
+    public void setRespuesta1(String respuesta1) {
+        this.respuesta1 = respuesta1;
+    }
+
+    public String getPregunta2() {
+        return pregunta2;
+    }
+
+    public void setPregunta2(String pregunta2) {
+        this.pregunta2 = pregunta2;
+    }
+
+    public String getRespuesta2() {
+        return respuesta2;
+    }
+
+    public void setRespuesta2(String respuesta2) {
+        this.respuesta2 = respuesta2;
+    }
+
+    public String getPregunta3() {
+        return pregunta3;
+    }
+
+    public void setPregunta3(String pregunta3) {
+        this.pregunta3 = pregunta3;
+    }
+
+    public String getRespuesta3() {
+        return respuesta3;
+    }
+
+    public void setRespuesta3(String respuesta3) {
+        this.respuesta3 = respuesta3;
     }
 
     @Override
@@ -96,7 +140,7 @@ public class Usuario {
                 ", fechaNacimiento=" + fechaNacimiento +
                 ", correo='" + correo + '\'' +
                 ", telefono='" + telefono + '\'' +
-                ", preguntas=" + (preguntasDeSeguridad != null ? preguntasDeSeguridad.size() : 0) +
+                ", preguntas=[1, 2, 3]" +
                 '}';
     }
 }
