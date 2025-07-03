@@ -1,35 +1,33 @@
-// Clase actualizada: Pregunta.java
 package ec.edu.ups.modelo;
 
-public class Pregunta {
+public class Preguntas {
     private String username;
     private String pregunta;
     private String respuesta;
 
-    public Pregunta(String username, String pregunta, String respuesta) {
+    public Preguntas(String username, String pregunta) {
         this.username = username;
         this.pregunta = pregunta;
-        this.respuesta = respuesta;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getPregunta() {
-        return pregunta;
-    }
-
-    public String getRespuesta() {
-        return respuesta;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
 
+    public String getPregunta() {
+        return pregunta;
+    }
+
     public void setPregunta(String pregunta) {
         this.pregunta = pregunta;
+    }
+
+    public String getRespuesta() {
+        return respuesta;
     }
 
     public void setRespuesta(String respuesta) {

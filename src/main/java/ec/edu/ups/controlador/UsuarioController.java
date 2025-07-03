@@ -1,161 +1,224 @@
 package ec.edu.ups.controlador;
 
-import ec.edu.ups.dao.PreguntaDAO;
+import ec.edu.ups.dao.PreguntasDAO;
 import ec.edu.ups.dao.UsuarioDAO;
-import ec.edu.ups.modelo.Pregunta;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
-import ec.edu.ups.vista.LoginView;
-import ec.edu.ups.vista.Principal;
-import ec.edu.ups.vista.RecuperarContraseniaView;
-import ec.edu.ups.vista.usuario.UsuarioRegistroView;
+import ec.edu.ups.vista.MenuPrincipalView;
+import ec.edu.ups.vista.preguntas.CuestionarioRecuView;
+import ec.edu.ups.vista.usuario.LoginView;
+import ec.edu.ups.vista.usuario.RegistrarseView;
+import ec.edu.ups.vista.usuario.UsuarioEliminarView;
+import ec.edu.ups.vista.usuario.UsuarioListaView;
+import ec.edu.ups.vista.preguntas.CuestionarioView;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class UsuarioController {
 
-    private final UsuarioDAO usuarioDAO;
-    private final PreguntaDAO preguntaDAO;
-    private final LoginView loginView;
-    private final UsuarioRegistroView registroView;
-    private final MensajeInternacionalizacionHandler mensajeHandler;
-
     private Usuario usuario;
+    private final UsuarioDAO usuarioDAO;
+    private final LoginView loginView;
+    private RegistrarseView registrarseView;
+    private MenuPrincipalView menuPrincipalView;
+    private UsuarioEliminarView usuarioEliminarView;
+    private UsuarioListaView usuarioListarView;
+    private MensajeInternacionalizacionHandler mensajeI;
+    private CuestionarioView recuperarContraseniaView;
 
-    public UsuarioController(UsuarioDAO usuarioDAO, PreguntaDAO preguntaDAO,
-                             LoginView loginView, UsuarioRegistroView registroView,
-                             MensajeInternacionalizacionHandler mensajeHandler) {
+    public UsuarioController(UsuarioDAO usuarioDAO, LoginView loginView, RegistrarseView registrarseView, MensajeInternacionalizacionHandler mensajeI) {
         this.usuarioDAO = usuarioDAO;
-        this.preguntaDAO = preguntaDAO;
         this.loginView = loginView;
-        this.registroView = registroView;
-        this.mensajeHandler = mensajeHandler;
-
-        configurarEventos();
+        this.usuario = null;
+        this.registrarseView = registrarseView;
+        this.mensajeI = mensajeI;
+        configurarEventosLogin();
     }
 
-    private void configurarEventos() {
-        loginView.getBtnIniciarSesion().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                autenticar();
-            }
-        });
+    public void setRecuperarContraseniaView(CuestionarioView recuperarContraseniaView) {
+        this.recuperarContraseniaView = recuperarContraseniaView;
+        configurarEventoOlvidoContrasena();
+    }
 
-        loginView.getBtnRegistrarse().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                registroView.setVisible(true);
-            }
-        });
+    public void setUsuarioEliminarView(UsuarioEliminarView usuarioEliminarView) {
+        this.usuarioEliminarView = usuarioEliminarView;
+        configurarEventosEliminar();
+    }
 
-        loginView.getBtnOlvidarContrasenia().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                RecuperarContraseniaView recuperarView = new RecuperarContraseniaView(mensajeHandler, preguntaDAO);
-                // 👇 Agregamos el controlador correctamente
-                RecuperarContraseniaController recuperarController = new RecuperarContraseniaController(
-                        recuperarView, usuarioDAO, mensajeHandler
-                );
-                recuperarView.setVisible(true);
-            }
-        });
+    public void setMenuPrincipalView(MenuPrincipalView menuPrincipalView) {
+        this.menuPrincipalView = menuPrincipalView;
+        configurarEventoCerrarSesion();
+    }
 
-        registroView.getBtnRegistrarse().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                registrarUsuario();
+    public void setRegistrarseView(RegistrarseView registrarseView) {
+        this.registrarseView = registrarseView;
+        configurarEventosRegistro();
+    }
+
+    public void setUsuarioListarView(UsuarioListaView usuarioListarView) {
+        this.usuarioListarView = usuarioListarView;
+        configurarEventosListaUsuarios();
+    }
+
+    private void configurarEventoOlvidoContrasena() {
+        loginView.getBtnOlvidarContrasenia().addActionListener(e -> {
+            if (recuperarContraseniaView != null) {
+                recuperarContraseniaView.setVisible(true);
+            } else {
+                System.out.println("recuperarContraseniaView es null");
             }
         });
     }
 
+    private void configurarEventosListaUsuarios() {
+        usuarioListarView.getBtnBuscar().addActionListener(e -> buscarUsuarios());
+        usuarioListarView.getBtnListar().addActionListener(e -> listarUsuarios());
+    }
+
+    private void configurarEventosEliminar() {
+        usuarioEliminarView.getBtnEliminarUsuario().addActionListener(e -> eliminarUsuario());
+    }
+
+    private void configurarEventoCerrarSesion() {
+        menuPrincipalView.getMenuItemCerrarSesion().addActionListener(e -> cerrarSesion());
+    }
+
+    private void configurarEventosRegistro() {
+        registrarseView.getBtnRegistrarse().addActionListener(e -> crear());
+    }
+
+    private void configurarEventosLogin() {
+        loginView.getBtnIniciarSesion().addActionListener(e -> autenticar());
+        loginView.getBtnRegistrarse().addActionListener(e -> {
+            if (registrarseView != null) {
+                registrarseView.setVisible(true);
+            }
+        });
+    }
+
+    private void buscarUsuarios() {
+        String nombre = usuarioListarView.getTxtNombre().getText().trim();
+        DefaultTableModel modelo = usuarioListarView.getModelo();
+        modelo.setRowCount(0);
+
+        if (nombre.isEmpty()) {
+            usuarioListarView.mostrarMensaje("Ingrese un nombre de usuario para buscar.");
+            return;
+        }
+
+        Usuario usuario = usuarioDAO.buscarPorUsername(nombre);
+        if (usuario != null) {
+            modelo.addRow(new Object[]{usuario.getUsername(), usuario.getRol().name()});
+        } else {
+            usuarioListarView.mostrarMensaje("Usuario no encontrado.");
+        }
+    }
+
+    private void listarUsuarios() {
+        List<Usuario> lista = usuarioDAO.listarTodos();
+        DefaultTableModel modelo = usuarioListarView.getModelo();
+        modelo.setRowCount(0);
+        for (Usuario u : lista) {
+            modelo.addRow(new Object[]{u.getUsername(), u.getRol().name()});
+        }
+    }
+
+    private void eliminarUsuario() {
+        String usernameEliminar = usuarioEliminarView.getTxtNombre().getText();
+        String contraseniaAdmin = new String(usuarioEliminarView.getTxtContraseña().getPassword());
+
+        if (getUsuarioAutenticado() == null || getUsuarioAutenticado().getRol() != Rol.ADMINISTRADOR) {
+            usuarioEliminarView.mostrarMensaje("No tienes permisos para eliminar usuarios.");
+            return;
+        }
+
+        if (!getUsuarioAutenticado().getContrasenia().equals(contraseniaAdmin)) {
+            usuarioEliminarView.mostrarMensaje("Contraseña incorrecta.");
+            return;
+        }
+
+        Usuario usuarioAEliminar = usuarioDAO.buscarPorUsername(usernameEliminar);
+        if (usuarioAEliminar == null) {
+            usuarioEliminarView.mostrarMensaje("Usuario no encontrado.");
+            return;
+        }
+
+        if (usuarioAEliminar.getUsername().equals(getUsuarioAutenticado().getUsername())) {
+            usuarioEliminarView.mostrarMensaje("No puedes eliminar tu propia cuenta.");
+            return;
+        }
+
+        usuarioDAO.eliminar(usernameEliminar);
+        usuarioEliminarView.mostrarMensaje("Usuario eliminado con éxito.");
+    }
+
+    private void cerrarSesion() {
+        int opcion = JOptionPane.showConfirmDialog(menuPrincipalView, "¿Está seguro que desea cerrar sesión?", "Confirmar", JOptionPane.YES_NO_OPTION);
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            menuPrincipalView.setVisible(false);
+            menuPrincipalView = null;
+            loginView.setVisible(true);
+            this.usuario = null;
+        }
+    }
+
+    private void crear() {
+        String usuarioT = registrarseView.getTxtUsuario().getText();
+        String contrasenia = new String(registrarseView.getTxtContrasenia().getPassword());
+        String confirmarContrasenia = new String(registrarseView.getTxtConfirmarContrasenia().getPassword());
+
+        if (usuarioT.isEmpty() || contrasenia.isEmpty() || confirmarContrasenia.isEmpty()) {
+            registrarseView.mostrarMensaje("Todos los campos son obligatorios.");
+            return;
+        }
+
+        if (!contrasenia.equals(confirmarContrasenia)) {
+            registrarseView.mostrarMensaje("Las contraseñas no coinciden.");
+            return;
+        }
+
+        if (usuarioDAO.buscarPorUsername(usuarioT) != null) {
+            registrarseView.mostrarMensaje("Ya existe un usuario con ese nombre.");
+            return;
+        }
+
+        Usuario nuevoUsuario = new Usuario(usuarioT, contrasenia);
+        usuarioDAO.crear(nuevoUsuario);
+        registrarseView.mostrarMensaje("Usuario registrado con éxito.");
+        registrarseView.dispose();
+    }
 
     private void autenticar() {
-        String username = loginView.getTxtUsername().getText().trim();
-        String contrasenia = new String(loginView.getTxtContrasenia().getPassword()).trim();
+        String username = loginView.getTxtUsername().getText();
+        String contrasenia = new String(loginView.getTxtContrasenia().getPassword());
 
         usuario = usuarioDAO.autenticar(username, contrasenia);
         if (usuario == null) {
-            loginView.mostrarMensaje(mensajeHandler.get("login.error"));
+            loginView.mostrarMensaje("Usuario o contraseña incorrectos.");
         } else {
-            loginView.mostrarMensaje(mensajeHandler.get("login.exito"));
+            loginView.mostrarMensaje("Bienvenido al sistema: " + username);
             loginView.dispose();
-
-            Principal principal = new Principal(usuario, mensajeHandler, usuarioDAO);
-            principal.setVisible(true);
         }
-    }
-
-    private void registrarUsuario() {
-        String usuarioNombre = registroView.getTxtUsuario().getText().trim();
-        String contrasenia = new String(registroView.getTxtContrasenia().getPassword()).trim();
-        String confirmar = new String(registroView.getTxtConfirmarContrasenia().getPassword()).trim();
-        String nombreCompleto = registroView.getTxtNombreCompleto().getText().trim();
-        String correo = registroView.getTxtCorreo().getText().trim();
-        String telefono = registroView.getTxtTelefono().getText().trim();
-        String fechaNacimiento = registroView.getTxtFechaNacimiento().getText().trim();
-
-        if (usuarioNombre.isEmpty() || contrasenia.isEmpty() || confirmar.isEmpty()
-                || nombreCompleto.isEmpty() || correo.isEmpty() || telefono.isEmpty()
-                || fechaNacimiento.isEmpty()) {
-            registroView.mostrarMensaje(mensajeHandler.get("registro.campos.vacios"));
-            return;
-        }
-
-        if (!contrasenia.equals(confirmar)) {
-            registroView.mostrarMensaje(mensajeHandler.get("registro.contrasena.no.coincide"));
-            return;
-        }
-
-        if (usuarioDAO.buscarPorUsername(usuarioNombre) != null) {
-            registroView.mostrarMensaje(mensajeHandler.get("registro.usuario.ya.existe"));
-            return;
-        }
-
-        LocalDate fechaNac;
-        try {
-            fechaNac = LocalDate.parse(fechaNacimiento, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        } catch (Exception e) {
-            registroView.mostrarMensaje(mensajeHandler.get("registro.fecha.invalida"));
-            return;
-        }
-
-        Usuario nuevoUsuario = new Usuario(usuarioNombre, contrasenia, Rol.USUARIO);
-        nuevoUsuario.setNombreCompleto(nombreCompleto);
-        nuevoUsuario.setCorreo(correo);
-        nuevoUsuario.setTelefono(telefono);
-        nuevoUsuario.setFechaNacimiento(fechaNac);
-
-        usuarioDAO.crear(nuevoUsuario);
-
-        // Guardar preguntas
-        Pregunta p1 = new Pregunta(usuarioNombre,
-                (String) registroView.getCbxPregunta1().getSelectedItem(),
-                registroView.getTxtPregunta1().getText().trim());
-
-        Pregunta p2 = new Pregunta(usuarioNombre,
-                (String) registroView.getCbxPregunta2().getSelectedItem(),
-                registroView.getTxtPregunta2().getText().trim());
-
-        Pregunta p3 = new Pregunta(usuarioNombre,
-                (String) registroView.getCbxPregunta3().getSelectedItem(),
-                registroView.getTxtPregunta3().getText().trim());
-
-        preguntaDAO.guardarPregunta(p1);
-        preguntaDAO.guardarPregunta(p2);
-        preguntaDAO.guardarPregunta(p3);
-
-        registroView.mostrarMensaje(mensajeHandler.get("registro.exito"));
-        registroView.limpiarCampos();
-        registroView.setVisible(false);
     }
 
     public Usuario getUsuarioAutenticado() {
         return usuario;
     }
+
+    public void setPreguntasDependencias(CuestionarioView cuestionarioView,
+                                         CuestionarioRecuView cuestionarioRecuView,
+                                         PreguntasDAO preguntasDAO,
+                                         MensajeInternacionalizacionHandler mensajeHandler) {
+        this.recuperarContraseniaView = cuestionarioView;
+        this.mensajeI = mensajeHandler;
+        // Puedes guardar los demás si los necesitas en atributos
+    }
+
 }
+

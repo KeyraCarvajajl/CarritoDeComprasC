@@ -1,9 +1,11 @@
 package ec.edu.ups.vista.carrito;
 
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.net.URL;
 
 public class CarritoListaView extends JInternalFrame {
 
@@ -19,35 +21,32 @@ public class CarritoListaView extends JInternalFrame {
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mensajeHandler;
 
-    public CarritoListaView(MensajeInternacionalizacionHandler mensajeHandler) {
-        super(mensajeHandler.get("ventana.carrito.lista"), true, true, false, true);
-        this.mensajeHandler = mensajeHandler;
-
-        // Inicializar si es null (por error de diseño .form)
-        if (panelPrincipal == null) panelPrincipal = new JPanel();
-        if (btnBuscar == null) btnBuscar = new JButton("Buscar");
-        if (btnListar == null) btnListar = new JButton("Listar");
-        if (tblPCarrito == null) tblPCarrito = new JTable();
-        if (lblCarrito == null) lblCarrito = new JLabel("Código carrito:");
-        if (txtCodigo == null) txtCodigo = new JTextField();
-        if (txtTotal == null) txtTotal = new JTextField();
-
+    public CarritoListaView(MensajeInternacionalizacionHandler mensajeI) {
+        super("Listado de Carritos", true, true, false, true);
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         setSize(500, 500);
-
         modelo = new DefaultTableModel();
-        Object[] columnas = {
-                mensajeHandler.get("tabla.columna.codigo"),
-                mensajeHandler.get("tabla.columna.nombre"),
-                mensajeHandler.get("tabla.columna.precio"),
-                mensajeHandler.get("tabla.columna.cantidad"),
-                mensajeHandler.get("tabla.columna.total")
-        };
+        Object[] columnas = {"Código", "Nombre", "Precio", "Cantidad", "Total"};
         modelo.setColumnIdentifiers(columnas);
         tblPCarrito.setModel(modelo);
+        this.mensajeHandler = mensajeI;
 
-        cambiarIdioma();
+        URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
+        if (btBuscar != null) {
+            ImageIcon iconBtnAceptar = new ImageIcon(btBuscar);
+            btnBuscar.setIcon(iconBtnAceptar);
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Buscar");
+        }
+
+        URL btListar = LoginView.class.getClassLoader().getResource("imagenes/listar.png");
+        if (btListar != null) {
+            ImageIcon iconBtnAceptar = new ImageIcon(btListar);
+            btnListar.setIcon(iconBtnAceptar);
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Listar");
+        }
     }
 
     public JTextField getTxtCodigo() {

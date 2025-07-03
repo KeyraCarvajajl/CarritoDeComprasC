@@ -3,9 +3,8 @@ package ec.edu.ups.vista.usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
-import java.awt.*;
 
-public class UsuarioRegistroView extends JFrame {
+public class RegistrarseView extends JInternalFrame {
 
     private JPanel panelPrincipal;
     private JTextField txtNombreCompleto;
@@ -40,14 +39,13 @@ public class UsuarioRegistroView extends JFrame {
 
     private MensajeInternacionalizacionHandler mensajeHandler;
 
-    public UsuarioRegistroView(MensajeInternacionalizacionHandler mensajeHandler) {
+    public RegistrarseView(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
         setContentPane(panelPrincipal);
         setResizable(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(800, 800);
         setTitle(mensajeHandler.get("usuario.view.registrar.titulo"));
-        setLocationRelativeTo(null);
         cambiarIdioma();
         cargarPreguntas();
     }
@@ -162,6 +160,4 @@ public class UsuarioRegistroView extends JFrame {
             cbxPregunta3.addItem("Ville natale ?");
         }
     }
-
-
 }

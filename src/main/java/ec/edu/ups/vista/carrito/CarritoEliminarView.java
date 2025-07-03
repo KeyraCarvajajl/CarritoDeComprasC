@@ -1,9 +1,11 @@
 package ec.edu.ups.vista.carrito;
 
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.net.URL;
 
 public class CarritoEliminarView extends JInternalFrame {
     private JTextField txtCodigo;
@@ -13,31 +15,66 @@ public class CarritoEliminarView extends JInternalFrame {
     private JButton btnVaciar;
     private JPanel panelPrincipal;
     private JLabel lblCodigo;
-    private MensajeInternacionalizacionHandler mensajeHandler;
+    private JTextField txtFecha;
+    private JLabel lblFecha;
+    private MensajeInternacionalizacionHandler mensajeI;
+    private DefaultTableModel modelo;
 
-
-    public CarritoEliminarView(MensajeInternacionalizacionHandler mensajeHandler) {
-        super(mensajeHandler.get("ventana.carrito.eliminar"), true, true, false, true);
-        this.mensajeHandler = mensajeHandler;
-
+    public CarritoEliminarView(MensajeInternacionalizacionHandler mensajeI) {
+        super("Eliminar Carrito", true, true, false, true);
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         setSize(500, 500);
 
-        DefaultTableModel modelo = new DefaultTableModel();
-        Object[] columnas = {
-                mensajeHandler.get("tabla.columna.codigo"),
-                mensajeHandler.get("tabla.columna.nombre"),
-                mensajeHandler.get("tabla.columna.precio"),
-                mensajeHandler.get("tabla.columna.cantidad"),
-                mensajeHandler.get("tabla.columna.subtotal") // o "total" si usas otra clave
-        };
+        modelo = new DefaultTableModel();
+        Object[] columnas = {"Código", "Nombre", "Precio", "Cantidad", "Total"};
         modelo.setColumnIdentifiers(columnas);
         tblLProductos.setModel(modelo);
+        this.mensajeI = mensajeI;
+        cambiarIdi();
 
-        cambiarIdioma();
+        URL btEliminar = LoginView.class.getClassLoader().getResource("imagenes/eliminar.png");
+        if (btEliminar != null) {
+            ImageIcon iconBtnAceptar = new ImageIcon(btEliminar);
+            btnEliminar.setIcon(iconBtnAceptar);
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Eliminar");
+        }
+
+        URL btVaciar = LoginView.class.getClassLoader().getResource("imagenes/vaciar.png");
+        if (btVaciar != null) {
+            ImageIcon iconBtnAceptar = new ImageIcon(btVaciar);
+            btnVaciar.setIcon(iconBtnAceptar);
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Eliminar");
+        }
+
+        URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
+        if (btBuscar != null) {
+            ImageIcon iconBtnAceptar = new ImageIcon(btBuscar);
+            btnBuscar.setIcon(iconBtnAceptar);
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Buscar");
+        }
+
     }
+    public void cambiarIdi(){
+        mensajeI.setLenguaje(mensajeI.getLocale().getLanguage(), mensajeI.getLocale().getCountry());
+        setTitle(mensajeI.get("carrito.eliminar.titulo"));
+        lblCodigo.setText(mensajeI.get("carrito.eliminar.codigo"));
+        lblFecha.setText(mensajeI.get("carrito.eliminar.fecha"));
 
+        btnBuscar.setText(mensajeI.get("carrito.eliminar.boton.buscar"));
+        btnEliminar.setText(mensajeI.get("carrito.eliminar.boton.eliminar"));
+        btnVaciar.setText(mensajeI.get("carrito.eliminar.boton.vaciar"));
+
+        modelo.setColumnIdentifiers(new Object[]{
+                mensajeI.get("carrito.eliminar.tabla.codigo"),
+                mensajeI.get("carrito.eliminar.tabla.nombre"),
+                mensajeI.get("carrito.eliminar.tabla.precio"),
+                mensajeI.get("carrito.eliminar.tabla.cantidad")
+        });
+    }
 
     public JTextField getTxtCodigo() {
         return txtCodigo;
@@ -92,33 +129,4 @@ public class CarritoEliminarView extends JInternalFrame {
     public void limpiarCampos() {
         txtCodigo.setText("");
     }
-
-    public void cambiarIdioma() {
-        setTitle(mensajeHandler.get("ventana.carrito.eliminar"));
-
-        lblCodigo.setText(mensajeHandler.get("etiqueta.codigo"));
-        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
-        btnEliminar.setText(mensajeHandler.get("boton.eliminar"));
-        btnVaciar.setText(mensajeHandler.get("boton.vaciar"));
-
-        String[] columnas = {
-                mensajeHandler.get("tabla.columna.codigo"),
-                mensajeHandler.get("tabla.columna.nombre"),
-                mensajeHandler.get("tabla.columna.precio"),
-                mensajeHandler.get("tabla.columna.cantidad"),
-                mensajeHandler.get("tabla.columna.subtotal") // O "total" si esa es tu clave
-        };
-
-        if (tblLProductos.getColumnCount() == columnas.length) {
-            for (int i = 0; i < columnas.length; i++) {
-                tblLProductos.getColumnModel().getColumn(i).setHeaderValue(columnas[i]);
-            }
-            tblLProductos.getTableHeader().repaint();
-        }
-    }
-
-    public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
-        this.mensajeHandler = mensajeHandler;
-    }
-
 }

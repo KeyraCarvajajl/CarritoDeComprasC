@@ -9,7 +9,7 @@ public class MensajeInternacionalizacionHandler {
     private Locale locale;
 
     public MensajeInternacionalizacionHandler(String lenguaje, String pais) {
-        this.locale = new Locale(lenguaje,pais);
+        this.locale = new Locale(lenguaje, pais);
         this.bundle = ResourceBundle.getBundle("mensajes", locale);
     }
 
@@ -21,13 +21,10 @@ public class MensajeInternacionalizacionHandler {
         this.locale = new Locale(lenguaje, pais);
         this.bundle = ResourceBundle.getBundle("mensajes", locale);
     }
-
     public Locale getLocale() {
-        return this.locale;
+        return locale;
     }
 
     public void setLocale(Locale locale) {
-        this.bundle = ResourceBundle.getBundle("mensajes", locale);
     }
-
 }

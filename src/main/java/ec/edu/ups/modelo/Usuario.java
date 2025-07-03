@@ -26,6 +26,13 @@ public class Usuario {
         this.rol = rol;
     }
 
+    public Usuario(String username, String contrasenia) {
+        this.username = username;
+        this.contrasenia = contrasenia;
+        this.rol = Rol.USUARIO; // por defecto, si es registro
+    }
+
+
     // Getters y Setters
     public String getUsername() {
         return username;

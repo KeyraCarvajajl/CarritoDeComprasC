@@ -2,7 +2,6 @@ package ec.edu.ups.util;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class FormateadorUtils {
@@ -12,7 +11,7 @@ public class FormateadorUtils {
         return formatoMoneda.format(cantidad);
     }
 
-    public static String formatearFecha(Date fecha, Locale locale) {
+    public static String formatearFecha(long fecha, Locale locale) {
         DateFormat formato = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
         return formato.format(fecha);
     }

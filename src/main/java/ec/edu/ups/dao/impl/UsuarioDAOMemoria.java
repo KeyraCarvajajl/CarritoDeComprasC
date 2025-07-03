@@ -15,12 +15,12 @@ public class UsuarioDAOMemoria implements UsuarioDAO {
     public UsuarioDAOMemoria() {
         usuarios = new ArrayList<>();
 
-        Usuario admin = new Usuario("admin", "12345", Rol.Administrador);
+        Usuario admin = new Usuario("admin", "12345", Rol.ADMINISTRADOR);
         admin.setNombreCompleto("Administrador General");
         admin.setCorreo("admin@correo.com");
         admin.setTelefono("0999999999");
 
-        Usuario keyra = new Usuario("Keyra", "0107909574", Rol.Administrador);
+        Usuario keyra = new Usuario("Keyra", "0107909574", Rol.ADMINISTRADOR);
         keyra.setNombreCompleto("Keyra Carvajal");
         keyra.setCorreo("keyra@correo.com");
         keyra.setTelefono("0978705998");
@@ -93,7 +93,7 @@ public class UsuarioDAOMemoria implements UsuarioDAO {
     public List<Usuario> listarAdministradores() {
         List<Usuario> admins = new ArrayList<>();
         for (Usuario usuario : usuarios) {
-            if (usuario.getRol() == Rol.Administrador) {
+            if (usuario.getRol() == Rol.ADMINISTRADOR) {
                 admins.add(usuario);
             }
         }

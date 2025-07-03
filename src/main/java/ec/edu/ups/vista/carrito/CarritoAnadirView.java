@@ -1,6 +1,7 @@
 package ec.edu.ups.vista.carrito;
 
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,7 +16,7 @@ public class CarritoAnadirView extends JInternalFrame {
     private JTextField txtNombre;
     private JTextField txtPrecio;
     private JButton btnBuscar;
-    private JButton btnAñadir;
+    private JButton btnAnadir;
     private JTable tblProductos;
     private JTextField txtSubTotal;
     private JTextField txtIVA;
@@ -30,72 +31,78 @@ public class CarritoAnadirView extends JInternalFrame {
     private JLabel lblSubTotal;
     private JLabel lblIva;
     private JLabel lblTotal;
+    private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mensajeHandler;
 
-
-    public CarritoAnadirView(MensajeInternacionalizacionHandler mensajeHandler) {
-        super(mensajeHandler.get("ventana.carrito.anadir"), true, true, false, true);
-        this.mensajeHandler = mensajeHandler;
-
+    public CarritoAnadirView(MensajeInternacionalizacionHandler mensajeI) {
+        super("Carrito de Compras", true, true, false, true);
         setContentPane(panelPrincipal);
-        setSize(500, 550);
-
-        // ---------- ICONO: Buscar ----------
-        URL urlBuscar = getClass().getResource("/images/buscar.png");
-        if (urlBuscar != null) {
-            ImageIcon iconBuscar = new ImageIcon(urlBuscar);
-            Image scaledBuscar = iconBuscar.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            btnBuscar.setIcon(new ImageIcon(scaledBuscar));
-        } else {
-            System.err.println("No se encontró el ícono: /images/buscar.png");
-        }
-
-// ---------- ICONO: Añadir ----------
-        URL urlAnadir = getClass().getResource("/images/anadir.png");
-        if (urlAnadir != null) {
-            ImageIcon iconAnadir = new ImageIcon(urlAnadir);
-            Image scaledAnadir = iconAnadir.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            btnAñadir.setIcon(new ImageIcon(scaledAnadir));
-        } else {
-            System.err.println("No se encontró el ícono: /images/anadir.png");
-        }
-
-// ---------- ICONO: Guardar ----------
-        URL urlGuardar = getClass().getResource("/images/guardar.png");
-        if (urlGuardar != null) {
-            ImageIcon iconGuardar = new ImageIcon(urlGuardar);
-            Image scaledGuardar = iconGuardar.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            btnGuardar.setIcon(new ImageIcon(scaledGuardar));
-        } else {
-            System.err.println("No se encontró el ícono: /images/guardar.png");
-        }
-
-// ---------- ICONO: Limpiar ----------
-        URL urlLimpiar = getClass().getResource("/images/limpiar.png");
-        if (urlLimpiar != null) {
-            ImageIcon iconLimpiar = new ImageIcon(urlLimpiar);
-            Image scaledLimpiar = iconLimpiar.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            btnLimpiar.setIcon(new ImageIcon(scaledLimpiar));
-        } else {
-            System.err.println("No se encontró el ícono: /images/limpiar.png");
-        }
-
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.pack(); // Ajusta el tamaño según el contenido
-
-        DefaultTableModel modelo = new DefaultTableModel();
-        Object[] columnas = {
-                mensajeHandler.get("tabla.columna.codigo"),
-                mensajeHandler.get("tabla.columna.nombre"),
-                mensajeHandler.get("tabla.columna.precio"),
-                mensajeHandler.get("tabla.columna.cantidad"),
-                mensajeHandler.get("tabla.columna.subtotal")
-        };
+        setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+        setSize(500, 500);
+        this.mensajeHandler = mensajeI;
+        modelo = new DefaultTableModel();
+        Object[] columnas = {"Codigo", "Nombre", "Precio", "Cantidad", "Subtotal"};
         modelo.setColumnIdentifiers(columnas);
         tblProductos.setModel(modelo);
 
         cargarDatos();
         cambiarIdioma();
+        limpiarCampos();
+
+        URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
+        if (btBuscar != null) {
+            ImageIcon iconBtnAceptar = new ImageIcon(btBuscar);
+            btnBuscar.setIcon(iconBtnAceptar);
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Buscar");
+        }
+
+        URL btAnadir = LoginView.class.getClassLoader().getResource("imagenes/anadircarrito.png");
+        if (btAnadir != null) {
+            ImageIcon iconBtnAceptar = new ImageIcon(btAnadir);
+            btnAnadir.setIcon(iconBtnAceptar);
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Añadir");
+        }
+
+        URL btGuardar = LoginView.class.getClassLoader().getResource("imagenes/agregarcarrito.png");
+        if (btGuardar != null) {
+            ImageIcon iconBtnAceptar = new ImageIcon(btGuardar);
+            btnGuardar.setIcon(iconBtnAceptar);
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Guardar");
+        }
+
+        URL btLimpiar = LoginView.class.getClassLoader().getResource("imagenes/limpiar.png");
+        if (btLimpiar != null) {
+            ImageIcon iconBtnAceptar = new ImageIcon(btLimpiar);
+            btnLimpiar.setIcon(iconBtnAceptar);
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Limpiar");
+        }
+    }
+    public void cambiarIdioma(){
+        mensajeHandler.setLenguaje(mensajeHandler.getLocale().getLanguage(),mensajeHandler.getLocale().getCountry());
+        setTitle(mensajeHandler.get("carrito.anadir.titulo"));
+        lblCodigo.setText(mensajeHandler.get("carrito.anadir.codigo"));
+        lblCantidad.setText(mensajeHandler.get("carrito.anadir.cantidad"));
+        lblNombre.setText(mensajeHandler.get("carrito.anadir.nombre"));
+        lblSubTotal.setText(mensajeHandler.get("carrito.anadir.subtotal"));
+        lblIva.setText(mensajeHandler.get("carrito.anadir.iva"));
+        lblTotal.setText(mensajeHandler.get("carrito.anadir.total"));
+
+        btnAnadir.setText(mensajeHandler.get("carrito.anadir.boton.anadir"));
+        btnGuardar.setText(mensajeHandler.get("carrito.anadir.boton.guardar"));
+        btnBuscar.setText(mensajeHandler.get("carrito.anadir.boton.buscar"));
+        btnLimpiar.setText(mensajeHandler.get("carrito.anadir.boton.limpiar"));
+
+        modelo.setColumnIdentifiers(new Object[]{
+                mensajeHandler.get("carrito.anadir.tabla.codigo"),
+                mensajeHandler.get("carrito.anadir.tabla.nombre"),
+                mensajeHandler.get("carrito.anadir.tabla.precio"),
+                mensajeHandler.get("carrito.anadir.tabla.cantidad"),
+                mensajeHandler.get("carrito.anadir.tabla.subtotal")
+        });
     }
 
     private void cargarDatos(){
@@ -103,6 +110,17 @@ public class CarritoAnadirView extends JInternalFrame {
         for(int i = 0; i < 20; i++){
             cbxCantidad.addItem(String.valueOf(i + 1));
         }
+    }
+
+    public void limpiarCampos(){
+        txtCodigo.setText("");
+        txtNombre.setText("");
+        txtPrecio.setText("");
+        txtSubTotal.setText("");
+    }
+
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
     }
 
 
@@ -154,20 +172,20 @@ public class CarritoAnadirView extends JInternalFrame {
         this.btnBuscar = btnBuscar;
     }
 
-    public JButton getBtnAñadir() {
-        return btnAñadir;
+    public JButton getBtnAnadir() {
+        return btnAnadir;
     }
 
-    public void setBtnAñadir(JButton btnAñadir) {
-        this.btnAñadir = btnAñadir;
+    public void setBtnAnadir(JButton btnAñadir) {
+        this.btnAnadir = btnAñadir;
     }
 
     public JTable getTblProductos() {
         return tblProductos;
     }
 
-    public void setTblProductos(JTable tblCarrito) {
-        this.tblProductos = tblCarrito;
+    public void setTblProductos(JTable tblProductos) {
+        this.tblProductos = tblProductos;
     }
 
     public JTextField getTxtSubTotal() {
@@ -178,11 +196,11 @@ public class CarritoAnadirView extends JInternalFrame {
         this.txtSubTotal = txtSubTotal;
     }
 
-    public JTextField getTxtIva() {
+    public JTextField getTxtIVA() {
         return txtIVA;
     }
 
-    public void setTxtIva(JTextField txtIVA) {
+    public void setTxtIVA(JTextField txtIVA) {
         this.txtIVA = txtIVA;
     }
 
@@ -218,78 +236,75 @@ public class CarritoAnadirView extends JInternalFrame {
         this.btnLimpiar = btnLimpiar;
     }
 
-    public void limpiarCampos(){
-        txtCodigo.setText("");
-        txtNombre.setText("");
-        txtPrecio.setText("");
-        txtSubTotal.setText("");
-        txtIVA.setText("");
-        txtTotal.setText("");
+    public JLabel getLblCodigo() {
+        return lblCodigo;
     }
 
-    public void mostrarMensaje(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje);
+    public void setLblCodigo(JLabel lblCodigo) {
+        this.lblCodigo = lblCodigo;
     }
 
-    public void cambiarIdioma() {
-        setTitle(mensajeHandler.get("ventana.carrito.anadir"));
+    public JLabel getLblNombre() {
+        return lblNombre;
+    }
 
-        lblCodigo.setText(mensajeHandler.get("etiqueta.codigo"));
-        lblNombre.setText(mensajeHandler.get("etiqueta.nombre"));
-        lblPrecio.setText(mensajeHandler.get("etiqueta.precio"));
-        lblCantidad.setText(mensajeHandler.get("tabla.columna.cantidad"));
-        lblSubTotal.setText(mensajeHandler.get("etiqueta.subtotal"));
-        lblIva.setText(mensajeHandler.get("etiqueta.iva"));
-        lblTotal.setText(mensajeHandler.get("etiqueta.total"));
+    public void setLblNombre(JLabel lblNombre) {
+        this.lblNombre = lblNombre;
+    }
 
-        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
-        btnAñadir.setText(mensajeHandler.get("boton.anadir"));
-        btnGuardar.setText(mensajeHandler.get("boton.guardar"));
-        btnLimpiar.setText(mensajeHandler.get("boton.limpiar"));
+    public JLabel getLblPrecio() {
+        return lblPrecio;
+    }
 
-        String[] columnas = {
-                mensajeHandler.get("tabla.columna.codigo"),
-                mensajeHandler.get("tabla.columna.nombre"),
-                mensajeHandler.get("tabla.columna.precio"),
-                mensajeHandler.get("tabla.columna.cantidad"),
-                mensajeHandler.get("tabla.columna.subtotal")
-        };
+    public void setLblPrecio(JLabel lblPrecio) {
+        this.lblPrecio = lblPrecio;
+    }
 
-        if (tblProductos.getColumnCount() == columnas.length) {
-            for (int i = 0; i < columnas.length; i++) {
-                tblProductos.getColumnModel().getColumn(i).setHeaderValue(columnas[i]);
-            }
-            tblProductos.getTableHeader().repaint();
-        }
+    public JLabel getLblCantidad() {
+        return lblCantidad;
+    }
+
+    public void setLblCantidad(JLabel lblCantidad) {
+        this.lblCantidad = lblCantidad;
+    }
+
+    public JLabel getLblSubTotal() {
+        return lblSubTotal;
+    }
+
+    public void setLblSubTotal(JLabel lblSubTotal) {
+        this.lblSubTotal = lblSubTotal;
+    }
+
+    public JLabel getLblIva() {
+        return lblIva;
+    }
+
+    public void setLblIva(JLabel lblIva) {
+        this.lblIva = lblIva;
+    }
+
+    public JLabel getLblTotal() {
+        return lblTotal;
+    }
+
+    public void setLblTotal(JLabel lblTotal) {
+        this.lblTotal = lblTotal;
+    }
+
+    public DefaultTableModel getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(DefaultTableModel modelo) {
+        this.modelo = modelo;
+    }
+
+    public MensajeInternacionalizacionHandler getMensajeHandler() {
+        return mensajeHandler;
     }
 
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
     }
-
-    public void calcularTotales() {
-        double subtotal = 0.0;
-
-        for (int i = 0; i < tblProductos.getRowCount(); i++) {
-            Object valor = tblProductos.getValueAt(i, 4); // Columna subtotal
-            if (valor != null) {
-                try {
-                    double valorSubtotal = Double.parseDouble(valor.toString());
-                    subtotal += valorSubtotal;
-                } catch (NumberFormatException e) {
-                    // Ignorar fila si hay error
-                }
-            }
-        }
-
-        double iva = subtotal * 0.12;
-        double total = subtotal + iva;
-
-        // Mostrar con 2 decimales
-        txtSubTotal.setText(String.format("%.2f", subtotal));
-        txtIVA.setText(String.format("%.2f", iva));
-        txtTotal.setText(String.format("%.2f", total));
-    }
-
-
 }
