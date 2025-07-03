@@ -27,15 +27,15 @@ public class MiJDesktopPane extends JDesktopPane {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         // Fondo claro
-        g2.setColor(new Color(234,217,250));
+        g2.setColor(new Color(250,222,212));
         g2.fillRect(0, 0, getWidth(), getHeight());
 
-        // Título en rojo centrado
+
         String titulo = mensajeHandler != null
                 ? mensajeHandler.get("pantalla.principal.bienvenida")
                 : "Bienvenido al Sistema de Compras";  // fallback
 
-        g2.setColor(Color.blue);
+        g2.setColor(Color. BLACK);
         g2.setFont(new Font("Times New Roman", Font.BOLD, 30));
 
         FontMetrics fm = g2.getFontMetrics();

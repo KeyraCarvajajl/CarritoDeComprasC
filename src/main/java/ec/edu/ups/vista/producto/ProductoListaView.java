@@ -10,7 +10,6 @@ import java.util.List;
 public class ProductoListaView extends JInternalFrame {
 
     private JTextField txtBuscar;
-    private JButton btnBuscar;
     private JTable tblProductos;
     private JPanel panelPrincipal;
     private JButton btnListar;
@@ -21,6 +20,13 @@ public class ProductoListaView extends JInternalFrame {
     public ProductoListaView(MensajeInternacionalizacionHandler mensajeHandler) {
         super(mensajeHandler.get("ventana.producto.lista"), true, true, false, true);
         this.mensajeHandler = mensajeHandler;
+
+        // Asegurar que los componentes estén inicializados
+        if (panelPrincipal == null) panelPrincipal = new JPanel();
+        if (txtBuscar == null) txtBuscar = new JTextField();
+        if (btnListar == null) btnListar = new JButton("Listar");
+        if (tblProductos == null) tblProductos = new JTable();
+        if (lblNombre == null) lblNombre = new JLabel("Nombre:");
 
         setContentPane(panelPrincipal);
         setSize(500, 500);
@@ -41,14 +47,6 @@ public class ProductoListaView extends JInternalFrame {
 
     public void setTxtBuscar(JTextField txtBuscar) {
         this.txtBuscar = txtBuscar;
-    }
-
-    public JButton getBtnBuscar() {
-        return btnBuscar;
-    }
-
-    public void setBtnBuscar(JButton btnBuscar) {
-        this.btnBuscar = btnBuscar;
     }
 
     public JTable getTblProductos() {

@@ -9,8 +9,6 @@ import ec.edu.ups.vista.producto.ProductoListaView;
 import ec.edu.ups.vista.producto.ProductoModificarView;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public class ProductoController {
@@ -30,6 +28,7 @@ public class ProductoController {
         this.carritoAnadirView = carritoAnadirView;
         this.productoDAO = productoDAO;
     }
+
     public void setProductoAnadirView(ProductoAnadirView productoAnadirView) {
         this.productoAnadirView = productoAnadirView;
         this.configurarAnadirEventos();
@@ -54,61 +53,26 @@ public class ProductoController {
         this.carritoAnadirView = carritoAnadirView;
     }
 
-
     private void configurarEliminarEventos() {
-        productoEliminarView.getBtnBuscar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buscarProductoParaEliminar();
-            }
-        });
-        productoEliminarView.getBtnEliminar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                eliminarProducto();
-            }
-        });
+        productoEliminarView.getBtnBuscar().addActionListener(e -> buscarProductoParaEliminar());
+        productoEliminarView.getBtnEliminar().addActionListener(e -> eliminarProducto());
     }
 
     private void configurarModificarEventos() {
-        productoModificarView.getBtnModificar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                modificarProducto();
-            }
-        });
-        productoModificarView.getBtnBuscar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buscarProductoParaModificar();
-            }
-        });
+        productoModificarView.getBtnModificar().addActionListener(e -> modificarProducto());
+        productoModificarView.getBtnBuscar().addActionListener(e -> buscarProductoParaModificar());
     }
 
     private void configurarAnadirEventos() {
-        productoAnadirView.getBtnAceptar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guardarProducto();
-            }
-        });
+        productoAnadirView.getBtnAceptar().addActionListener(e -> guardarProducto());
     }
 
     private void configurarListaEventos() {
-        productoListaView.getBtnBuscar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buscarProducto();
-            }
-        });
-
-        productoListaView.getBtnListar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                listarProductos();
-            }
-        });
+        if (productoListaView.getBtnListar() != null) {
+            productoListaView.getBtnListar().addActionListener(e -> listarProductos());
+        }
     }
+
     private void buscarProductoParaEliminar() {
         int codigo = Integer.parseInt(productoEliminarView.getTxtCodigo().getText());
         Producto producto = productoDAO.buscarPorCodigo(codigo);
@@ -123,12 +87,9 @@ public class ProductoController {
     }
 
     private void eliminarProducto() {
-        int respuesta = JOptionPane.showConfirmDialog(
-                null,
+        int respuesta = JOptionPane.showConfirmDialog(null,
                 "¿Está seguro que desea eliminar este producto?",
-                "Confirmación",
-                JOptionPane.YES_NO_OPTION
-        );
+                "Confirmación", JOptionPane.YES_NO_OPTION);
         if (respuesta == JOptionPane.YES_OPTION) {
             int codigo = Integer.parseInt(productoEliminarView.getTxtCodigo().getText());
             productoDAO.eliminar(codigo);
@@ -138,6 +99,7 @@ public class ProductoController {
             productoEliminarView.mostrarMensaje("Eliminación cancelada");
         }
     }
+
     private void buscarProductoParaModificar() {
         int codigo = Integer.parseInt(productoModificarView.getTxtCodigo().getText());
         Producto producto = productoDAO.buscarPorCodigo(codigo);
@@ -173,15 +135,9 @@ public class ProductoController {
         productoAnadirView.mostrarProductos(productoDAO.listarTodos());
     }
 
-    private void buscarProducto() {
-        String nombre = productoListaView.getTxtBuscar().getText();
-
-        List<Producto> productosEncontrados = productoDAO.buscarPorNombre(nombre);
-        productoListaView.cargarDatos(productosEncontrados);
-    }
-
     private void listarProductos() {
         List<Producto> productos = productoDAO.listarTodos();
         productoListaView.cargarDatos(productos);
     }
 }
+

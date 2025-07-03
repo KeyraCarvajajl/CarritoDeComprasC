@@ -1,31 +1,42 @@
 package ec.edu.ups.vista.carrito;
 
-
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class CarritoListaView  extends JInternalFrame{
+public class CarritoListaView extends JInternalFrame {
+
     private JTextField txtCodigo;
     private JButton btnBuscar;
     private JButton btnListar;
     private JTable tblPCarrito;
     private JPanel panelPrincipal;
     private JLabel lblCarrito;
+    private JTextField txtTotalCarrito;
+    private JLabel lblTotalCarrito;
     private JTextField txtTotal;
-    DefaultTableModel modelo;
+    private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mensajeHandler;
 
     public CarritoListaView(MensajeInternacionalizacionHandler mensajeHandler) {
         super(mensajeHandler.get("ventana.carrito.lista"), true, true, false, true);
         this.mensajeHandler = mensajeHandler;
 
+        // Inicializar si es null (por error de diseño .form)
+        if (panelPrincipal == null) panelPrincipal = new JPanel();
+        if (btnBuscar == null) btnBuscar = new JButton("Buscar");
+        if (btnListar == null) btnListar = new JButton("Listar");
+        if (tblPCarrito == null) tblPCarrito = new JTable();
+        if (lblCarrito == null) lblCarrito = new JLabel("Código carrito:");
+        if (txtCodigo == null) txtCodigo = new JTextField();
+        if (txtTotal == null) txtTotal = new JTextField();
+
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         setSize(500, 500);
 
-        DefaultTableModel modelo = new DefaultTableModel();
+        modelo = new DefaultTableModel();
         Object[] columnas = {
                 mensajeHandler.get("tabla.columna.codigo"),
                 mensajeHandler.get("tabla.columna.nombre"),
@@ -83,6 +94,10 @@ public class CarritoListaView  extends JInternalFrame{
         return modelo;
     }
 
+    public void setModelo(DefaultTableModel modelo) {
+        this.modelo = modelo;
+    }
+
     public JTextField getTxtTotal() {
         return txtTotal;
     }
@@ -91,13 +106,12 @@ public class CarritoListaView  extends JInternalFrame{
         this.txtTotal = txtTotal;
     }
 
-    public void setModelo(DefaultTableModel modelo) {
-        this.modelo = modelo;
-    }
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
-    public void cargarCarrito(){
+
+    public void cargarCarrito() {
+        // Método vacío para futuras extensiones
     }
 
     public void cambiarIdioma() {
