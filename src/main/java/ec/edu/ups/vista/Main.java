@@ -45,10 +45,10 @@ public class Main {
                 LoginView loginView = new LoginView(mensajeHandler);
                 RegistrarseView registrarseView = new RegistrarseView(mensajeHandler);
                 PreguntasDAO preguntasDAO = new PreguntasDAOMemoria();
-                CuestionarioView cuestionarioView = new CuestionarioView();
-                CuestionarioRecuView cuestionarioRecuView = new CuestionarioRecuView();
+                CuestionarioView cuestionarioView = new CuestionarioView(mensajeHandler,preguntasDAO);
+                CuestionarioRecuView cuestionarioRecuView = new CuestionarioRecuView(mensajeHandler);
 
-                UsuarioController usuarioController = new UsuarioController(usuarioDAO, loginView, registrarseView);
+                UsuarioController usuarioController = new UsuarioController(usuarioDAO, loginView, registrarseView,mensajeHandler);
                 loginView.setVisible(true);
                 usuarioController.setPreguntasDependencias(cuestionarioView, cuestionarioRecuView, preguntasDAO, mensajeHandler);
 
@@ -67,9 +67,9 @@ public class Main {
 
                             //instancio vistas
                             ProductoAnadirView productoAnadirView = new ProductoAnadirView(mensajeHandler);
-                            ProductoListaView productoListaView = new ProductoListaView();
-                            ProductoModificarView productoModificarView = new ProductoModificarView();
-                            ProductoEliminarView productoEliminarView = new ProductoEliminarView();
+                            ProductoListaView productoListaView = new ProductoListaView(mensajeHandler);
+                            ProductoModificarView productoModificarView = new ProductoModificarView(mensajeHandler);
+                            ProductoEliminarView productoEliminarView = new ProductoEliminarView(mensajeHandler);
 
                             CarritoAnadirView carritoAnadirView = new CarritoAnadirView(mensajeHandler);
                             CarritoListaView carritoListarView = new CarritoListaView(mensajeHandler);

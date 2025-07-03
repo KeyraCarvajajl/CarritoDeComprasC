@@ -157,7 +157,7 @@ public class UsuarioController {
         usuarioEliminarView.mostrarMensaje("Usuario eliminado con éxito.");
     }
 
-    private void cerrarSesion() {
+    public void cerrarSesion() {
         int opcion = JOptionPane.showConfirmDialog(menuPrincipalView, "¿Está seguro que desea cerrar sesión?", "Confirmar", JOptionPane.YES_NO_OPTION);
 
         if (opcion == JOptionPane.YES_OPTION) {
