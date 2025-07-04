@@ -30,8 +30,22 @@ public class ProductoModificarView extends JInternalFrame {
         setIconifiable(true);
         setResizable(true);
 
-        cambiarIdioma();
+        cambiarIdioma(mensajeHandler);
     }
+
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
+        setTitle(mensajeHandler.get("producto.modificar.titulo"));
+
+        lblModificarProducto.setText(mensajeHandler.get("producto.modificar.titulo"));
+        lblCodigo.setText(mensajeHandler.get("producto.modificar.codigo"));
+        lblNombre.setText(mensajeHandler.get("producto.modificar.nombre"));
+        lblPrecio.setText(mensajeHandler.get("producto.modificar.precio"));
+
+        btnBuscar.setText(mensajeHandler.get("producto.modificar.buscar"));
+        btnEliminar.setText(mensajeHandler.get("producto.modificar.eliminar"));
+        btnModificar.setText(mensajeHandler.get("producto.modificar.modificar"));
+    }
+
 
     public JTextField getTxtCodigo() {
         return txtCodigo;
@@ -98,20 +112,10 @@ public class ProductoModificarView extends JInternalFrame {
         txtPrecio.setText("");
     }
 
-    public void cambiarIdioma() {
-        setTitle(mensajeHandler.get("ventana.producto.modificar"));
-        lblModificarProducto.setText(mensajeHandler.get("etiqueta.modificar.producto"));
-        lblCodigo.setText(mensajeHandler.get("etiqueta.codigo"));
-        lblNombre.setText(mensajeHandler.get("etiqueta.nombre"));
-        lblPrecio.setText(mensajeHandler.get("etiqueta.precio"));
-        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
-        btnEliminar.setText(mensajeHandler.get("boton.eliminar"));
-        btnModificar.setText(mensajeHandler.get("boton.modificar"));
-    }
 
 
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
-        cambiarIdioma();
+        cambiarIdioma(mensajeHandler);
     }
 }

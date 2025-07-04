@@ -38,8 +38,16 @@ public class ProductoListaView extends JInternalFrame {
         modelo = new DefaultTableModel();
         tblProductos.setModel(modelo);
 
-        cambiarIdioma();
+        cambiarIdioma(mensajeHandler);
     }
+
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
+        setTitle(mensajeHandler.get("producto.lista.titulo"));
+
+        lblNombre.setText(mensajeHandler.get("producto.lista.nombre"));
+        btnListar.setText(mensajeHandler.get("producto.lista.listar"));
+    }
+
 
     public JTextField getTxtBuscar() {
         return txtBuscar;
@@ -93,20 +101,9 @@ public class ProductoListaView extends JInternalFrame {
         }
     }
 
-    public void cambiarIdioma() {
-        setTitle(mensajeHandler.get("ventana.producto.lista"));
-        lblNombre.setText(mensajeHandler.get("etiqueta.lista.productos"));
-
-        String[] columnas = {
-                mensajeHandler.get("etiqueta.codigo"),
-                mensajeHandler.get("etiqueta.nombre"),
-                mensajeHandler.get("etiqueta.precio")
-        };
-        modelo.setColumnIdentifiers(columnas);
-    }
 
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
-        cambiarIdioma();
+        cambiarIdioma(mensajeHandler);
     }
 }

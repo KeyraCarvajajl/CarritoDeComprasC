@@ -28,8 +28,21 @@ public class ProductoEliminarView extends JInternalFrame {
         setIconifiable(true);
         setResizable(true);
 
-        cambiarIdioma();
+        cambiarIdioma(mensajeHandler);
     }
+
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
+        setTitle(mensajeHandler.get("producto.eliminar.titulo"));
+
+        lblEliminarProducto.setText(mensajeHandler.get("producto.eliminar.titulo"));
+        lblCodigo.setText(mensajeHandler.get("producto.eliminar.codigo"));
+        lblNombre.setText(mensajeHandler.get("producto.eliminar.nombre"));
+        lblPrecio.setText(mensajeHandler.get("producto.eliminar.precio"));
+
+        btnBuscar.setText(mensajeHandler.get("producto.eliminar.buscar"));
+        btnEliminar.setText(mensajeHandler.get("producto.eliminar.eliminar"));
+    }
+
 
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
@@ -87,15 +100,6 @@ public class ProductoEliminarView extends JInternalFrame {
         txtCodigo.setText("");
         txtNombre.setText("");
         txtPrecio.setText("");
-    }
-    public void cambiarIdioma() {
-        setTitle(mensajeHandler.get("ventana.producto.eliminar"));
-        lblEliminarProducto.setText(mensajeHandler.get("etiqueta.eliminar.producto"));
-        lblCodigo.setText(mensajeHandler.get("etiqueta.codigo"));
-        lblNombre.setText(mensajeHandler.get("etiqueta.nombre"));
-        lblPrecio.setText(mensajeHandler.get("etiqueta.precio"));
-        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
-        btnEliminar.setText(mensajeHandler.get("boton.eliminar"));
     }
 
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {

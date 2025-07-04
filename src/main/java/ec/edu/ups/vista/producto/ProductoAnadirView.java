@@ -38,8 +38,20 @@ public class ProductoAnadirView extends JInternalFrame {
             }
         });
 
-        cambiarIdioma();
+        cambiarIdioma(mensajeHandler);
     }
+
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
+        setTitle(mensajeHandler.get("producto.anadir.titulo"));
+
+        lblCodigo.setText(mensajeHandler.get("producto.anadir.codigo"));
+        lblNombre.setText(mensajeHandler.get("producto.anadir.nombre"));
+        lblPrecio.setText(mensajeHandler.get("producto.anadir.precio"));
+
+        btnAceptar.setText(mensajeHandler.get("producto.anadir.aceptar"));
+        btnLimpiar.setText(mensajeHandler.get("producto.anadir.limpiar"));
+    }
+
 
 
     public JPanel getPanelPrincipal() {
@@ -104,15 +116,6 @@ public class ProductoAnadirView extends JInternalFrame {
         for (Producto producto : productos) {
             System.out.println(producto);
         }
-    }
-
-    public void cambiarIdioma() {
-        setTitle(mensajeHandler.get("producto.titulo"));
-        btnAceptar.setText(mensajeHandler.get("aceptar"));
-        btnLimpiar.setText(mensajeHandler.get("limpiar"));
-        lblCodigo.setText(mensajeHandler.get("etiqueta.codigo"));
-        lblNombre.setText(mensajeHandler.get("etiqueta.nombre"));
-        lblPrecio.setText(mensajeHandler.get("etiqueta.precio"));
     }
 
 
