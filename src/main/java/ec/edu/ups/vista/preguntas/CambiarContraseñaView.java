@@ -5,7 +5,7 @@ import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import javax.swing.*;
 import java.awt.*;
 
-public class CuestionarioRecuView extends JInternalFrame {
+public class CambiarContraseñaView extends JInternalFrame {
 
     private JPanel panelPrincipal;
     private JLabel lblNuevaContrasenia;
@@ -17,7 +17,7 @@ public class CuestionarioRecuView extends JInternalFrame {
 
     private MensajeInternacionalizacionHandler mensajeHandler;
 
-    public CuestionarioRecuView(MensajeInternacionalizacionHandler mensajeHandler) {
+    public CambiarContraseñaView(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
         setTitle(mensajeHandler.get("ventana.cambiar.contrasenia"));
         setClosable(true);

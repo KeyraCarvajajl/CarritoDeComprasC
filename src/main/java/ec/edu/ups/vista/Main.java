@@ -1,7 +1,6 @@
 package ec.edu.ups.vista;
 
 import ec.edu.ups.controlador.CarritoController;
-import ec.edu.ups.controlador.PreguntasController;
 import ec.edu.ups.controlador.ProductoController;
 import ec.edu.ups.controlador.UsuarioController;
 import ec.edu.ups.dao.CarritoDAO;
@@ -15,7 +14,7 @@ import ec.edu.ups.dao.impl.UsuarioDAOMemoria;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.carrito.*;
-import ec.edu.ups.vista.preguntas.CuestionarioRecuView;
+import ec.edu.ups.vista.preguntas.CambiarContraseñaView;
 import ec.edu.ups.vista.preguntas.CuestionarioView;
 import ec.edu.ups.vista.producto.ProductoAnadirView;
 import ec.edu.ups.vista.producto.ProductoEliminarView;
@@ -29,7 +28,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-// DAO, CONTROLLER, VISTAS - se instancian una sola vez
 public class Main {
     @SuppressWarnings("all")
     public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
@@ -46,7 +44,7 @@ public class Main {
                 RegistrarseView registrarseView = new RegistrarseView(mensajeHandler);
                 PreguntasDAO preguntasDAO = new PreguntasDAOMemoria();
                 CuestionarioView cuestionarioView = new CuestionarioView(mensajeHandler,preguntasDAO);
-                CuestionarioRecuView cuestionarioRecuView = new CuestionarioRecuView(mensajeHandler);
+                CambiarContraseñaView cuestionarioRecuView = new CambiarContraseñaView(mensajeHandler);
 
                 UsuarioController usuarioController = new UsuarioController(usuarioDAO, loginView, registrarseView,mensajeHandler);
                 loginView.setVisible(true);

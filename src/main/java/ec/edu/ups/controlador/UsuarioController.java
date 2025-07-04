@@ -6,7 +6,7 @@ import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.MenuPrincipalView;
-import ec.edu.ups.vista.preguntas.CuestionarioRecuView;
+import ec.edu.ups.vista.preguntas.CambiarContraseñaView;
 import ec.edu.ups.vista.usuario.LoginView;
 import ec.edu.ups.vista.usuario.RegistrarseView;
 import ec.edu.ups.vista.usuario.UsuarioEliminarView;
@@ -15,8 +15,6 @@ import ec.edu.ups.vista.preguntas.CuestionarioView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public class UsuarioController {
@@ -212,7 +210,7 @@ public class UsuarioController {
     }
 
     public void setPreguntasDependencias(CuestionarioView cuestionarioView,
-                                         CuestionarioRecuView cuestionarioRecuView,
+                                         CambiarContraseñaView cuestionarioRecuView,
                                          PreguntasDAO preguntasDAO,
                                          MensajeInternacionalizacionHandler mensajeHandler) {
         this.recuperarContraseniaView = cuestionarioView;

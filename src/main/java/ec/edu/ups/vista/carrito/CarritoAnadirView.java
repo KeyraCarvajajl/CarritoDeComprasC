@@ -34,19 +34,19 @@ public class CarritoAnadirView extends JInternalFrame {
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mensajeHandler;
 
-    public CarritoAnadirView(MensajeInternacionalizacionHandler mensajeI) {
+    public CarritoAnadirView(MensajeInternacionalizacionHandler mensajeHandler) {
         super("Carrito de Compras", true, true, false, true);
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         setSize(500, 500);
-        this.mensajeHandler = mensajeI;
+        this.mensajeHandler = mensajeHandler;
         modelo = new DefaultTableModel();
         Object[] columnas = {"Codigo", "Nombre", "Precio", "Cantidad", "Subtotal"};
         modelo.setColumnIdentifiers(columnas);
         tblProductos.setModel(modelo);
 
         cargarDatos();
-        cambiarIdioma();
+        cambiarIdioma(mensajeHandler);
         limpiarCampos();
 
         URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
@@ -81,29 +81,24 @@ public class CarritoAnadirView extends JInternalFrame {
             System.err.println("Error: No se ha cargado el icono de Limpiar");
         }
     }
-    public void cambiarIdioma(){
-        mensajeHandler.setLenguaje(mensajeHandler.getLocale().getLanguage(),mensajeHandler.getLocale().getCountry());
+
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
         setTitle(mensajeHandler.get("carrito.anadir.titulo"));
+
         lblCodigo.setText(mensajeHandler.get("carrito.anadir.codigo"));
-        lblCantidad.setText(mensajeHandler.get("carrito.anadir.cantidad"));
         lblNombre.setText(mensajeHandler.get("carrito.anadir.nombre"));
+        lblPrecio.setText(mensajeHandler.get("carrito.anadir.precio"));
+        lblCantidad.setText(mensajeHandler.get("carrito.anadir.cantidad"));
         lblSubTotal.setText(mensajeHandler.get("carrito.anadir.subtotal"));
         lblIva.setText(mensajeHandler.get("carrito.anadir.iva"));
         lblTotal.setText(mensajeHandler.get("carrito.anadir.total"));
 
-        btnAnadir.setText(mensajeHandler.get("carrito.anadir.boton.anadir"));
-        btnGuardar.setText(mensajeHandler.get("carrito.anadir.boton.guardar"));
-        btnBuscar.setText(mensajeHandler.get("carrito.anadir.boton.buscar"));
-        btnLimpiar.setText(mensajeHandler.get("carrito.anadir.boton.limpiar"));
-
-        modelo.setColumnIdentifiers(new Object[]{
-                mensajeHandler.get("carrito.anadir.tabla.codigo"),
-                mensajeHandler.get("carrito.anadir.tabla.nombre"),
-                mensajeHandler.get("carrito.anadir.tabla.precio"),
-                mensajeHandler.get("carrito.anadir.tabla.cantidad"),
-                mensajeHandler.get("carrito.anadir.tabla.subtotal")
-        });
+        btnBuscar.setText(mensajeHandler.get("carrito.anadir.buscar"));
+        btnAnadir.setText(mensajeHandler.get("carrito.anadir.anadir"));
+        btnGuardar.setText(mensajeHandler.get("carrito.anadir.guardar"));
+        btnLimpiar.setText(mensajeHandler.get("carrito.anadir.limpiar"));
     }
+
 
     private void cargarDatos(){
         cbxCantidad.removeAllItems();

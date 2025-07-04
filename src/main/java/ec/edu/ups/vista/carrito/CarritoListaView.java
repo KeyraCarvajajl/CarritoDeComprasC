@@ -47,7 +47,20 @@ public class CarritoListaView extends JInternalFrame {
         } else {
             System.err.println("Error: No se ha cargado el icono de Listar");
         }
+
+        cambiarIdioma(mensajeHandler);
     }
+
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
+        setTitle(mensajeHandler.get("carrito.lista.titulo"));
+
+        lblCarrito.setText(mensajeHandler.get("carrito.lista.carrito"));
+        lblTotalCarrito.setText(mensajeHandler.get("carrito.lista.total"));
+
+        btnBuscar.setText(mensajeHandler.get("carrito.lista.buscar"));
+        btnListar.setText(mensajeHandler.get("carrito.lista.listar"));
+    }
+
 
     public JTextField getTxtCodigo() {
         return txtCodigo;
@@ -110,30 +123,6 @@ public class CarritoListaView extends JInternalFrame {
     }
 
     public void cargarCarrito() {
-        // Método vacío para futuras extensiones
-    }
-
-    public void cambiarIdioma() {
-        setTitle(mensajeHandler.get("ventana.carrito.lista"));
-
-        lblCarrito.setText(mensajeHandler.get("etiqueta.codigo.carrito"));
-        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
-        btnListar.setText(mensajeHandler.get("boton.listar"));
-
-        String[] columnas = {
-                mensajeHandler.get("tabla.columna.codigo"),
-                mensajeHandler.get("tabla.columna.nombre"),
-                mensajeHandler.get("tabla.columna.precio"),
-                mensajeHandler.get("tabla.columna.cantidad"),
-                mensajeHandler.get("tabla.columna.total")
-        };
-
-        if (tblPCarrito.getColumnCount() == columnas.length) {
-            for (int i = 0; i < columnas.length; i++) {
-                tblPCarrito.getColumnModel().getColumn(i).setHeaderValue(columnas[i]);
-            }
-            tblPCarrito.getTableHeader().repaint();
-        }
     }
 
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {

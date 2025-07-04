@@ -35,7 +35,7 @@ public class CarritoDetalleView extends JInternalFrame {
         modelo.setColumnIdentifiers(columnas);
         tblDetCarrito.setModel(modelo);
         this.mensajeHandler = mensajeHandler;
-        cambiarIdioma();
+        cambiarIdioma(mensajeHandler);
 
         URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
         if (btBuscar != null) {
@@ -54,21 +54,19 @@ public class CarritoDetalleView extends JInternalFrame {
         }
     }
 
-    public void cambiarIdioma() {
-        setTitle(mensajeHandler.get("carrito.detalle.titulo")); // Cambia según la clave de tu título
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
+        setTitle(mensajeHandler.get("carrito.detalle.titulo"));
 
-        lblTotal.setText(mensajeHandler.get("carrito.detalle.total")); // Etiqueta de total
+        lblDetallesCarrito.setText(mensajeHandler.get("carrito.detalle.titulo"));
+        lblID.setText(mensajeHandler.get("carrito.detalle.id"));
+        lblSubTotal.setText(mensajeHandler.get("carrito.detalle.subtotal"));
+        lblIVA.setText(mensajeHandler.get("carrito.detalle.iva"));
+        lblTotal.setText(mensajeHandler.get("carrito.detalle.total"));
 
-        Object[] columnas = {
-                mensajeHandler.get("carrito.detalle.columna.codigo"),
-                mensajeHandler.get("carrito.detalle.columna.nombre"),
-                mensajeHandler.get("carrito.detalle.columna.precio"),
-                mensajeHandler.get("carrito.detalle.columna.cantidad"),
-                mensajeHandler.get("carrito.detalle.columna.subtotal")
-        };
-
-        modelo.setColumnIdentifiers(columnas); // Este modelo debe ser tu DefaultTableModel
+        btnBuscarDetalle.setText(mensajeHandler.get("carrito.detalle.buscar"));
+        btnAceptarDetalle.setText(mensajeHandler.get("carrito.detalle.aceptar"));
     }
+
 
 
     public JTextField getTxtIdDet() {

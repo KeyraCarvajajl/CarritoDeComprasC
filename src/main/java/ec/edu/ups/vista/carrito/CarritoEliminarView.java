@@ -17,10 +17,10 @@ public class CarritoEliminarView extends JInternalFrame {
     private JLabel lblCodigo;
     private JTextField txtFecha;
     private JLabel lblFecha;
-    private MensajeInternacionalizacionHandler mensajeI;
+    private MensajeInternacionalizacionHandler mensajeHandler;
     private DefaultTableModel modelo;
 
-    public CarritoEliminarView(MensajeInternacionalizacionHandler mensajeI) {
+    public CarritoEliminarView(MensajeInternacionalizacionHandler mensajeHandler) {
         super("Eliminar Carrito", true, true, false, true);
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
@@ -30,8 +30,8 @@ public class CarritoEliminarView extends JInternalFrame {
         Object[] columnas = {"Código", "Nombre", "Precio", "Cantidad", "Total"};
         modelo.setColumnIdentifiers(columnas);
         tblLProductos.setModel(modelo);
-        this.mensajeI = mensajeI;
-        cambiarIdi();
+        this.mensajeHandler = mensajeHandler;
+        cambiarIdioma(mensajeHandler);
 
         URL btEliminar = LoginView.class.getClassLoader().getResource("imagenes/eliminar.png");
         if (btEliminar != null) {
@@ -58,23 +58,18 @@ public class CarritoEliminarView extends JInternalFrame {
         }
 
     }
-    public void cambiarIdi(){
-        mensajeI.setLenguaje(mensajeI.getLocale().getLanguage(), mensajeI.getLocale().getCountry());
-        setTitle(mensajeI.get("carrito.eliminar.titulo"));
-        lblCodigo.setText(mensajeI.get("carrito.eliminar.codigo"));
-        lblFecha.setText(mensajeI.get("carrito.eliminar.fecha"));
 
-        btnBuscar.setText(mensajeI.get("carrito.eliminar.boton.buscar"));
-        btnEliminar.setText(mensajeI.get("carrito.eliminar.boton.eliminar"));
-        btnVaciar.setText(mensajeI.get("carrito.eliminar.boton.vaciar"));
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
+        setTitle(mensajeHandler.get("carrito.eliminar.titulo"));
 
-        modelo.setColumnIdentifiers(new Object[]{
-                mensajeI.get("carrito.eliminar.tabla.codigo"),
-                mensajeI.get("carrito.eliminar.tabla.nombre"),
-                mensajeI.get("carrito.eliminar.tabla.precio"),
-                mensajeI.get("carrito.eliminar.tabla.cantidad")
-        });
+        lblCodigo.setText(mensajeHandler.get("carrito.eliminar.codigo"));
+        lblFecha.setText(mensajeHandler.get("carrito.eliminar.fecha"));
+
+        btnBuscar.setText(mensajeHandler.get("carrito.eliminar.buscar"));
+        btnEliminar.setText(mensajeHandler.get("carrito.eliminar.eliminar"));
+        btnVaciar.setText(mensajeHandler.get("carrito.eliminar.vaciar"));
     }
+
 
     public JTextField getTxtCodigo() {
         return txtCodigo;

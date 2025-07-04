@@ -19,7 +19,7 @@ public class CarritoModificarView extends JInternalFrame {
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mensajeHandler;
 
-    public CarritoModificarView(MensajeInternacionalizacionHandler mensajeI) {
+    public CarritoModificarView(MensajeInternacionalizacionHandler mensajeHandler) {
         super("Modificar Carrito",true,true,false,true);
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
@@ -29,8 +29,8 @@ public class CarritoModificarView extends JInternalFrame {
         Object[] columnas = {"Código", "Nombre", "Precio", "Cantidad", "Total"};
         modelo.setColumnIdentifiers(columnas);
         tblView.setModel(modelo);
-        this.mensajeHandler = mensajeI;
-        cambiarIdioma();
+        this.mensajeHandler = mensajeHandler;
+        cambiarIdioma(mensajeHandler);
 
         URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
         if (btBuscar != null) {
@@ -48,23 +48,17 @@ public class CarritoModificarView extends JInternalFrame {
             System.err.println("Error: No se ha cargado el icono de Buscar");
         }
     }
-    public void cambiarIdioma() {
-        mensajeHandler.setLenguaje(mensajeHandler.getLocale().getLanguage(),mensajeHandler.getLocale().getCountry());
 
-        setTitle(mensajeHandler.get("carrito.titulo.modificar"));
-        lblCodigo.setText(mensajeHandler.get("carrito.label.codigo"));
-        lblFecha.setText(mensajeHandler.get("carrito.label.fecha"));
-        btnBuscar.setText(mensajeHandler.get("carrito.boton.buscar"));
-        btnModificar.setText(mensajeHandler.get("carrito.boton.modificar"));
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
+        setTitle(mensajeHandler.get("carrito.modificar.titulo"));
 
-        modelo.setColumnIdentifiers(new Object[]{
-                mensajeHandler.get("carrito.columna.codigo"),
-                mensajeHandler.get("carrito.columna.nombre"),
-                mensajeHandler.get("carrito.columna.precio"),
-                mensajeHandler.get("carrito.columna.cantidad"),
-                mensajeHandler.get("carrito.columna.total")
-        });
+        lblCodigo.setText(mensajeHandler.get("carrito.modificar.codigo"));
+        lblFecha.setText(mensajeHandler.get("carrito.modificar.fecha"));
+
+        btnBuscar.setText(mensajeHandler.get("carrito.modificar.buscar"));
+        btnModificar.setText(mensajeHandler.get("carrito.modificar.modificar"));
     }
+
 
     public JTextField getTxtCodigo() {
         return txtCodigo;
