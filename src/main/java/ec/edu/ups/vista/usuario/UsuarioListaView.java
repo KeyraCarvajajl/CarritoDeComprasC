@@ -14,7 +14,6 @@ public class UsuarioListaView extends JFrame {
     private JTextField txtNombre;
     private JLabel lblNombre;
     private JPanel panelPrincipal;
-    private JButton btnListar;
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mensajeHandler;
 
@@ -30,27 +29,19 @@ public class UsuarioListaView extends JFrame {
         modelo = new DefaultTableModel();
         tblUsuarios.setModel(modelo);
 
-        cambiarIdioma();
+        cambiarIdioma(mensajeHandler);
     }
 
-    public void cambiarIdioma() {
-        setTitle(mensajeHandler.get("ventana.usuario.listar"));
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
+        setTitle(mensajeHandler.get("usuario.lista.titulo"));
 
-        lblNombre.setText(mensajeHandler.get("etiqueta.buscar.por"));
-        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
-        btnCerrar.setText(mensajeHandler.get("boton.cerrar"));
+        lblNombre.setText(mensajeHandler.get("usuario.lista.nombre"));
 
-        cbxFiltro.removeAllItems();
-        cbxFiltro.addItem(mensajeHandler.get("usuario.nombre"));
-        cbxFiltro.addItem(mensajeHandler.get("usuario.username"));
-        cbxFiltro.addItem(mensajeHandler.get("usuario.rol"));
-
-        modelo.setColumnIdentifiers(new String[]{
-                mensajeHandler.get("usuario.nombre"),
-                mensajeHandler.get("usuario.username"),
-                mensajeHandler.get("usuario.rol")
-        });
+        btnBuscar.setText(mensajeHandler.get("usuario.lista.buscar"));
+        btnCerrar.setText(mensajeHandler.get("usuario.lista.cerrar"));
     }
+
+
 
     // Getters
     public JTable getTblUsuarios() {
@@ -72,11 +63,6 @@ public class UsuarioListaView extends JFrame {
     public JTextField getTxtNombre() {
         return txtNombre;
     }
-
-    public JButton getBtnListar() {
-        return btnListar;
-    }
-
 
     public DefaultTableModel getTableModel() {
         return modelo;

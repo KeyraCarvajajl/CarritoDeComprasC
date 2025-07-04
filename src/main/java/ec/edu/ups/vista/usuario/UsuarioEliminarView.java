@@ -21,18 +21,20 @@ public class UsuarioEliminarView extends JInternalFrame {
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         setSize(300, 190);
-        cambiarIdioma();
+        cambiarIdioma(mensajeHandler);
     }
 
-    public void cambiarIdioma() {
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
         setTitle(mensajeHandler.get("usuario.eliminar.titulo"));
-        lblNombre.setText(mensajeHandler.get("usuario.nombre"));
-        lblContrasenia.setText(mensajeHandler.get("usuario.contrasenia"));
-        lblConfirmarContrasenia.setText(mensajeHandler.get("usuario.confirmar"));
-        btnEliminarUsuario.setText(mensajeHandler.get("usuario.eliminar.boton"));
+
+        lblNombre.setText(mensajeHandler.get("usuario.eliminar.nombre"));
+        lblContrasenia.setText(mensajeHandler.get("usuario.eliminar.contrasenia"));
+        lblConfirmarContrasenia.setText(mensajeHandler.get("usuario.eliminar.confirmar"));
+
+        btnEliminarUsuario.setText(mensajeHandler.get("usuario.eliminar.eliminar"));
     }
 
-    // Getters
+
     public JTextField getTxtNombre() {
         return txtNombre;
     }

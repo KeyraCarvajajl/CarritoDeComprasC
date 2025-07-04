@@ -36,6 +36,7 @@ public class RegistrarseView extends JInternalFrame {
     private JLabel lblPregunta1;
     private JLabel lblPregunta2;
     private JLabel lblPregunta3;
+    private JLabel lblPreuntasSeguridad;
 
     private MensajeInternacionalizacionHandler mensajeHandler;
 
@@ -46,26 +47,31 @@ public class RegistrarseView extends JInternalFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(800, 800);
         setTitle(mensajeHandler.get("usuario.view.registrar.titulo"));
-        cambiarIdioma();
+        cambiarIdioma(mensajeHandler);
         cargarPreguntas();
     }
 
-    public void cambiarIdioma() {
-        setTitle(mensajeHandler.get("usuario.view.registrar.titulo"));
-        lblNombre.setText(mensajeHandler.get("usuario.nombre"));
-        lblUsuario.setText(mensajeHandler.get("usuario.usuario"));
-        lblContrasenia.setText(mensajeHandler.get("usuario.contrasena"));
-        lblConfirmarContrasenia.setText(mensajeHandler.get("usuario.confirmar"));
-        lblFechaDeNacimiento.setText(mensajeHandler.get("usuario.fecha"));
-        lblCorreoElectrónico.setText(mensajeHandler.get("usuario.correo"));
-        lblTeléfono.setText(mensajeHandler.get("usuario.telefono"));
-        lblPregunta1.setText(mensajeHandler.get("usuario.pregunta1"));
-        lblPregunta2.setText(mensajeHandler.get("usuario.pregunta2"));
-        lblPregunta3.setText(mensajeHandler.get("usuario.pregunta3"));
-        lblRegistrar.setText(mensajeHandler.get("usuario.registrar"));
-        btnRegistrarse.setText(mensajeHandler.get("usuario.registrar"));
-        btnCancelar.setText(mensajeHandler.get("boton.cancelar"));
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
+        setTitle(mensajeHandler.get("usuario.registro.titulo"));
+
+        lblRegistrar.setText(mensajeHandler.get("usuario.registro.titulo"));
+        lblNombre.setText(mensajeHandler.get("usuario.registro.nombre"));
+        lblUsuario.setText(mensajeHandler.get("usuario.registro.usuario"));
+        lblContrasenia.setText(mensajeHandler.get("usuario.registro.contrasenia"));
+        lblConfirmarContrasenia.setText(mensajeHandler.get("usuario.registro.confirmar"));
+        lblFechaDeNacimiento.setText(mensajeHandler.get("usuario.registro.fecha"));
+        lblCorreoElectrónico.setText(mensajeHandler.get("usuario.registro.correo"));
+        lblTeléfono.setText(mensajeHandler.get("usuario.registro.telefono"));
+
+        lblPreuntasSeguridad.setText(mensajeHandler.get("usuario.registro.preguntas"));
+        lblPregunta1.setText(mensajeHandler.get("usuario.registro.pregunta1"));
+        lblPregunta2.setText(mensajeHandler.get("usuario.registro.pregunta2"));
+        lblPregunta3.setText(mensajeHandler.get("usuario.registro.pregunta3"));
+
+        btnRegistrarse.setText(mensajeHandler.get("usuario.registro.registrarse"));
+        btnCancelar.setText(mensajeHandler.get("usuario.registro.cancelar"));
     }
+
 
     // Getters
     public JTextField getTxtNombreCompleto() { return txtNombreCompleto; }
@@ -147,6 +153,7 @@ public class RegistrarseView extends JInternalFrame {
             cbxPregunta3.addItem("Pet's name?");
             cbxPregunta3.addItem("Hometown?");
         } else if (idioma.equals("fr")) {
+
             cbxPregunta1.addItem("Couleur préférée ?");
             cbxPregunta1.addItem("Nom de votre animal de compagnie ?");
             cbxPregunta1.addItem("Ville natale ?");

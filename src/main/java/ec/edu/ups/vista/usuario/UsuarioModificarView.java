@@ -30,20 +30,23 @@ public class UsuarioModificarView extends JInternalFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(600, 500);
         setTitle(mensajeHandler.get("usuario.view.modificar.titulo"));
-        cambiarIdioma();
+        cambiarIdioma(mensajeHandler);
         limpiarCampos();
     }
 
-    public void cambiarIdioma() {
-        setTitle(mensajeHandler.get("usuario.view.modificar.titulo"));
-        lblUsuarioBuscar.setText(mensajeHandler.get("usuario.usuario"));
-        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
-        lblNombre.setText(mensajeHandler.get("usuario.nombre"));
-        lblCorreo.setText(mensajeHandler.get("usuario.correo"));
-        lblTelefono.setText(mensajeHandler.get("usuario.telefono"));
-        btnGuardar.setText(mensajeHandler.get("boton.guardar"));
-        btnCancelar.setText(mensajeHandler.get("boton.cancelar"));
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
+        setTitle(mensajeHandler.get("usuario.modificar.titulo"));
+
+        lblUsuarioBuscar.setText(mensajeHandler.get("usuario.modificar.buscar.usuario"));
+        lblNombre.setText(mensajeHandler.get("usuario.modificar.nombre"));
+        lblCorreo.setText(mensajeHandler.get("usuario.modificar.correo"));
+        lblTelefono.setText(mensajeHandler.get("usuario.modificar.telefono"));
+
+        btnBuscar.setText(mensajeHandler.get("usuario.modificar.buscar"));
+        btnGuardar.setText(mensajeHandler.get("usuario.modificar.guardar"));
+        btnCancelar.setText(mensajeHandler.get("usuario.modificar.cancelar"));
     }
+
 
     public JTextField getTxtBuscarUsuario() { return txtBuscarUsuario; }
 

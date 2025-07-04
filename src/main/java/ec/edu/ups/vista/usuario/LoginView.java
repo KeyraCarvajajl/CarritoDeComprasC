@@ -48,12 +48,25 @@ public class LoginView extends JFrame {
                         mensajeHandler.setLocale(new Locale("fr", "FR"));
                         break;
                 }
-                cambiarIdioma(); // Actualiza los textos en pantalla
+                cambiarIdioma(mensajeHandler); // Actualiza los textos en pantalla
             }
         });
 
-        cambiarIdioma();
+        cambiarIdioma(mensajeHandler);
     }
+
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
+        setTitle(mensajeHandler.get("login.titulo"));
+
+        lblUsuario.setText(mensajeHandler.get("login.usuario"));
+        lblContrasenia.setText(mensajeHandler.get("login.contrasenia"));
+        lblIdioma.setText(mensajeHandler.get("login.idioma"));
+
+        btnIniciarSesion.setText(mensajeHandler.get("login.iniciar"));
+        btnRegistrarse.setText(mensajeHandler.get("login.registrarse"));
+        btnOlvidarContrasenia.setText(mensajeHandler.get("login.olvidaste"));
+    }
+
 
 
     public JComboBox getComboBox1() {return comboBox1;}
@@ -114,19 +127,8 @@ public class LoginView extends JFrame {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
-    public void cambiarIdioma() {
-        setTitle(mensajeHandler.get("ventana.login"));
-        lblUsuario.setText(mensajeHandler.get("etiqueta.usuario"));
-        lblContrasenia.setText(mensajeHandler.get("etiqueta.contrasena"));
-        lblIdioma.setText(mensajeHandler.get("etiqueta.idioma"));
-        btnIniciarSesion.setText(mensajeHandler.get("boton.ingresar"));
-        btnRegistrarse.setText(mensajeHandler.get("boton.registrarse"));
-        btnOlvidarContrasenia.setText(mensajeHandler.get("boton.olvidar"));
-    }
-
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
-        cambiarIdioma();
+        cambiarIdioma(mensajeHandler);
     }
-
 }
