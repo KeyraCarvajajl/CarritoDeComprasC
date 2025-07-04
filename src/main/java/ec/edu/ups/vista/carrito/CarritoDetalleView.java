@@ -67,6 +67,20 @@ public class CarritoDetalleView extends JInternalFrame {
         btnAceptarDetalle.setText(mensajeHandler.get("carrito.detalle.aceptar"));
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblDetallesCarrito.setText(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.titulo"));
+        lblID.setText(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.id"));
+        lblSubTotal.setText(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.subtotal"));
+        lblIVA.setText(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.iva"));
+        lblTotal.setText(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.total"));
+
+        btnBuscarDetalle.setText(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.buscar"));
+        btnAceptarDetalle.setText(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.aceptar"));
+
+        setTitle(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.titulo"));
+    }
+
+
 
 
     public JTextField getTxtIdDet() {

@@ -14,7 +14,7 @@ import ec.edu.ups.dao.impl.UsuarioDAOMemoria;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.carrito.*;
-import ec.edu.ups.vista.preguntas.CambiarContraseñaView;
+import ec.edu.ups.vista.preguntas.CambiarContraseniaView;
 import ec.edu.ups.vista.preguntas.CuestionarioView;
 import ec.edu.ups.vista.producto.ProductoAnadirView;
 import ec.edu.ups.vista.producto.ProductoEliminarView;
@@ -44,7 +44,7 @@ public class Main {
                 RegistrarseView registrarseView = new RegistrarseView(mensajeHandler);
                 PreguntasDAO preguntasDAO = new PreguntasDAOMemoria();
                 CuestionarioView cuestionarioView = new CuestionarioView(mensajeHandler,preguntasDAO);
-                CambiarContraseñaView cuestionarioRecuView = new CambiarContraseñaView(mensajeHandler);
+                CambiarContraseniaView cuestionarioRecuView = new CambiarContraseniaView(mensajeHandler);
 
                 UsuarioController usuarioController = new UsuarioController(usuarioDAO, loginView, registrarseView,mensajeHandler);
                 loginView.setVisible(true);

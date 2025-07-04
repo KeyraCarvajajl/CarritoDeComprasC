@@ -2,13 +2,13 @@ package ec.edu.ups.vista;
 
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.carrito.*;
+import ec.edu.ups.vista.preguntas.CambiarContraseniaView;
+import ec.edu.ups.vista.preguntas.CuestionarioView;
 import ec.edu.ups.vista.producto.ProductoAnadirView;
 import ec.edu.ups.vista.producto.ProductoEliminarView;
 import ec.edu.ups.vista.producto.ProductoListaView;
 import ec.edu.ups.vista.producto.ProductoModificarView;
-import ec.edu.ups.vista.usuario.UsuarioEliminarView;
-import ec.edu.ups.vista.usuario.UsuarioListaView;
-import ec.edu.ups.vista.usuario.UsuarioModificarView;
+import ec.edu.ups.vista.usuario.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,6 +49,28 @@ public class MenuPrincipalView extends JFrame {
 
     private JDesktopPane jDesktopPane;
     private JLabel lblUsuario;
+
+    private ProductoAnadirView ventanaProductoAnadir;
+    private ProductoEliminarView ventanaProductoEliminar;
+    private ProductoModificarView ventanaProductoModificar;
+    private ProductoListaView ventanaProductoLista;
+
+    private CarritoAnadirView ventanaCarritoAnadir;
+    private CarritoDetalleView ventanaCarritoDetalle;
+    private CarritoEliminarView ventanaCarritoEliminar;
+    private CarritoModificarView ventanaCarritoModificar;
+    private CarritoListaView ventanaCarritoLista;
+
+    private UsuarioEliminarView ventanaUsuarioEliminar;
+    private UsuarioModificarView ventanaUsuarioModificar;
+    private UsuarioListaView ventanaUsuarioLista;
+    private UsuarioListaView ventanaUsuarioListar;
+    private RegistrarseView ventanaRegistrarse;
+    private LoginView ventanaLogin;
+
+    private CuestionarioView ventanaRecuperarContrasenia;
+    private CambiarContraseniaView ventanaCambiarContrasenia;
+
 
     public MenuPrincipalView(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
@@ -125,6 +147,8 @@ public class MenuPrincipalView extends JFrame {
         add(panelSuperior, BorderLayout.NORTH);
 
         registrarEventos();
+        deshabilitarMenusAdministrador();
+        actualizarTextos(mensajeHandler);
     }
 
     private void registrarEventos() {
@@ -241,6 +265,11 @@ public class MenuPrincipalView extends JFrame {
                 vista.setVisible(true);
             }
         });
+
+        menuItemIdiomaEspanol.addActionListener(e -> cambiarIdioma("es", "EC"));
+        menuItemIdiomaIngles.addActionListener(e -> cambiarIdioma("en", "US"));
+        menuItemIdiomaFrances.addActionListener(e -> cambiarIdioma("fr", "FR"));
+
     }
 
 
@@ -259,8 +288,8 @@ public class MenuPrincipalView extends JFrame {
         getMenuItemEliminarProducto().setEnabled(false);
     }
 
-    public void cambiarIdioma(String lenguaje, String pais){
-        mensajeHandler.setLenguaje(lenguaje,pais);
+    public void cambiarIdioma(String lenguaje, String pais) {
+        mensajeHandler.setLenguaje(lenguaje, pais);
         setTitle(mensajeHandler.get("app.titulo"));
 
         menuProducto.setText(mensajeHandler.get("menu.producto"));
@@ -277,16 +306,110 @@ public class MenuPrincipalView extends JFrame {
         menuItemAnadirCarrito.setText(mensajeHandler.get("menu.carrito.añadir"));
         menuItemBuscarCarrito.setText(mensajeHandler.get("menu.carrito.buscar"));
         menuItemEliminarCarrito.setText(mensajeHandler.get("menu.carrito.eliminar"));
+        menuItemModificarCarrito.setText(mensajeHandler.get("menu.carrito.modificar"));
 
-        menuItemModificarUsuario.setText(mensajeHandler.get("menu.usuario.modificar"));
         menuItemEliminarUsuario.setText(mensajeHandler.get("menu.usuario.eliminar"));
-        menuItemBuscarUsuario.setText(mensajeHandler.get("menu.usuario.cargar"));
+        menuItemModificarUsuario.setText(mensajeHandler.get("menu.usuario.modificar"));
+        menuItemBuscarUsuario.setText(mensajeHandler.get("menu.usuario.buscar"));
 
         menuItemIdiomaEspanol.setText(mensajeHandler.get("menu.idioma.es"));
         menuItemIdiomaIngles.setText(mensajeHandler.get("menu.idioma.en"));
         menuItemIdiomaFrances.setText(mensajeHandler.get("menu.idioma.fr"));
 
         menuItemCerrarSesion.setText(mensajeHandler.get("menu.salir.cerrar"));
+
+        lblUsuario.setText(mensajeHandler.get("menu.usuario.etiqueta") + ":");
+
+        // PRODUCTOS
+        if (ventanaProductoAnadir != null && ventanaProductoAnadir.isVisible()) {
+            ventanaProductoAnadir.actualizarTextos(mensajeHandler);
+        }
+        if (ventanaProductoEliminar != null && ventanaProductoEliminar.isVisible()) {
+            ventanaProductoEliminar.actualizarTextos(mensajeHandler);
+        }
+        if (ventanaProductoModificar != null && ventanaProductoModificar.isVisible()) {
+            ventanaProductoModificar.actualizarTextos(mensajeHandler);
+        }
+        if (ventanaProductoLista != null && ventanaProductoLista.isVisible()) {
+            ventanaProductoLista.actualizarTextos(mensajeHandler);
+        }
+
+        // CARRITOS
+        if (ventanaCarritoAnadir != null && ventanaCarritoAnadir.isVisible()) {
+            ventanaCarritoAnadir.actualizarTextos(mensajeHandler);
+        }
+        if (ventanaCarritoEliminar != null && ventanaCarritoEliminar.isVisible()) {
+            ventanaCarritoEliminar.actualizarTextos(mensajeHandler);
+        }
+        if (ventanaCarritoModificar != null && ventanaCarritoModificar.isVisible()) {
+            ventanaCarritoModificar.actualizarTextos(mensajeHandler);
+        }
+        if (ventanaCarritoLista != null && ventanaCarritoLista.isVisible()) {
+            ventanaCarritoLista.actualizarTextos(mensajeHandler);
+        }
+        if (ventanaCarritoDetalle != null && ventanaCarritoDetalle.isVisible()) {
+            ventanaCarritoDetalle.actualizarTextos(mensajeHandler);
+        }
+
+        // USUARIOS
+        if (ventanaUsuarioEliminar != null && ventanaUsuarioEliminar.isVisible()) {
+            ventanaUsuarioEliminar.actualizarTextos(mensajeHandler);
+        }
+        if (ventanaUsuarioModificar != null && ventanaUsuarioModificar.isVisible()) {
+            ventanaUsuarioModificar.actualizarTextos(mensajeHandler);
+        }
+        if (ventanaUsuarioListar != null && ventanaUsuarioListar.isVisible()) {
+            ventanaUsuarioListar.actualizarTextos(mensajeHandler);
+        }
+        if (ventanaRegistrarse != null && ventanaRegistrarse.isVisible()) {
+            ventanaRegistrarse.actualizarTextos(mensajeHandler);
+        }
+        if (ventanaLogin != null && ventanaLogin.isVisible()) {
+            ventanaLogin.actualizarTextos(mensajeHandler);
+        }
+
+        // RECUPERACIÓN DE CONTRASEÑA
+        if (ventanaRecuperarContrasenia != null && ventanaRecuperarContrasenia.isVisible()) {
+            ventanaRecuperarContrasenia.actualizarTextos(mensajeHandler);
+        }
+        if (ventanaCambiarContrasenia != null && ventanaCambiarContrasenia.isVisible()) {
+            ventanaCambiarContrasenia.actualizarTextos(mensajeHandler);
+        }
+    }
+
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        // Menús principales
+        menuProducto.setText(mensajeHandler.get("menu.producto"));
+        menuCarrito.setText(mensajeHandler.get("menu.carrito"));
+        menuUsuario.setText(mensajeHandler.get("menu.usuario"));
+        menuIdioma.setText(mensajeHandler.get("menu.idioma"));
+        menuCerrarSesion.setText(mensajeHandler.get("menu.cerrar"));
+
+        // Submenús Producto
+        menuItemCrearProducto.setText(mensajeHandler.get("producto.crear"));
+        menuItemEliminarProducto.setText(mensajeHandler.get("producto.eliminar"));
+        menuItemModificarProducto.setText(mensajeHandler.get("producto.modificar"));
+        menuItemBuscarProducto.setText(mensajeHandler.get("producto.buscar"));
+
+        // Submenús Carrito
+        menuItemAnadirCarrito.setText(mensajeHandler.get("carrito.anadir"));
+        menuItemBuscarCarrito.setText(mensajeHandler.get("carrito.buscar"));
+        menuItemEliminarCarrito.setText(mensajeHandler.get("carrito.eliminar"));
+        menuItemModificarCarrito.setText(mensajeHandler.get("carrito.modificar"));
+
+        // Submenús Usuario
+        menuItemEliminarUsuario.setText(mensajeHandler.get("usuario.eliminar"));
+        menuItemModificarUsuario.setText(mensajeHandler.get("usuario.modificar"));
+        menuItemBuscarUsuario.setText(mensajeHandler.get("usuario.buscar"));
+
+        // Idiomas
+        menuItemIdiomaEspanol.setText(mensajeHandler.get("idioma.espanol"));
+        menuItemIdiomaIngles.setText(mensajeHandler.get("idioma.ingles"));
+        menuItemIdiomaFrances.setText(mensajeHandler.get("idioma.frances"));
+
+        // Otros
+        menuItemCerrarSesion.setText(mensajeHandler.get("menu.cerrar"));
+        lblUsuario.setText(mensajeHandler.get("menu.usuario"));
     }
 
     public JMenu getMenuUsuario() {

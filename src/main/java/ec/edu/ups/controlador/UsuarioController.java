@@ -6,7 +6,7 @@ import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.MenuPrincipalView;
-import ec.edu.ups.vista.preguntas.CambiarContraseñaView;
+import ec.edu.ups.vista.preguntas.CambiarContraseniaView;
 import ec.edu.ups.vista.usuario.LoginView;
 import ec.edu.ups.vista.usuario.RegistrarseView;
 import ec.edu.ups.vista.usuario.UsuarioEliminarView;
@@ -75,7 +75,6 @@ public class UsuarioController {
 
     private void configurarEventosListaUsuarios() {
         usuarioListarView.getBtnBuscar().addActionListener(e -> buscarUsuarios());
-        usuarioListarView.getBtnListar().addActionListener(e -> listarUsuarios());
     }
 
     private void configurarEventosEliminar() {
@@ -210,7 +209,7 @@ public class UsuarioController {
     }
 
     public void setPreguntasDependencias(CuestionarioView cuestionarioView,
-                                         CambiarContraseñaView cuestionarioRecuView,
+                                         CambiarContraseniaView cuestionarioRecuView,
                                          PreguntasDAO preguntasDAO,
                                          MensajeInternacionalizacionHandler mensajeHandler) {
         this.recuperarContraseniaView = cuestionarioView;

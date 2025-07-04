@@ -48,6 +48,14 @@ public class ProductoListaView extends JInternalFrame {
         btnListar.setText(mensajeHandler.get("producto.lista.listar"));
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblNombre.setText(ProductoListaView.this.mensajeHandler.get("producto.nombre"));
+        btnListar.setText(ProductoListaView.this.mensajeHandler.get("producto.listar"));
+
+        setTitle(ProductoListaView.this.mensajeHandler.get("producto.lista.titulo"));
+    }
+
+
 
     public JTextField getTxtBuscar() {
         return txtBuscar;

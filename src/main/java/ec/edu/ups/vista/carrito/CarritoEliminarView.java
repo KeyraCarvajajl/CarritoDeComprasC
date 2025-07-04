@@ -70,6 +70,16 @@ public class CarritoEliminarView extends JInternalFrame {
         btnVaciar.setText(mensajeHandler.get("carrito.eliminar.vaciar"));
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblCodigo.setText(CarritoEliminarView.this.mensajeHandler.get("carrito.eliminar.codigo"));
+        lblFecha.setText(CarritoEliminarView.this.mensajeHandler.get("carrito.eliminar.fecha"));
+
+        btnBuscar.setText(CarritoEliminarView.this.mensajeHandler.get("carrito.eliminar.buscar"));
+        btnEliminar.setText(CarritoEliminarView.this.mensajeHandler.get("carrito.eliminar.eliminar"));
+        btnVaciar.setText(CarritoEliminarView.this.mensajeHandler.get("carrito.eliminar.vaciar"));
+
+        setTitle(CarritoEliminarView.this.mensajeHandler.get("carrito.eliminar.titulo"));
+    }
 
     public JTextField getTxtCodigo() {
         return txtCodigo;

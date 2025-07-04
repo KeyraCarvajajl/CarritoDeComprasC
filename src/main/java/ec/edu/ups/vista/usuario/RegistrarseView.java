@@ -72,6 +72,27 @@ public class RegistrarseView extends JInternalFrame {
         btnCancelar.setText(mensajeHandler.get("usuario.registro.cancelar"));
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblRegistrar.setText(RegistrarseView.this.mensajeHandler.get("usuario.view.registrar.titulo"));
+        lblNombre.setText(RegistrarseView.this.mensajeHandler.get("usuario.nombre"));
+        lblUsuario.setText(RegistrarseView.this.mensajeHandler.get("usuario.usuario"));
+        lblContrasenia.setText(RegistrarseView.this.mensajeHandler.get("usuario.contrasenia"));
+        lblConfirmarContrasenia.setText(RegistrarseView.this.mensajeHandler.get("usuario.confirmar"));
+        lblFechaDeNacimiento.setText(RegistrarseView.this.mensajeHandler.get("usuario.fecha"));
+        lblCorreoElectrónico.setText(RegistrarseView.this.mensajeHandler.get("usuario.correo"));
+        lblTeléfono.setText(RegistrarseView.this.mensajeHandler.get("usuario.telefono"));
+        lblPreuntasSeguridad.setText(RegistrarseView.this.mensajeHandler.get("usuario.preguntas"));
+        lblPregunta1.setText(RegistrarseView.this.mensajeHandler.get("usuario.pregunta1"));
+        lblPregunta2.setText(RegistrarseView.this.mensajeHandler.get("usuario.pregunta2"));
+        lblPregunta3.setText(RegistrarseView.this.mensajeHandler.get("usuario.pregunta3"));
+
+        btnRegistrarse.setText(RegistrarseView.this.mensajeHandler.get("usuario.registrarse"));
+        btnCancelar.setText(RegistrarseView.this.mensajeHandler.get("usuario.cancelar"));
+
+        setTitle(RegistrarseView.this.mensajeHandler.get("usuario.view.registrar.titulo"));
+    }
+
+
 
     // Getters
     public JTextField getTxtNombreCompleto() { return txtNombreCompleto; }

@@ -67,6 +67,19 @@ public class LoginView extends JFrame {
         btnOlvidarContrasenia.setText(mensajeHandler.get("login.olvidaste"));
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblUsuario.setText(LoginView.this.mensajeHandler.get("login.usuario"));
+        lblContrasenia.setText(LoginView.this.mensajeHandler.get("login.contrasenia"));
+        lblIdioma.setText(LoginView.this.mensajeHandler.get("login.idioma"));
+
+        btnIniciarSesion.setText(LoginView.this.mensajeHandler.get("login.iniciar"));
+        btnRegistrarse.setText(LoginView.this.mensajeHandler.get("login.registrarse"));
+        btnOlvidarContrasenia.setText(LoginView.this.mensajeHandler.get("login.olvidar"));
+
+        setTitle(LoginView.this.mensajeHandler.get("ventana.login"));
+    }
+
+
 
 
     public JComboBox getComboBox1() {return comboBox1;}

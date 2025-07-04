@@ -59,6 +59,15 @@ public class CarritoModificarView extends JInternalFrame {
         btnModificar.setText(mensajeHandler.get("carrito.modificar.modificar"));
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblCodigo.setText(CarritoModificarView.this.mensajeHandler.get("carrito.modificar.codigo"));
+        lblFecha.setText(CarritoModificarView.this.mensajeHandler.get("carrito.modificar.fecha"));
+
+        btnBuscar.setText(CarritoModificarView.this.mensajeHandler.get("carrito.modificar.buscar"));
+        btnModificar.setText(CarritoModificarView.this.mensajeHandler.get("carrito.modificar.modificar"));
+
+        setTitle(CarritoModificarView.this.mensajeHandler.get("carrito.modificar.titulo"));
+    }
 
     public JTextField getTxtCodigo() {
         return txtCodigo;

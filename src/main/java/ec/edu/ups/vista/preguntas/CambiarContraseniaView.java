@@ -5,7 +5,7 @@ import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import javax.swing.*;
 import java.awt.*;
 
-public class CambiarContraseñaView extends JInternalFrame {
+public class CambiarContraseniaView extends JInternalFrame {
 
     private JPanel panelPrincipal;
     private JLabel lblNuevaContrasenia;
@@ -17,7 +17,7 @@ public class CambiarContraseñaView extends JInternalFrame {
 
     private MensajeInternacionalizacionHandler mensajeHandler;
 
-    public CambiarContraseñaView(MensajeInternacionalizacionHandler mensajeHandler) {
+    public CambiarContraseniaView(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
         setTitle(mensajeHandler.get("ventana.cambiar.contrasenia"));
         setClosable(true);
@@ -73,6 +73,18 @@ public class CambiarContraseñaView extends JInternalFrame {
         btnGuardar.setText(mensajeHandler.get("boton.guardar"));
         btnCancelar.setText(mensajeHandler.get("boton.cancelar"));
     }
+
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblNuevaContrasenia.setText(CambiarContraseniaView.this.mensajeHandler.get("usuario.nueva"));
+        lblConfirmarContrasenia.setText(CambiarContraseniaView.this.mensajeHandler.get("usuario.confirmar"));
+
+        btnGuardar.setText(CambiarContraseniaView.this.mensajeHandler.get("usuario.guardar"));
+        btnCancelar.setText(CambiarContraseniaView.this.mensajeHandler.get("usuario.cancelar"));
+
+        setTitle(CambiarContraseniaView.this.mensajeHandler.get("usuario.cambiar.titulo"));
+    }
+
+
 
     // Getters para el controlador
     public JPasswordField getTxtNuevaContrasenia() {

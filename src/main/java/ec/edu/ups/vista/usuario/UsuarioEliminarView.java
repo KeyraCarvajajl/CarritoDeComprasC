@@ -34,6 +34,17 @@ public class UsuarioEliminarView extends JInternalFrame {
         btnEliminarUsuario.setText(mensajeHandler.get("usuario.eliminar.eliminar"));
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblNombre.setText(UsuarioEliminarView.this.mensajeHandler.get("usuario.nombre"));
+        lblContrasenia.setText(UsuarioEliminarView.this.mensajeHandler.get("usuario.contrasenia"));
+        lblConfirmarContrasenia.setText(UsuarioEliminarView.this.mensajeHandler.get("usuario.confirmar"));
+
+        btnEliminarUsuario.setText(UsuarioEliminarView.this.mensajeHandler.get("usuario.eliminar"));
+
+        setTitle(UsuarioEliminarView.this.mensajeHandler.get("usuario.eliminar.titulo"));
+    }
+
+
 
     public JTextField getTxtNombre() {
         return txtNombre;

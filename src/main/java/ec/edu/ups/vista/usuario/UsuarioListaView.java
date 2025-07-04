@@ -41,6 +41,13 @@ public class UsuarioListaView extends JFrame {
         btnCerrar.setText(mensajeHandler.get("usuario.lista.cerrar"));
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblNombre.setText(UsuarioListaView.this.mensajeHandler.get("usuario.nombre"));
+        btnBuscar.setText(UsuarioListaView.this.mensajeHandler.get("usuario.buscar"));
+        btnCerrar.setText(UsuarioListaView.this.mensajeHandler.get("usuario.cerrar"));
+
+        setTitle(UsuarioListaView.this.mensajeHandler.get("usuario.lista.titulo"));
+    }
 
 
     // Getters

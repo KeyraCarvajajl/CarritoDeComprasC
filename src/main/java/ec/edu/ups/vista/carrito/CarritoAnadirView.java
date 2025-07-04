@@ -48,6 +48,7 @@ public class CarritoAnadirView extends JInternalFrame {
         cargarDatos();
         cambiarIdioma(mensajeHandler);
         limpiarCampos();
+        actualizarTextos(mensajeHandler);
 
         URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
         if (btBuscar != null) {
@@ -114,10 +115,27 @@ public class CarritoAnadirView extends JInternalFrame {
         txtSubTotal.setText("");
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblCodigo.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.codigo"));
+        lblNombre.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.nombre"));
+        lblPrecio.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.precio"));
+        lblCantidad.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.cantidad"));
+        lblSubTotal.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.subtotal"));
+        lblIva.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.iva"));
+        lblTotal.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.total"));
+
+        btnBuscar.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.buscar"));
+        btnAnadir.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.anadir"));
+        btnGuardar.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.guardar"));
+        btnLimpiar.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.limpiar"));
+
+        setTitle(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.titulo"));
+    }
+
+
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
-
 
     public JPanel getPanelPrincipal() {
         return panelPrincipal;

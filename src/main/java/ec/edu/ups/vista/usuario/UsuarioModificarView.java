@@ -47,6 +47,18 @@ public class UsuarioModificarView extends JInternalFrame {
         btnCancelar.setText(mensajeHandler.get("usuario.modificar.cancelar"));
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblUsuarioBuscar.setText(UsuarioModificarView.this.mensajeHandler.get("usuario.usuario"));
+        lblNombre.setText(UsuarioModificarView.this.mensajeHandler.get("usuario.nombre"));
+        lblCorreo.setText(UsuarioModificarView.this.mensajeHandler.get("usuario.correo"));
+        lblTelefono.setText(UsuarioModificarView.this.mensajeHandler.get("usuario.telefono"));
+
+        btnBuscar.setText(UsuarioModificarView.this.mensajeHandler.get("usuario.buscar"));
+        btnGuardar.setText(UsuarioModificarView.this.mensajeHandler.get("usuario.guardar"));
+        btnCancelar.setText(UsuarioModificarView.this.mensajeHandler.get("usuario.cancelar"));
+
+        setTitle(UsuarioModificarView.this.mensajeHandler.get("usuario.modificar.titulo"));
+    }
 
     public JTextField getTxtBuscarUsuario() { return txtBuscarUsuario; }
 

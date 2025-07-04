@@ -43,6 +43,19 @@ public class ProductoEliminarView extends JInternalFrame {
         btnEliminar.setText(mensajeHandler.get("producto.eliminar.eliminar"));
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblEliminarProducto.setText(ProductoEliminarView.this.mensajeHandler.get("producto.eliminar.titulo"));
+        lblCodigo.setText(ProductoEliminarView.this.mensajeHandler.get("producto.codigo"));
+        lblNombre.setText(ProductoEliminarView.this.mensajeHandler.get("producto.nombre"));
+        lblPrecio.setText(ProductoEliminarView.this.mensajeHandler.get("producto.precio"));
+
+        btnBuscar.setText(ProductoEliminarView.this.mensajeHandler.get("producto.buscar"));
+        btnEliminar.setText(ProductoEliminarView.this.mensajeHandler.get("producto.eliminar"));
+
+        setTitle(ProductoEliminarView.this.mensajeHandler.get("producto.eliminar.titulo"));
+    }
+
+
 
     public JPanel getPanelPrincipal() {
         return panelPrincipal;

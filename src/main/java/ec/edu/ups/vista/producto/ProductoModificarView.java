@@ -46,6 +46,20 @@ public class ProductoModificarView extends JInternalFrame {
         btnModificar.setText(mensajeHandler.get("producto.modificar.modificar"));
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblModificarProducto.setText(ProductoModificarView.this.mensajeHandler.get("producto.modificar.titulo"));
+        lblCodigo.setText(ProductoModificarView.this.mensajeHandler.get("producto.codigo"));
+        lblNombre.setText(ProductoModificarView.this.mensajeHandler.get("producto.nombre"));
+        lblPrecio.setText(ProductoModificarView.this.mensajeHandler.get("producto.precio"));
+
+        btnBuscar.setText(ProductoModificarView.this.mensajeHandler.get("producto.buscar"));
+        btnEliminar.setText(ProductoModificarView.this.mensajeHandler.get("producto.eliminar"));
+        btnModificar.setText(ProductoModificarView.this.mensajeHandler.get("producto.modificar"));
+
+        setTitle(ProductoModificarView.this.mensajeHandler.get("producto.modificar.titulo"));
+    }
+
+
 
     public JTextField getTxtCodigo() {
         return txtCodigo;
