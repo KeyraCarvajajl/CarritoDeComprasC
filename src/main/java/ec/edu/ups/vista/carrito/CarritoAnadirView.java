@@ -49,38 +49,6 @@ public class CarritoAnadirView extends JInternalFrame {
         cambiarIdioma(mensajeHandler);
         limpiarCampos();
         actualizarTextos(mensajeHandler);
-
-        URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
-        if (btBuscar != null) {
-            ImageIcon iconBtnAceptar = new ImageIcon(btBuscar);
-            btnBuscar.setIcon(iconBtnAceptar);
-        } else {
-            System.err.println("Error: No se ha cargado el icono de Buscar");
-        }
-
-        URL btAnadir = LoginView.class.getClassLoader().getResource("imagenes/anadircarrito.png");
-        if (btAnadir != null) {
-            ImageIcon iconBtnAceptar = new ImageIcon(btAnadir);
-            btnAnadir.setIcon(iconBtnAceptar);
-        } else {
-            System.err.println("Error: No se ha cargado el icono de Añadir");
-        }
-
-        URL btGuardar = LoginView.class.getClassLoader().getResource("imagenes/agregarcarrito.png");
-        if (btGuardar != null) {
-            ImageIcon iconBtnAceptar = new ImageIcon(btGuardar);
-            btnGuardar.setIcon(iconBtnAceptar);
-        } else {
-            System.err.println("Error: No se ha cargado el icono de Guardar");
-        }
-
-        URL btLimpiar = LoginView.class.getClassLoader().getResource("imagenes/limpiar.png");
-        if (btLimpiar != null) {
-            ImageIcon iconBtnAceptar = new ImageIcon(btLimpiar);
-            btnLimpiar.setIcon(iconBtnAceptar);
-        } else {
-            System.err.println("Error: No se ha cargado el icono de Limpiar");
-        }
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {

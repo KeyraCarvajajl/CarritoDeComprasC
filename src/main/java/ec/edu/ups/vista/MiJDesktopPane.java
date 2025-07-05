@@ -5,6 +5,7 @@ import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import javax.swing.*;
 import java.awt.*;
 
+
 public class MiJDesktopPane extends JDesktopPane {
 
     private MensajeInternacionalizacionHandler mensajeHandler;
@@ -15,46 +16,49 @@ public class MiJDesktopPane extends JDesktopPane {
 
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
-        repaint(); // actualizar el texto cuando cambie idioma
+        repaint();  // Se actualiza el fondo cuando cambie el idioma
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        super.paintComponent(g);  // Llamada al super para asegurar la renderización base
 
         Graphics2D g2 = (Graphics2D) g;
-
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Fondo claro
-        g2.setColor(new Color(250,222,212));
+        // Fondo claro (esto puede ser opcional si ya tienes la imagen de fondo)
+        g2.setColor(new Color(250, 222, 212));
         g2.fillRect(0, 0, getWidth(), getHeight());
 
-
+        // Titulo
         String titulo = mensajeHandler != null
                 ? mensajeHandler.get("pantalla.principal.bienvenida")
                 : "Bienvenido al Sistema de Compras";  // fallback
 
-        g2.setColor(Color. BLACK);
+        g2.setColor(Color.BLACK);
         g2.setFont(new Font("Times New Roman", Font.BOLD, 30));
 
         FontMetrics fm = g2.getFontMetrics();
         int anchoTexto = fm.stringWidth(titulo);
         int xTexto = (getWidth() - anchoTexto) / 2;
         g2.drawString(titulo, xTexto, 50);
-        // Coordenadas base
+
+        // Coordenadas base para el carrito
         int cx = getWidth() / 2;
         int cy = getHeight() / 2 + 30;
-        int cartW = 220;
-        int cartH = 120;
+
+        // Aumento del tamaño del carrito
+        int cartW = 350;  // Ancho más grande
+        int cartH = 200;  // Alto más grande
+
         int cartX = cx - cartW / 2;
         int cartY = cy - cartH / 2;
 
-        // Sombra ovalada
+        // Sombra ovalada del carrito
         g2.setColor(new Color(0, 0, 0, 40));
         g2.fillOval(cartX + 20, cartY + cartH + 20, cartW - 40, 20);
 
-        // Mango
+        // Mango del carrito
         g2.setStroke(new BasicStroke(5));
         g2.setColor(Color.BLACK);
         g2.drawLine(cartX, cartY, cartX - 40, cartY - 40);
@@ -64,30 +68,30 @@ public class MiJDesktopPane extends JDesktopPane {
         g2.setPaint(grad);
         g2.fillRoundRect(cartX, cartY, cartW, cartH, 12, 12);
 
-        // Borde
+        // Borde del carrito
         g2.setColor(Color.BLACK);
         g2.setStroke(new BasicStroke(3));
         g2.drawRoundRect(cartX, cartY, cartW, cartH, 12, 12);
 
-        // Cuadrícula interna
+        // Cuadrícula interna del carrito
         g2.setStroke(new BasicStroke(1.5f));
         g2.drawLine(cartX + cartW / 3, cartY, cartX + cartW / 3, cartY + cartH);
         g2.drawLine(cartX + 2 * cartW / 3, cartY, cartX + 2 * cartW / 3, cartY + cartH);
         g2.drawLine(cartX, cartY + cartH / 2, cartX + cartW, cartY + cartH / 2);
 
-        // Cajas (más variedad)
+        // Cajas dentro del carrito
         g2.setColor(new Color(194, 136, 62));
-        g2.fillRoundRect(cartX + 15, cartY + 10, 40, 30, 6, 6);
-        g2.fillRoundRect(cartX + 90, cartY + 5, 50, 40, 6, 6);
-        g2.fillRoundRect(cartX + 165, cartY + 15, 30, 25, 6, 6);
+        g2.fillRoundRect(cartX + 15, cartY + 10, 60, 50, 6, 6);
+        g2.fillRoundRect(cartX + 130, cartY + 5, 90, 70, 6, 6);
+        g2.fillRoundRect(cartX + 230, cartY + 15, 50, 40, 6, 6);
 
         g2.setColor(new Color(120, 80, 40));
-        g2.drawRoundRect(cartX + 15, cartY + 10, 40, 30, 6, 6);
-        g2.drawRoundRect(cartX + 90, cartY + 5, 50, 40, 6, 6);
-        g2.drawRoundRect(cartX + 165, cartY + 15, 30, 25, 6, 6);
+        g2.drawRoundRect(cartX + 15, cartY + 10, 60, 50, 6, 6);
+        g2.drawRoundRect(cartX + 130, cartY + 5, 90, 70, 6, 6);
+        g2.drawRoundRect(cartX + 230, cartY + 15, 50, 40, 6, 6);
 
-        // Logo de compra (+) en el centro
-        int circleSize = 40;
+        // Logo de compra en el centro del carrito
+        int circleSize = 60;  // Tamaño aumentado para el logo
         int circleX = cx - circleSize / 2;
         int circleY = cy - circleSize / 2;
         g2.setColor(Color.WHITE);
@@ -97,20 +101,20 @@ public class MiJDesktopPane extends JDesktopPane {
         g2.drawLine(cx, circleY + 10, cx, circleY + circleSize - 10);
         g2.drawLine(circleX + 10, cy, circleX + circleSize - 10, cy);
 
-        // Código de barras (estilo etiqueta)
+        // Código de barras dentro del carrito
         g2.setStroke(new BasicStroke(1));
-        int barX = cartX + cartW - 40;
-        int barY = cartY + cartH - 15;
-        g2.drawRect(barX, barY, 30, 10);
-        for (int i = 2; i < 28; i += 3) {
-            g2.drawLine(barX + i, barY + 1, barX + i, barY + 9);
+        int barX = cartX + cartW - 60;
+        int barY = cartY + cartH - 30;
+        g2.drawRect(barX, barY, 50, 15);
+        for (int i = 2; i < 48; i += 4) {
+            g2.drawLine(barX + i, barY + 1, barX + i, barY + 13);
         }
 
         // Ruedas violetas
-        int r = 30;
+        int r = 40;  // Tamaño de las ruedas aumentado
         int yR = cartY + cartH;
-        int xR1 = cartX + 30;
-        int xR2 = cartX + cartW - 60;
+        int xR1 = cartX + 40;
+        int xR2 = cartX + cartW - 80;
         g2.setColor(new Color(150, 100, 200));
         g2.fillOval(xR1, yR, r, r);
         g2.fillOval(xR2, yR, r, r);
@@ -120,8 +124,8 @@ public class MiJDesktopPane extends JDesktopPane {
         g2.drawOval(xR1, yR, r, r);
         g2.drawOval(xR2, yR, r, r);
 
-        // Eje
-        g2.fillOval(xR1 + 10, yR + 10, 10, 10);
-        g2.fillOval(xR2 + 10, yR + 10, 10, 10);
+        // Eje de las ruedas
+        g2.fillOval(xR1 + 10, yR + 10, 12, 12);
+        g2.fillOval(xR2 + 10, yR + 10, 12, 12);
     }
 }

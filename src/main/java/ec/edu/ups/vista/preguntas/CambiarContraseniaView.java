@@ -74,18 +74,6 @@ public class CambiarContraseniaView extends JInternalFrame {
         btnCancelar.setText(mensajeHandler.get("boton.cancelar"));
     }
 
-    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
-        lblNuevaContrasenia.setText(CambiarContraseniaView.this.mensajeHandler.get("usuario.nueva"));
-        lblConfirmarContrasenia.setText(CambiarContraseniaView.this.mensajeHandler.get("usuario.confirmar"));
-
-        btnGuardar.setText(CambiarContraseniaView.this.mensajeHandler.get("usuario.guardar"));
-        btnCancelar.setText(CambiarContraseniaView.this.mensajeHandler.get("usuario.cancelar"));
-
-        setTitle(CambiarContraseniaView.this.mensajeHandler.get("usuario.cambiar.titulo"));
-    }
-
-
-
     // Getters para el controlador
     public JPasswordField getTxtNuevaContrasenia() {
         return txtNuevaContrasenia;
