@@ -1,8 +1,11 @@
 package ec.edu.ups.vista.producto;
 
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
 
 public class ProductoEliminarView extends JInternalFrame {
     private JPanel panelPrincipal;
@@ -22,13 +25,42 @@ public class ProductoEliminarView extends JInternalFrame {
         this.mensajeHandler = mensajeHandler;
 
         setContentPane(panelPrincipal);
-        setSize(500, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        setSize(550, 550);
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
 
         cambiarIdioma(mensajeHandler);
+        imagenIcon();
+    }
+
+    private void imagenIcon() {
+        // Redimensionar icono "Buscar"
+        URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
+        if (btBuscar != null) {
+            ImageIcon iconBtnBuscar = new ImageIcon(btBuscar);
+            Image imgBuscar = iconBtnBuscar.getImage();  // Convierte ImageIcon a Image
+            Image newImgBuscar = imgBuscar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnBuscar = new ImageIcon(newImgBuscar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnBuscar.setIcon(iconBtnBuscar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Buscar");
+        }
+
+// Redimensionar icono "Eliminar"
+        URL btEliminar = LoginView.class.getClassLoader().getResource("imagenes/eliminar.png");
+        if (btEliminar != null) {
+            ImageIcon iconBtnEliminar = new ImageIcon(btEliminar);
+            Image imgEliminar = iconBtnEliminar.getImage();  // Convierte ImageIcon a Image
+            Image newImgEliminar = imgEliminar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnEliminar = new ImageIcon(newImgEliminar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnEliminar.setIcon(iconBtnEliminar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Eliminar");
+        }
+
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {

@@ -3,9 +3,11 @@ package ec.edu.ups.vista.preguntas;
 import ec.edu.ups.dao.UsuarioDAO;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 import java.util.*;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class CuestionarioView extends JInternalFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(400, 300);
 
-        actualizarTextos(mensajeHandler);
+        imagenIcon();
 
         btnValidar.addActionListener(e -> validarRespuesta());
         btnCancelar.addActionListener(e -> dispose());
@@ -49,6 +51,33 @@ public class CuestionarioView extends JInternalFrame {
         lblRespuesta.setText(mensajeHandler.get("label.respuesta"));
         btnValidar.setText(mensajeHandler.get("boton.validar"));
         btnCancelar.setText(mensajeHandler.get("boton.cancelar"));
+    }
+
+    private void imagenIcon(){
+        // Redimensionar icono "Validar"
+        URL btValidar = LoginView.class.getClassLoader().getResource("imagenes/validar.png");
+        if (btValidar != null) {
+            ImageIcon iconBtnValidar = new ImageIcon(btValidar);
+            Image imgValidar = iconBtnValidar.getImage();  // Convierte ImageIcon a Image
+            Image newImgValidar = imgValidar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnValidar = new ImageIcon(newImgValidar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnValidar.setIcon(iconBtnValidar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Validar");
+        }
+
+// Redimensionar icono "Cancelar"
+        URL btCancelar = LoginView.class.getClassLoader().getResource("imagenes/cancelar.png");
+        if (btCancelar != null) {
+            ImageIcon iconBtnCancelar = new ImageIcon(btCancelar);
+            Image imgCancelar = iconBtnCancelar.getImage();  // Convierte ImageIcon a Image
+            Image newImgCancelar = imgCancelar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnCancelar = new ImageIcon(newImgCancelar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnCancelar.setIcon(iconBtnCancelar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Cancelar");
+        }
+
     }
 
 

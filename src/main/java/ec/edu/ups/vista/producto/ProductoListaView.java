@@ -2,9 +2,12 @@ package ec.edu.ups.vista.producto;
 
 import ec.edu.ups.modelo.Producto;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.net.URL;
 import java.util.List;
 
 public class ProductoListaView extends JInternalFrame {
@@ -29,8 +32,9 @@ public class ProductoListaView extends JInternalFrame {
         if (lblNombre == null) lblNombre = new JLabel("Nombre:");
 
         setContentPane(panelPrincipal);
-        setSize(500, 500);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+
+        setSize(550, 550);
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
@@ -39,6 +43,22 @@ public class ProductoListaView extends JInternalFrame {
         tblProductos.setModel(modelo);
 
         cambiarIdioma(mensajeHandler);
+        imagenIcon();
+    }
+
+    private void imagenIcon() {
+        // Redimensionar icono "Listar"
+        URL btListar = LoginView.class.getClassLoader().getResource("imagenes/listar.png");
+        if (btListar != null) {
+            ImageIcon iconBtnListar = new ImageIcon(btListar);
+            Image imgListar = iconBtnListar.getImage();  // Convierte ImageIcon a Image
+            Image newImgListar = imgListar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnListar = new ImageIcon(newImgListar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnListar.setIcon(iconBtnListar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Listar");
+        }
+
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {

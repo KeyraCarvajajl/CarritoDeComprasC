@@ -52,7 +52,7 @@
                 <properties>
                   <background color="-656641"/>
                   <font name="Courier New" size="16" style="1"/>
-                  <text value="Cancel"/>
+                  <text value="Cancelar"/>
                 </properties>
               </component>
             </children>

@@ -28,7 +28,7 @@ public class MiJDesktopPane extends JDesktopPane {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         // Fondo claro (esto puede ser opcional si ya tienes la imagen de fondo)
-        g2.setColor(new Color(250, 222, 212));
+        g2.setColor(new Color(232, 218, 239));
         g2.fillRect(0, 0, getWidth(), getHeight());
 
         // Titulo

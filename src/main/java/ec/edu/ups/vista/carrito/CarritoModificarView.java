@@ -24,7 +24,11 @@ public class CarritoModificarView extends JInternalFrame {
         super("Modificar Carrito",true,true,false,true);
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        setSize(500, 500);
+
+        setSize(650, 700);
+        setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
 
         modelo = new DefaultTableModel();
         Object[] columnas = {"Código", "Nombre", "Precio", "Cantidad", "Total"};

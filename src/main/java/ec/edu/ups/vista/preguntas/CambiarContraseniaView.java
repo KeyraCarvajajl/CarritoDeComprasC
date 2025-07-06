@@ -1,9 +1,11 @@
 package ec.edu.ups.vista.preguntas;
 
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class CambiarContraseniaView extends JInternalFrame {
 
@@ -28,6 +30,34 @@ public class CambiarContraseniaView extends JInternalFrame {
 
         initComponents();
         cambiarIdioma();
+        imagenIcon();
+    }
+
+    private void imagenIcon() {
+        // Redimensionar icono "Guardar"
+        URL btGuardar = LoginView.class.getClassLoader().getResource("imagenes/guardar.png");
+        if (btGuardar != null) {
+            ImageIcon iconBtnGuardar = new ImageIcon(btGuardar);
+            Image imgGuardar = iconBtnGuardar.getImage();  // Convierte ImageIcon a Image
+            Image newImgGuardar = imgGuardar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnGuardar = new ImageIcon(newImgGuardar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnGuardar.setIcon(iconBtnGuardar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Guardar");
+        }
+
+// Redimensionar icono "Cancelar"
+        URL btCancelar = LoginView.class.getClassLoader().getResource("imagenes/cancelar.png");
+        if (btCancelar != null) {
+            ImageIcon iconBtnCancelar = new ImageIcon(btCancelar);
+            Image imgCancelar = iconBtnCancelar.getImage();  // Convierte ImageIcon a Image
+            Image newImgCancelar = imgCancelar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnCancelar = new ImageIcon(newImgCancelar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnCancelar.setIcon(iconBtnCancelar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Cancelar");
+        }
+
     }
 
     private void initComponents() {
