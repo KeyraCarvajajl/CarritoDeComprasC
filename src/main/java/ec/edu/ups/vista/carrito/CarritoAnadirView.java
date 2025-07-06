@@ -56,21 +56,28 @@ public class CarritoAnadirView extends JInternalFrame {
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        setTitle(mensajeHandler.get("carrito.anadir.titulo"));
+        // Actualiza los títulos de la ventana
+        setTitle(mensajeHandler.get("producto.lista.titulo"));
 
-        lblCodigo.setText(mensajeHandler.get("carrito.anadir.codigo"));
-        lblNombre.setText(mensajeHandler.get("carrito.anadir.nombre"));
-        lblPrecio.setText(mensajeHandler.get("carrito.anadir.precio"));
-        lblCantidad.setText(mensajeHandler.get("carrito.anadir.cantidad"));
-        lblSubTotal.setText(mensajeHandler.get("carrito.anadir.subtotal"));
-        lblIva.setText(mensajeHandler.get("carrito.anadir.iva"));
-        lblTotal.setText(mensajeHandler.get("carrito.anadir.total"));
+        // Actualiza las etiquetas
+        lblCodigo.setText(mensajeHandler.get("producto.codigo"));
+        lblNombre.setText(mensajeHandler.get("producto.nombre"));
+        lblPrecio.setText(mensajeHandler.get("producto.precio"));
+        lblCantidad.setText(mensajeHandler.get("producto.cantidad"));
+        lblSubTotal.setText(mensajeHandler.get("producto.subtotal"));
+        lblIva.setText(mensajeHandler.get("producto.iva"));
+        lblTotal.setText(mensajeHandler.get("producto.total"));
 
-        btnBuscar.setText(mensajeHandler.get("carrito.anadir.buscar"));
-        btnAnadir.setText(mensajeHandler.get("carrito.anadir.anadir"));
-        btnGuardar.setText(mensajeHandler.get("carrito.anadir.guardar"));
-        btnLimpiar.setText(mensajeHandler.get("carrito.anadir.limpiar"));
+        // Actualiza los botones
+        btnBuscar.setText(mensajeHandler.get("producto.buscar"));
+        btnAnadir.setText(mensajeHandler.get("producto.anadir"));
+        btnGuardar.setText(mensajeHandler.get("producto.guardar"));
+        btnLimpiar.setText(mensajeHandler.get("producto.limpiar"));
+
+        // Actualiza los combobox y otros textos si es necesario
+        cbxCantidad.setToolTipText(mensajeHandler.get("producto.cantidad.tooltip"));
     }
+
 
 
     private void cargarDatos(){

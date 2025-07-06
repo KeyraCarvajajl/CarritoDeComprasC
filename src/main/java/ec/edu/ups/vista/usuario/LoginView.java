@@ -3,6 +3,8 @@ package ec.edu.ups.vista.usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
 import java.util.Locale;
 
 public class LoginView extends JFrame {
@@ -53,6 +55,46 @@ public class LoginView extends JFrame {
         });
 
         cambiarIdioma(mensajeHandler);
+        imagenIcon();
+    }
+
+    private void imagenIcon() {
+        // Redimensionar icono "Iniciar Sesión"
+        URL btIniciarSesion = LoginView.class.getClassLoader().getResource("imagenes/iniciarSesión.png");
+        if (btIniciarSesion != null) {
+            ImageIcon iconBtnIniciarSesion = new ImageIcon(btIniciarSesion);
+            Image imgIniciarSesion = iconBtnIniciarSesion.getImage();  // Convierte ImageIcon a Image
+            Image newImgIniciarSesion = imgIniciarSesion.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnIniciarSesion = new ImageIcon(newImgIniciarSesion);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnIniciarSesion.setIcon(iconBtnIniciarSesion);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Iniciar Sesión");
+        }
+
+// Redimensionar icono "Registro"
+        URL btRegistro = LoginView.class.getClassLoader().getResource("imagenes/registro.png");
+        if (btRegistro != null) {
+            ImageIcon iconBtnRegistro = new ImageIcon(btRegistro);
+            Image imgRegistro = iconBtnRegistro.getImage();  // Convierte ImageIcon a Image
+            Image newImgRegistro = imgRegistro.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnRegistro = new ImageIcon(newImgRegistro);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnRegistrarse.setIcon(iconBtnRegistro);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Registro");
+        }
+
+// Redimensionar icono "Olvidaste Contraseña"
+        URL btOlvidasteContrasena = LoginView.class.getClassLoader().getResource("imagenes/olvidarContraseña.png");
+        if (btOlvidasteContrasena != null) {
+            ImageIcon iconBtnOlvidasteContrasena = new ImageIcon(btOlvidasteContrasena);
+            Image imgOlvidasteContrasena = iconBtnOlvidasteContrasena.getImage();  // Convierte ImageIcon a Image
+            Image newImgOlvidasteContrasena = imgOlvidasteContrasena.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnOlvidasteContrasena = new ImageIcon(newImgOlvidasteContrasena);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnOlvidarContrasenia.setIcon(iconBtnOlvidasteContrasena);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Olvidaste Contraseña");
+        }
+
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {

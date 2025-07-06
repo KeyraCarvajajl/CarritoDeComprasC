@@ -3,6 +3,8 @@ package ec.edu.ups.vista.usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
 
 public class UsuarioEliminarView extends JInternalFrame {
     private JTextField txtNombre;
@@ -20,8 +22,29 @@ public class UsuarioEliminarView extends JInternalFrame {
         this.mensajeHandler = mensajeI;
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        setSize(300, 190);
+
+        setSize(550, 550);
+        setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
+
         cambiarIdioma(mensajeHandler);
+        imagenIcon();
+    }
+
+    private void imagenIcon() {
+        // Redimensionar icono "Eliminar"
+        URL btEliminar = LoginView.class.getClassLoader().getResource("imagenes/eliminar.png");
+        if (btEliminar != null) {
+            ImageIcon iconBtnEliminar = new ImageIcon(btEliminar);
+            Image imgEliminar = iconBtnEliminar.getImage();  // Convierte ImageIcon a Image
+            Image newImgEliminar = imgEliminar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnEliminar = new ImageIcon(newImgEliminar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnEliminarUsuario.setIcon(iconBtnEliminar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Eliminar");
+        }
+
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {

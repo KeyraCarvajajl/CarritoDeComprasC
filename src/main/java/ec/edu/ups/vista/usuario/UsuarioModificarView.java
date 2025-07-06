@@ -4,6 +4,7 @@ import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class UsuarioModificarView extends JInternalFrame {
 
@@ -28,10 +29,55 @@ public class UsuarioModificarView extends JInternalFrame {
         setContentPane(panelPrincipal);
         setResizable(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(600, 500);
+
+        setSize(550, 550);
+        setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
+
         setTitle(mensajeHandler.get("usuario.view.modificar.titulo"));
         cambiarIdioma(mensajeHandler);
         limpiarCampos();
+        imagenIcon();
+    }
+
+    private void imagenIcon() {
+        // Redimensionar icono "Buscar"
+        URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
+        if (btBuscar != null) {
+            ImageIcon iconBtnBuscar = new ImageIcon(btBuscar);
+            Image imgBuscar = iconBtnBuscar.getImage();  // Convierte ImageIcon a Image
+            Image newImgBuscar = imgBuscar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnBuscar = new ImageIcon(newImgBuscar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnBuscar.setIcon(iconBtnBuscar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Buscar");
+        }
+
+// Redimensionar icono "Guardar"
+        URL btGuardar = LoginView.class.getClassLoader().getResource("imagenes/guardar.png");
+        if (btGuardar != null) {
+            ImageIcon iconBtnGuardar = new ImageIcon(btGuardar);
+            Image imgGuardar = iconBtnGuardar.getImage();  // Convierte ImageIcon a Image
+            Image newImgGuardar = imgGuardar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnGuardar = new ImageIcon(newImgGuardar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnGuardar.setIcon(iconBtnGuardar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Guardar");
+        }
+
+// Redimensionar icono "Cancelar"
+        URL btCancelar = LoginView.class.getClassLoader().getResource("imagenes/cancelar.png");
+        if (btCancelar != null) {
+            ImageIcon iconBtnCancelar = new ImageIcon(btCancelar);
+            Image imgCancelar = iconBtnCancelar.getImage();  // Convierte ImageIcon a Image
+            Image newImgCancelar = imgCancelar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnCancelar = new ImageIcon(newImgCancelar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnCancelar.setIcon(iconBtnCancelar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Cancelar");
+        }
+
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {

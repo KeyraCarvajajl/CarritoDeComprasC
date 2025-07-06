@@ -17,19 +17,13 @@ public class ProductoListaView extends JInternalFrame {
     private JPanel panelPrincipal;
     private JButton btnListar;
     private JLabel lblNombre;
+    private JButton btnBuscar;
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mensajeHandler;
 
     public ProductoListaView(MensajeInternacionalizacionHandler mensajeHandler) {
         super(mensajeHandler.get("ventana.producto.lista"), true, true, false, true);
         this.mensajeHandler = mensajeHandler;
-
-        // Asegurar que los componentes estén inicializados
-        if (panelPrincipal == null) panelPrincipal = new JPanel();
-        if (txtBuscar == null) txtBuscar = new JTextField();
-        if (btnListar == null) btnListar = new JButton("Listar");
-        if (tblProductos == null) tblProductos = new JTable();
-        if (lblNombre == null) lblNombre = new JLabel("Nombre:");
 
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
@@ -40,6 +34,8 @@ public class ProductoListaView extends JInternalFrame {
         setResizable(true);
 
         modelo = new DefaultTableModel();
+        Object [] columnas = {"Codigo", "Nombre", "Precio"};
+        modelo.setColumnIdentifiers(columnas);
         tblProductos.setModel(modelo);
 
         cambiarIdioma(mensajeHandler);
@@ -59,6 +55,20 @@ public class ProductoListaView extends JInternalFrame {
             System.err.println("Error: No se ha cargado el icono de Listar");
         }
 
+        // Redimensionar icono "Buscar"
+        URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
+        if (btBuscar != null) {
+            ImageIcon iconBtnBuscar = new ImageIcon(btBuscar);
+            Image imgBuscar = iconBtnBuscar.getImage();  // Convierte ImageIcon a Image
+            Image newImgBuscar = imgBuscar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnBuscar = new ImageIcon(newImgBuscar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnBuscar.setIcon(iconBtnBuscar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Buscar");
+        }
+
+
+
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
@@ -75,7 +85,25 @@ public class ProductoListaView extends JInternalFrame {
         setTitle(ProductoListaView.this.mensajeHandler.get("producto.lista.titulo"));
     }
 
+    public JLabel getLblNombre() {
+        return lblNombre;
+    }
 
+    public void setLblNombre(JLabel lblNombre) {
+        this.lblNombre = lblNombre;
+    }
+
+    public JButton getBtnBuscar() {
+        return btnBuscar;
+    }
+
+    public void setBtnBuscar(JButton btnBuscar) {
+        this.btnBuscar = btnBuscar;
+    }
+
+    public MensajeInternacionalizacionHandler getMensajeHandler() {
+        return mensajeHandler;
+    }
 
     public JTextField getTxtBuscar() {
         return txtBuscar;

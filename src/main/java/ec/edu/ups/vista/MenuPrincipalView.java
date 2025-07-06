@@ -5,6 +5,8 @@ import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JMenuBar;
 
 public class MenuPrincipalView extends JFrame {
@@ -139,6 +141,8 @@ public class MenuPrincipalView extends JFrame {
                 login.setVisible(true);
             }
         });
+
+
     }
 
     public MensajeInternacionalizacionHandler getMensajeInternacionalizacionHandler() {

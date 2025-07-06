@@ -3,6 +3,8 @@ package ec.edu.ups.vista.usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
 
 public class RegistrarseView extends JInternalFrame {
 
@@ -49,6 +51,34 @@ public class RegistrarseView extends JInternalFrame {
         setTitle(mensajeHandler.get("usuario.view.registrar.titulo"));
         cambiarIdioma(mensajeHandler);
         cargarPreguntas();
+        imagenIcon();
+    }
+
+    private void imagenIcon() {
+        // Redimensionar icono "Registro"
+        URL btRegistro = LoginView.class.getClassLoader().getResource("imagenes/registro.png");
+        if (btRegistro != null) {
+            ImageIcon iconBtnRegistro = new ImageIcon(btRegistro);
+            Image imgRegistro = iconBtnRegistro.getImage();  // Convierte ImageIcon a Image
+            Image newImgRegistro = imgRegistro.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnRegistro = new ImageIcon(newImgRegistro);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnRegistrarse.setIcon(iconBtnRegistro);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Registro");
+        }
+
+// Redimensionar icono "Cancelar"
+        URL btCancelar = LoginView.class.getClassLoader().getResource("imagenes/cancelar.png");
+        if (btCancelar != null) {
+            ImageIcon iconBtnCancelar = new ImageIcon(btCancelar);
+            Image imgCancelar = iconBtnCancelar.getImage();  // Convierte ImageIcon a Image
+            Image newImgCancelar = imgCancelar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnCancelar = new ImageIcon(newImgCancelar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnCancelar.setIcon(iconBtnCancelar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Cancelar");
+        }
+
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {

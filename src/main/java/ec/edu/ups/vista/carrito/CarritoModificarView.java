@@ -67,14 +67,22 @@ public class CarritoModificarView extends JInternalFrame {
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        setTitle(mensajeHandler.get("carrito.modificar.titulo"));
+        // Cambiar el título de la ventana
+        setTitle(mensajeHandler.get("producto.detalle.titulo"));
 
-        lblCodigo.setText(mensajeHandler.get("carrito.modificar.codigo"));
-        lblFecha.setText(mensajeHandler.get("carrito.modificar.fecha"));
+        // Cambiar las etiquetas de los campos
+        lblCodigo.setText(mensajeHandler.get("producto.codigo"));
+        lblFecha.setText(mensajeHandler.get("producto.fecha"));
 
-        btnBuscar.setText(mensajeHandler.get("carrito.modificar.buscar"));
-        btnModificar.setText(mensajeHandler.get("carrito.modificar.modificar"));
+        // Cambiar los botones
+        btnBuscar.setText(mensajeHandler.get("producto.buscar"));
+        btnModificar.setText(mensajeHandler.get("producto.modificar"));
+
+        // Actualizar tooltips si es necesario
+        txtCodigo.setToolTipText(mensajeHandler.get("producto.codigo.tooltip"));
+        txtFecha.setToolTipText(mensajeHandler.get("producto.fecha.tooltip"));
     }
+
 
     public JTextField getTxtCodigo() {
         return txtCodigo;

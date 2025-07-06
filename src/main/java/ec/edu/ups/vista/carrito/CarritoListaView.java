@@ -23,23 +23,41 @@ public class CarritoListaView extends JInternalFrame {
     private MensajeInternacionalizacionHandler mensajeHandler;
 
     public CarritoListaView(MensajeInternacionalizacionHandler mensajeHandler) {
-        super("Listado de Carritos", true, true, false, true);
+        super(mensajeHandler.get("carrito.lista.titulo"), true, true, false, true);
+
+        // Inicialización de los componentes
+        if (panelPrincipal == null) panelPrincipal = new JPanel();
+        panelPrincipal.setLayout(new BorderLayout());  // Configura un layout adecuado (por ejemplo, BorderLayout)
+
+        if (lblCarrito == null) lblCarrito = new JLabel();
+        if (txtCodigo == null) txtCodigo = new JTextField();
+        if (btnBuscar == null) btnBuscar = new JButton();
+        if (btnListar == null) btnListar = new JButton();
+        if (txtTotalCarrito == null) txtTotalCarrito = new JTextField();
+        if (txtTotal == null) txtTotal = new JTextField();
+        if (tblPCarrito == null) tblPCarrito = new JTable();
+
+        // Asignación de modelo a la tabla
+        modelo = new DefaultTableModel();
+        tblPCarrito.setModel(modelo);
+        Object[] columnas = {"Código", "Nombre", "Precio", "Cantidad", "Total"};
+        modelo.setColumnIdentifiers(columnas);
+
+        // Asignar panel y otros componentes
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-
         setSize(550, 550);
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
 
-        modelo = new DefaultTableModel();
-        Object[] columnas = {"Código", "Nombre", "Precio", "Cantidad", "Total"};
-        modelo.setColumnIdentifiers(columnas);
-        tblPCarrito.setModel(modelo);
         this.mensajeHandler = mensajeHandler;
+
+        // Llamar a cambiarIdioma para cargar los textos en el idioma correcto
         cambiarIdioma(mensajeHandler);
         imagenIcono();
     }
+
 
     private void imagenIcono() {
         // Redimensionar icono "Buscar"
@@ -69,14 +87,23 @@ public class CarritoListaView extends JInternalFrame {
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        setTitle(mensajeHandler.get("carrito.lista.titulo"));
+        // Cambiar el título de la ventana
+        setTitle(mensajeHandler.get("carrito.detalle.titulo"));
 
-        lblCarrito.setText(mensajeHandler.get("carrito.lista.carrito"));
-        lblTotalCarrito.setText(mensajeHandler.get("carrito.lista.total"));
+        // Actualiza las etiquetas
+        lblCarrito.setText(mensajeHandler.get("carrito.titulo"));
+        lblTotalCarrito.setText(mensajeHandler.get("carrito.total"));
 
-        btnBuscar.setText(mensajeHandler.get("carrito.lista.buscar"));
-        btnListar.setText(mensajeHandler.get("carrito.lista.listar"));
+        // Actualiza los botones
+        btnBuscar.setText(mensajeHandler.get("carrito.buscar"));
+        btnListar.setText(mensajeHandler.get("carrito.listar"));
+
+        // Actualiza los tooltips si es necesario
+        txtCodigo.setToolTipText(mensajeHandler.get("carrito.codigo.tooltip"));
+        txtTotalCarrito.setToolTipText(mensajeHandler.get("carrito.total.tooltip"));
+        txtTotal.setToolTipText(mensajeHandler.get("carrito.total.pagar"));
     }
+
 
     public JTextField getTxtCodigo() {
         return txtCodigo;

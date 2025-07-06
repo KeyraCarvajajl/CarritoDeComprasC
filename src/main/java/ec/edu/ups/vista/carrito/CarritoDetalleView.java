@@ -45,17 +45,27 @@ public class CarritoDetalleView extends JInternalFrame {
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
+        // Cambiar el título de la ventana
         setTitle(mensajeHandler.get("carrito.detalle.titulo"));
 
-        lblDetallesCarrito.setText(mensajeHandler.get("carrito.detalle.titulo"));
-        lblID.setText(mensajeHandler.get("carrito.detalle.id"));
-        lblSubTotal.setText(mensajeHandler.get("carrito.detalle.subtotal"));
-        lblIVA.setText(mensajeHandler.get("carrito.detalle.iva"));
-        lblTotal.setText(mensajeHandler.get("carrito.detalle.total"));
+        // Cambiar los textos de las etiquetas
+        lblDetallesCarrito.setText(mensajeHandler.get("carrito.detalles"));
+        lblID.setText(mensajeHandler.get("carrito.id"));
+        lblSubTotal.setText(mensajeHandler.get("carrito.subtotal"));
+        lblIVA.setText(mensajeHandler.get("carrito.iva"));
+        lblTotal.setText(mensajeHandler.get("carrito.total"));
 
-        btnBuscarDetalle.setText(mensajeHandler.get("carrito.detalle.buscar"));
-        btnAceptarDetalle.setText(mensajeHandler.get("carrito.detalle.aceptar"));
+        // Cambiar los textos de los botones
+        btnBuscarDetalle.setText(mensajeHandler.get("carrito.buscar"));
+        btnAceptarDetalle.setText(mensajeHandler.get("carrito.aceptar"));
+
+        // Actualizar los tooltips de los campos si es necesario
+        txtIdDet.setToolTipText(mensajeHandler.get("carrito.id.tooltip"));
+        txtSubTotal.setToolTipText(mensajeHandler.get("carrito.subtotal.tooltip"));
+        txtIVA.setToolTipText(mensajeHandler.get("carrito.iva.tooltip"));
+        txtTotal.setToolTipText(mensajeHandler.get("carrito.total.tooltip"));
     }
+
 
     private void iconoImagen() {
         // Redimensionar icono "Buscar"

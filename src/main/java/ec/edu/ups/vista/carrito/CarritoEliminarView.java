@@ -36,6 +36,8 @@ public class CarritoEliminarView extends JInternalFrame {
         modelo.setColumnIdentifiers(columnas);
         tblLProductos.setModel(modelo);
         this.mensajeHandler = mensajeHandler;
+
+
         cambiarIdioma(mensajeHandler);
         iconoImagen();
     }
@@ -80,15 +82,23 @@ public class CarritoEliminarView extends JInternalFrame {
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        setTitle(mensajeHandler.get("carrito.eliminar.titulo"));
+        // Actualiza el título de la ventana
+        setTitle(mensajeHandler.get("producto.lista.titulo"));
 
-        lblCodigo.setText(mensajeHandler.get("carrito.eliminar.codigo"));
-        lblFecha.setText(mensajeHandler.get("carrito.eliminar.fecha"));
+        // Actualiza las etiquetas
+        lblCodigo.setText(mensajeHandler.get("producto.codigo"));
+        lblFecha.setText(mensajeHandler.get("producto.fecha"));
 
-        btnBuscar.setText(mensajeHandler.get("carrito.eliminar.buscar"));
-        btnEliminar.setText(mensajeHandler.get("carrito.eliminar.eliminar"));
-        btnVaciar.setText(mensajeHandler.get("carrito.eliminar.vaciar"));
+        // Actualiza los botones
+        btnBuscar.setText(mensajeHandler.get("producto.buscar"));
+        btnEliminar.setText(mensajeHandler.get("producto.eliminar"));
+        btnVaciar.setText(mensajeHandler.get("producto.vaciar"));
+
+        // Actualiza los tooltips si es necesario
+        txtCodigo.setToolTipText(mensajeHandler.get("producto.codigo.tooltip"));
+        txtFecha.setToolTipText(mensajeHandler.get("producto.fecha.tooltip"));
     }
+
 
 
     public JTextField getTxtCodigo() {
