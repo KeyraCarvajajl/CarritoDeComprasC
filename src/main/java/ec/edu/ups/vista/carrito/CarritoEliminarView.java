@@ -5,6 +5,7 @@ import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.net.URL;
 
 public class CarritoEliminarView extends JInternalFrame {
@@ -24,7 +25,11 @@ public class CarritoEliminarView extends JInternalFrame {
         super("Eliminar Carrito", true, true, false, true);
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        setSize(500, 500);
+
+        setSize(550, 550);
+        setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
 
         modelo = new DefaultTableModel();
         Object[] columnas = {"Código", "Nombre", "Precio", "Cantidad", "Total"};
@@ -32,27 +37,42 @@ public class CarritoEliminarView extends JInternalFrame {
         tblLProductos.setModel(modelo);
         this.mensajeHandler = mensajeHandler;
         cambiarIdioma(mensajeHandler);
+        iconoImagen();
+    }
 
+    private void iconoImagen() {
+        // Redimensionar icono "Eliminar"
         URL btEliminar = LoginView.class.getClassLoader().getResource("imagenes/eliminar.png");
         if (btEliminar != null) {
-            ImageIcon iconBtnAceptar = new ImageIcon(btEliminar);
-            btnEliminar.setIcon(iconBtnAceptar);
+            ImageIcon iconBtnEliminar = new ImageIcon(btEliminar);
+            Image imgEliminar = iconBtnEliminar.getImage();  // Convierte ImageIcon a Image
+            Image newImgEliminar = imgEliminar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnEliminar = new ImageIcon(newImgEliminar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnEliminar.setIcon(iconBtnEliminar);  // Establecer el icono en el botón
         } else {
             System.err.println("Error: No se ha cargado el icono de Eliminar");
         }
 
+// Redimensionar icono "Vaciar"
         URL btVaciar = LoginView.class.getClassLoader().getResource("imagenes/vaciar.png");
         if (btVaciar != null) {
-            ImageIcon iconBtnAceptar = new ImageIcon(btVaciar);
-            btnVaciar.setIcon(iconBtnAceptar);
+            ImageIcon iconBtnVaciar = new ImageIcon(btVaciar);
+            Image imgVaciar = iconBtnVaciar.getImage();  // Convierte ImageIcon a Image
+            Image newImgVaciar = imgVaciar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnVaciar = new ImageIcon(newImgVaciar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnVaciar.setIcon(iconBtnVaciar);  // Establecer el icono en el botón
         } else {
-            System.err.println("Error: No se ha cargado el icono de Eliminar");
+            System.err.println("Error: No se ha cargado el icono de Vaciar");
         }
 
+// Redimensionar icono "Buscar"
         URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
         if (btBuscar != null) {
-            ImageIcon iconBtnAceptar = new ImageIcon(btBuscar);
-            btnBuscar.setIcon(iconBtnAceptar);
+            ImageIcon iconBtnBuscar = new ImageIcon(btBuscar);
+            Image imgBuscar = iconBtnBuscar.getImage();  // Convierte ImageIcon a Image
+            Image newImgBuscar = imgBuscar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnBuscar = new ImageIcon(newImgBuscar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnBuscar.setIcon(iconBtnBuscar);  // Establecer el icono en el botón
         } else {
             System.err.println("Error: No se ha cargado el icono de Buscar");
         }
@@ -70,16 +90,6 @@ public class CarritoEliminarView extends JInternalFrame {
         btnVaciar.setText(mensajeHandler.get("carrito.eliminar.vaciar"));
     }
 
-    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
-        lblCodigo.setText(CarritoEliminarView.this.mensajeHandler.get("carrito.eliminar.codigo"));
-        lblFecha.setText(CarritoEliminarView.this.mensajeHandler.get("carrito.eliminar.fecha"));
-
-        btnBuscar.setText(CarritoEliminarView.this.mensajeHandler.get("carrito.eliminar.buscar"));
-        btnEliminar.setText(CarritoEliminarView.this.mensajeHandler.get("carrito.eliminar.eliminar"));
-        btnVaciar.setText(CarritoEliminarView.this.mensajeHandler.get("carrito.eliminar.vaciar"));
-
-        setTitle(CarritoEliminarView.this.mensajeHandler.get("carrito.eliminar.titulo"));
-    }
 
     public JTextField getTxtCodigo() {
         return txtCodigo;

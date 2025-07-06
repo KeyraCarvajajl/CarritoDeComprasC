@@ -11,6 +11,7 @@ import ec.edu.ups.dao.impl.CarritoDAOMemoria;
 import ec.edu.ups.dao.impl.PreguntasDAOMemoria;
 import ec.edu.ups.dao.impl.ProductoDAOMemoria;
 import ec.edu.ups.dao.impl.UsuarioDAOMemoria;
+import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.carrito.*;
@@ -60,19 +61,18 @@ public class Main {
                             PreguntasDAO preguntasDAO = new PreguntasDAOMemoria();
                             MenuPrincipalView principalView = new MenuPrincipalView(mensajeHandler);
 
-
                             ProductoAnadirView productoAnadirView = new ProductoAnadirView(mensajeHandler);
                             ProductoListaView productoListaView = new ProductoListaView(mensajeHandler);
                             ProductoModificarView productoModificarView = new ProductoModificarView(mensajeHandler);
                             ProductoEliminarView productoEliminarView = new ProductoEliminarView(mensajeHandler);
 
                             CarritoAnadirView carritoAnadirView = new CarritoAnadirView(mensajeHandler);
-                            CarritoListaView carritoListarView = new CarritoListaView(mensajeHandler);
+                            CarritoListaView carritoListaView = new CarritoListaView(mensajeHandler);
                             CarritoEliminarView carritoEliminarView = new CarritoEliminarView(mensajeHandler);
                             CarritoModificarView carritoModificarView = new CarritoModificarView(mensajeHandler);
                             CarritoDetalleView carritoDetalleView = new CarritoDetalleView(mensajeHandler);
 
-                            UsuarioListaView usuarioListarView = new UsuarioListaView(mensajeHandler);
+                            UsuarioListaView usuarioListaView = new UsuarioListaView(mensajeHandler);
                             UsuarioEliminarView usuarioEliminarView = new UsuarioEliminarView(mensajeHandler);
                             UsuarioModificarView usuarioModificarView = new UsuarioModificarView(mensajeHandler);
 
@@ -88,7 +88,7 @@ public class Main {
                                     carritoDAO,
                                     productoDAO,
                                     carritoAnadirView,
-                                    carritoListarView,
+                                    carritoListaView,
                                     carritoEliminarView,
                                     carritoModificarView,
                                     carritoDetalleView,
@@ -99,7 +99,7 @@ public class Main {
                             productoController.setProductoModificarView(productoModificarView);
                             productoController.setProductoEliminarView(productoEliminarView);
                             productoController.setCarritoAnadirView(carritoAnadirView);
-                            usuarioController.setUsuarioListarView(usuarioListarView);
+                            usuarioController.setUsuarioListarView(usuarioListaView);
                             usuarioController.setMenuPrincipalView(principalView);
 
                             // CREAR PRODUCTO
@@ -115,7 +115,7 @@ public class Main {
                                 }
                             });
 
-// LISTAR PRODUCTOS
+                        // LISTAR PRODUCTOS
                             principalView.getMenuItemBuscarProducto().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -168,14 +168,14 @@ public class Main {
                             });
 
                             // BUSCAR CARRITO
-                            principalView.getMenuItemBuscarCarrito().addActionListener(new ActionListener() {
+                            principalView.getMenuItemListaCarrito().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                    if (!carritoListarView.isVisible()) {
-                                        principalView.getjDesktopPane().add(carritoListarView);
-                                        carritoListarView.setVisible(true);
+                                    if (!carritoListaView.isVisible()) {
+                                        principalView.getjDesktopPane().add(carritoListaView);
+                                        carritoListaView.setVisible(true);
                                     } else {
-                                        carritoListarView.toFront();
+                                        carritoListaView.toFront();
                                     }
                                 }
                             });
@@ -252,44 +252,18 @@ public class Main {
                                     }
                                 }
                             });
-                            principalView.getMenuItemBuscarUsuario().addActionListener(new ActionListener() {
+
+                            principalView.getMenuItemListaUsuario().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                    if (!usuarioListarView.isVisible()) {
-                                        principalView.getjDesktopPane().add(usuarioListarView);
-                                        usuarioListarView.setVisible(true);
+                                    if (!usuarioListaView.isVisible()) {
+                                        principalView.getjDesktopPane().add(usuarioListaView);
+                                        usuarioListaView.setVisible(true);
                                     } else {
-                                        usuarioListarView.toFront();
+                                        usuarioListaView.toFront();
                                     }
                                 }
                             });
-
-                            principalView.getMenuItemListaCarrito().addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    // Verifica si la ventana ya está visible
-                                    if (!carritoListarView.isVisible()) {
-                                        principalView.getjDesktopPane().add(carritoListarView);
-                                        carritoListarView.setVisible(true);
-                                    } else {
-                                        carritoListarView.toFront();  // Trae al frente la ventana si ya está abierta
-                                    }
-                                }
-                            });
-
-                            principalView.getMenuItemBuscarUsuario().addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    // Verifica si la ventana ya está visible
-                                    if (!usuarioListarView.isVisible()) {
-                                        principalView.getjDesktopPane().add(usuarioListarView);
-                                        usuarioListarView.setVisible(true);
-                                    } else {
-                                        usuarioListarView.toFront();  // Trae al frente la ventana si ya está abierta
-                                    }
-                                }
-                            });
-
 
 
                             principalView.getMenuItemIdiomaIngles().addActionListener(new ActionListener() {

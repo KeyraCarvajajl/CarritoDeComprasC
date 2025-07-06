@@ -14,6 +14,7 @@ public class MiJDesktopPane extends JDesktopPane {
         this.mensajeHandler = new MensajeInternacionalizacionHandler("es", "EC");
     }
 
+
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
         repaint();  // Se actualiza el fondo cuando cambie el idioma

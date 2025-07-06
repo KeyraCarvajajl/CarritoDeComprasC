@@ -20,7 +20,12 @@ public class ProductoController {
     private CarritoAnadirView carritoAnadirView;
     private final ProductoDAO productoDAO;
 
-    public ProductoController(ProductoAnadirView productoAnadirView, ProductoListaView productoListaView, ProductoModificarView productoModificarView, ProductoEliminarView productoEliminarView, CarritoAnadirView carritoAnadirView, ProductoDAO productoDAO) {
+    public ProductoController(ProductoAnadirView productoAnadirView,
+                              ProductoListaView productoListaView,
+                              ProductoModificarView productoModificarView,
+                              ProductoEliminarView productoEliminarView,
+                              CarritoAnadirView carritoAnadirView,
+                              ProductoDAO productoDAO) {
         this.productoAnadirView = productoAnadirView;
         this.productoListaView = productoListaView;
         this.productoModificarView = productoModificarView;

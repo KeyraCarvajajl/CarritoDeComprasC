@@ -24,9 +24,9 @@ public class ProductoAnadirView extends JInternalFrame {
     public ProductoAnadirView(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
         setContentPane(panelPrincipal);
-        setTitle(mensajeHandler.get("producto.titulo"));
+        setTitle("Datos del producto");
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        setSize(500, 500);
+        setSize(400, 300);
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
@@ -51,19 +51,6 @@ public class ProductoAnadirView extends JInternalFrame {
         btnAceptar.setText(mensajeHandler.get("producto.anadir.aceptar"));
         btnLimpiar.setText(mensajeHandler.get("producto.anadir.limpiar"));
     }
-
-    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
-        lblCodigo.setText(ProductoAnadirView.this.mensajeHandler.get("producto.codigo"));
-        lblNombre.setText(ProductoAnadirView.this.mensajeHandler.get("producto.nombre"));
-        lblPrecio.setText(ProductoAnadirView.this.mensajeHandler.get("producto.precio"));
-
-        btnAceptar.setText(ProductoAnadirView.this.mensajeHandler.get("producto.aceptar"));
-        btnLimpiar.setText(ProductoAnadirView.this.mensajeHandler.get("producto.limpiar"));
-
-        setTitle(ProductoAnadirView.this.mensajeHandler.get("producto.anadir.titulo"));
-    }
-
-
 
     public JPanel getPanelPrincipal() {
         return panelPrincipal;

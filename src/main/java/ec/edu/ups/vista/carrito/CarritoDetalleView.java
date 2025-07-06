@@ -5,6 +5,7 @@ import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.net.URL;
 
 public class CarritoDetalleView extends JInternalFrame {
@@ -28,7 +29,11 @@ public class CarritoDetalleView extends JInternalFrame {
         super("Detalle del Carrito", true, true, false, true);
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        setSize(600, 500);
+
+        setSize(550, 550);
+        setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
 
         modelo = new DefaultTableModel();
         Object[] columnas = {"Código", "Nombre", "Precio", "Cantidad", "Subtotal"};
@@ -36,22 +41,7 @@ public class CarritoDetalleView extends JInternalFrame {
         tblDetCarrito.setModel(modelo);
         this.mensajeHandler = mensajeHandler;
         cambiarIdioma(mensajeHandler);
-
-        URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
-        if (btBuscar != null) {
-            ImageIcon iconBtnAceptar = new ImageIcon(btBuscar);
-            btnBuscarDetalle.setIcon(iconBtnAceptar);
-        } else {
-            System.err.println("Error: No se ha cargado el icono de Buscar Detalle");
-        }
-
-        URL btAceptar = LoginView.class.getClassLoader().getResource("imagenes/aceptar.png");
-        if (btAceptar != null) {
-            ImageIcon iconBtnAceptar = new ImageIcon(btAceptar);
-            btnAceptarDetalle.setIcon(iconBtnAceptar);
-        } else {
-            System.err.println("Error: No se ha cargado el icono de Aceptar Detalle");
-        }
+        iconoImagen();
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
@@ -67,21 +57,32 @@ public class CarritoDetalleView extends JInternalFrame {
         btnAceptarDetalle.setText(mensajeHandler.get("carrito.detalle.aceptar"));
     }
 
-    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
-        lblDetallesCarrito.setText(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.titulo"));
-        lblID.setText(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.id"));
-        lblSubTotal.setText(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.subtotal"));
-        lblIVA.setText(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.iva"));
-        lblTotal.setText(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.total"));
+    private void iconoImagen() {
+        // Redimensionar icono "Buscar"
+        URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
+        if (btBuscar != null) {
+            ImageIcon iconBtnBuscar = new ImageIcon(btBuscar);
+            Image imgBuscar = iconBtnBuscar.getImage();  // Convierte ImageIcon a Image
+            Image newImgBuscar = imgBuscar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnBuscar = new ImageIcon(newImgBuscar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnBuscarDetalle.setIcon(iconBtnBuscar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Buscar Detalle");
+        }
 
-        btnBuscarDetalle.setText(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.buscar"));
-        btnAceptarDetalle.setText(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.aceptar"));
+// Redimensionar icono "Aceptar"
+        URL btAceptar = LoginView.class.getClassLoader().getResource("imagenes/aceptar.png");
+        if (btAceptar != null) {
+            ImageIcon iconBtnAceptar = new ImageIcon(btAceptar);
+            Image imgAceptar = iconBtnAceptar.getImage();  // Convierte ImageIcon a Image
+            Image newImgAceptar = imgAceptar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnAceptar = new ImageIcon(newImgAceptar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnAceptarDetalle.setIcon(iconBtnAceptar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Aceptar Detalle");
+        }
 
-        setTitle(CarritoDetalleView.this.mensajeHandler.get("carrito.detalle.titulo"));
     }
-
-
-
 
     public JTextField getTxtIdDet() {
         return txtIdDet;

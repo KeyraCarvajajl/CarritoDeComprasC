@@ -1,7 +1,6 @@
 package ec.edu.ups.vista.carrito;
 
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
-import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -38,7 +37,12 @@ public class CarritoAnadirView extends JInternalFrame {
         super("Carrito de Compras", true, true, false, true);
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        setSize(500, 500);
+
+        setSize(550, 550);
+        setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
+
         this.mensajeHandler = mensajeHandler;
         modelo = new DefaultTableModel();
         Object[] columnas = {"Codigo", "Nombre", "Precio", "Cantidad", "Subtotal"};
@@ -48,7 +52,7 @@ public class CarritoAnadirView extends JInternalFrame {
         cargarDatos();
         cambiarIdioma(mensajeHandler);
         limpiarCampos();
-        actualizarTextos(mensajeHandler);
+        iconoImagen();
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
@@ -83,21 +87,54 @@ public class CarritoAnadirView extends JInternalFrame {
         txtSubTotal.setText("");
     }
 
-    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
-        lblCodigo.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.codigo"));
-        lblNombre.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.nombre"));
-        lblPrecio.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.precio"));
-        lblCantidad.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.cantidad"));
-        lblSubTotal.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.subtotal"));
-        lblIva.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.iva"));
-        lblTotal.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.total"));
+    private void iconoImagen() {
+        // Redimensionar icono "Buscar"
+        URL btBuscar = getClass().getClassLoader().getResource("imagenes/buscar.png");
+        if (btBuscar != null) {
+            ImageIcon iconBtnAceptar = new ImageIcon(btBuscar);
+            Image imgBuscar = iconBtnAceptar.getImage();
+            Image newImgBuscar = imgBuscar.getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Ajustar el tamaño
+            iconBtnAceptar = new ImageIcon(newImgBuscar);
+            btnBuscar.setIcon(iconBtnAceptar);
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Buscar");
+        }
 
-        btnBuscar.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.buscar"));
-        btnAnadir.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.anadir"));
-        btnGuardar.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.guardar"));
-        btnLimpiar.setText(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.limpiar"));
+        // Redimensionar icono "Añadir"
+        URL btAnadir = getClass().getClassLoader().getResource("imagenes/anadir.png");
+        if (btAnadir != null) {
+            ImageIcon iconBtnAceptar = new ImageIcon(btAnadir);
+            Image imgAnadir = iconBtnAceptar.getImage();
+            Image newImgAnadir = imgAnadir.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Ajustar el tamaño
+            iconBtnAceptar = new ImageIcon(newImgAnadir);
+            btnAnadir.setIcon(iconBtnAceptar);
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Añadir");
+        }
 
-        setTitle(CarritoAnadirView.this.mensajeHandler.get("carrito.anadir.titulo"));
+        // Redimensionar icono "Guardar"
+        URL btGuardar = getClass().getClassLoader().getResource("imagenes/guardar.png");
+        if (btGuardar != null) {
+            ImageIcon iconBtnAceptar = new ImageIcon(btGuardar);
+            Image imgGuardar = iconBtnAceptar.getImage();
+            Image newImgGuardar = imgGuardar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Ajustar el tamaño
+            iconBtnAceptar = new ImageIcon(newImgGuardar);
+            btnGuardar.setIcon(iconBtnAceptar);
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Guardar");
+        }
+
+        // Redimensionar icono "Limpiar"
+        URL btLimpiar = getClass().getClassLoader().getResource("imagenes/limpiar.png");
+        if (btLimpiar != null) {
+            ImageIcon iconBtnAceptar = new ImageIcon(btLimpiar);
+            Image imgLimpiar = iconBtnAceptar.getImage();
+            Image newImgLimpiar = imgLimpiar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Ajustar el tamaño
+            iconBtnAceptar = new ImageIcon(newImgLimpiar);
+            btnLimpiar.setIcon(iconBtnAceptar);
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Limpiar");
+        }
     }
 
 

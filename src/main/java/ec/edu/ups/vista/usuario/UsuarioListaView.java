@@ -5,7 +5,7 @@ import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class UsuarioListaView extends JFrame {
+public class UsuarioListaView extends JInternalFrame {
 
     private JTable tblUsuarios;
     private JComboBox<String> cbxFiltro;
@@ -23,9 +23,8 @@ public class UsuarioListaView extends JFrame {
 
         setContentPane(panelPrincipal);
         setSize(600, 400);
+        setVisible(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null); // Centra la ventana
-
         modelo = new DefaultTableModel();
         tblUsuarios.setModel(modelo);
 
@@ -36,19 +35,9 @@ public class UsuarioListaView extends JFrame {
         setTitle(mensajeHandler.get("usuario.lista.titulo"));
 
         lblNombre.setText(mensajeHandler.get("usuario.lista.nombre"));
-
         btnBuscar.setText(mensajeHandler.get("usuario.lista.buscar"));
         btnCerrar.setText(mensajeHandler.get("usuario.lista.cerrar"));
     }
-
-    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
-        lblNombre.setText(UsuarioListaView.this.mensajeHandler.get("usuario.nombre"));
-        btnBuscar.setText(UsuarioListaView.this.mensajeHandler.get("usuario.buscar"));
-        btnCerrar.setText(UsuarioListaView.this.mensajeHandler.get("usuario.cerrar"));
-
-        setTitle(UsuarioListaView.this.mensajeHandler.get("usuario.lista.titulo"));
-    }
-
 
     // Getters
     public JTable getTblUsuarios() {

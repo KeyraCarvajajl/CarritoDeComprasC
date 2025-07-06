@@ -5,6 +5,7 @@ import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.net.URL;
 
 public class CarritoModificarView extends JInternalFrame {
@@ -31,22 +32,34 @@ public class CarritoModificarView extends JInternalFrame {
         tblView.setModel(modelo);
         this.mensajeHandler = mensajeHandler;
         cambiarIdioma(mensajeHandler);
+        imagenIcono();
+    }
 
+    private void imagenIcono() {
+        // Redimensionar icono "Buscar"
         URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
         if (btBuscar != null) {
-            ImageIcon iconBtnAceptar = new ImageIcon(btBuscar);
-            btnBuscar.setIcon(iconBtnAceptar);
+            ImageIcon iconBtnBuscar = new ImageIcon(btBuscar);
+            Image imgBuscar = iconBtnBuscar.getImage();  // Convierte ImageIcon a Image
+            Image newImgBuscar = imgBuscar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnBuscar = new ImageIcon(newImgBuscar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnBuscar.setIcon(iconBtnBuscar);  // Establecer el icono en el botón
         } else {
             System.err.println("Error: No se ha cargado el icono de Buscar");
         }
 
+// Redimensionar icono "Modificar"
         URL btModificar = LoginView.class.getClassLoader().getResource("imagenes/modificar.png");
         if (btModificar != null) {
-            ImageIcon iconBtnAceptar = new ImageIcon(btModificar);
-            btnModificar.setIcon(iconBtnAceptar);
+            ImageIcon iconBtnModificar = new ImageIcon(btModificar);
+            Image imgModificar = iconBtnModificar.getImage();  // Convierte ImageIcon a Image
+            Image newImgModificar = imgModificar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnModificar = new ImageIcon(newImgModificar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnModificar.setIcon(iconBtnModificar);  // Establecer el icono en el botón
         } else {
-            System.err.println("Error: No se ha cargado el icono de Buscar");
+            System.err.println("Error: No se ha cargado el icono de Modificar");
         }
+
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
@@ -57,16 +70,6 @@ public class CarritoModificarView extends JInternalFrame {
 
         btnBuscar.setText(mensajeHandler.get("carrito.modificar.buscar"));
         btnModificar.setText(mensajeHandler.get("carrito.modificar.modificar"));
-    }
-
-    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
-        lblCodigo.setText(CarritoModificarView.this.mensajeHandler.get("carrito.modificar.codigo"));
-        lblFecha.setText(CarritoModificarView.this.mensajeHandler.get("carrito.modificar.fecha"));
-
-        btnBuscar.setText(CarritoModificarView.this.mensajeHandler.get("carrito.modificar.buscar"));
-        btnModificar.setText(CarritoModificarView.this.mensajeHandler.get("carrito.modificar.modificar"));
-
-        setTitle(CarritoModificarView.this.mensajeHandler.get("carrito.modificar.titulo"));
     }
 
     public JTextField getTxtCodigo() {

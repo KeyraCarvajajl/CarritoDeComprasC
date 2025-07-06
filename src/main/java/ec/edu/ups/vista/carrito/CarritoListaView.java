@@ -5,6 +5,7 @@ import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.net.URL;
 
 public class CarritoListaView extends JInternalFrame {
@@ -21,7 +22,7 @@ public class CarritoListaView extends JInternalFrame {
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mensajeHandler;
 
-    public CarritoListaView(MensajeInternacionalizacionHandler mensajeI) {
+    public CarritoListaView(MensajeInternacionalizacionHandler mensajeHandler) {
         super("Listado de Carritos", true, true, false, true);
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
@@ -30,25 +31,36 @@ public class CarritoListaView extends JInternalFrame {
         Object[] columnas = {"Código", "Nombre", "Precio", "Cantidad", "Total"};
         modelo.setColumnIdentifiers(columnas);
         tblPCarrito.setModel(modelo);
-        this.mensajeHandler = mensajeI;
+        this.mensajeHandler = mensajeHandler;
+        cambiarIdioma(mensajeHandler);
+        imagenIcono();
+    }
 
+    private void imagenIcono() {
+        // Redimensionar icono "Buscar"
         URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
         if (btBuscar != null) {
-            ImageIcon iconBtnAceptar = new ImageIcon(btBuscar);
-            btnBuscar.setIcon(iconBtnAceptar);
+            ImageIcon iconBtnBuscar = new ImageIcon(btBuscar);
+            Image imgBuscar = iconBtnBuscar.getImage();  // Convierte ImageIcon a Image
+            Image newImgBuscar = imgBuscar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnBuscar = new ImageIcon(newImgBuscar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnBuscar.setIcon(iconBtnBuscar);  // Establecer el icono en el botón
         } else {
             System.err.println("Error: No se ha cargado el icono de Buscar");
         }
 
+// Redimensionar icono "Listar"
         URL btListar = LoginView.class.getClassLoader().getResource("imagenes/listar.png");
         if (btListar != null) {
-            ImageIcon iconBtnAceptar = new ImageIcon(btListar);
-            btnListar.setIcon(iconBtnAceptar);
+            ImageIcon iconBtnListar = new ImageIcon(btListar);
+            Image imgListar = iconBtnListar.getImage();  // Convierte ImageIcon a Image
+            Image newImgListar = imgListar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnListar = new ImageIcon(newImgListar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnListar.setIcon(iconBtnListar);  // Establecer el icono en el botón
         } else {
             System.err.println("Error: No se ha cargado el icono de Listar");
         }
 
-        cambiarIdioma(mensajeHandler);
     }
 
     public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
@@ -60,18 +72,6 @@ public class CarritoListaView extends JInternalFrame {
         btnBuscar.setText(mensajeHandler.get("carrito.lista.buscar"));
         btnListar.setText(mensajeHandler.get("carrito.lista.listar"));
     }
-
-    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
-        lblCarrito.setText(CarritoListaView.this.mensajeHandler.get("carrito.lista.carrito"));
-        lblTotalCarrito.setText(CarritoListaView.this.mensajeHandler.get("carrito.lista.total"));
-
-        btnBuscar.setText(CarritoListaView.this.mensajeHandler.get("carrito.lista.buscar"));
-        btnListar.setText(CarritoListaView.this.mensajeHandler.get("carrito.lista.listar"));
-
-        setTitle(CarritoListaView.this.mensajeHandler.get("carrito.lista.titulo"));
-    }
-
-
 
     public JTextField getTxtCodigo() {
         return txtCodigo;
