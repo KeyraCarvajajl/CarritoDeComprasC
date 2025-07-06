@@ -84,6 +84,7 @@
         </constraints>
         <properties>
           <background color="-656641"/>
+          <editable value="false"/>
         </properties>
       </component>
     </children>

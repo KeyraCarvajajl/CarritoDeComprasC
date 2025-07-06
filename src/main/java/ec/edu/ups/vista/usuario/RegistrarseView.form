@@ -29,7 +29,7 @@
           <text value="REGISTRAR"/>
         </properties>
       </component>
-      <component id="a5cc" class="javax.swing.JButton" binding="btnRegistrarse">
+      <component id="a5cc" class="javax.swing.JButton" binding="btnRegistro">
         <constraints>
           <grid row="25" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -55,7 +55,7 @@
         <properties>
           <enabled value="true"/>
           <font name="Courier New" size="16" style="1"/>
-          <text value="Fecha de Nacimiento:"/>
+          <text value="Fecha de Nacimiento (dd-MM-yyyy):"/>
         </properties>
       </component>
       <component id="873f5" class="javax.swing.JFormattedTextField" binding="jFormatedFecha">

@@ -18,45 +18,69 @@ public class CarritoListaView extends JInternalFrame {
     private JLabel lblCarrito;
     private JTextField txtTotalCarrito;
     private JLabel lblTotalCarrito;
-    private JTextField txtTotal;
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mensajeHandler;
 
     public CarritoListaView(MensajeInternacionalizacionHandler mensajeHandler) {
-        super(mensajeHandler.get("carrito.lista.titulo"), true, true, false, true);
+        super("Listar Carrito", true, true, false, true);
+        this.mensajeHandler = mensajeHandler;
 
-        // Inicialización de los componentes
-        if (panelPrincipal == null) panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new BorderLayout());  // Configura un layout adecuado (por ejemplo, BorderLayout)
+        // Crear panel principal y configurarlo
+        panelPrincipal = new JPanel(null);
+        panelPrincipal.setBackground(new Color(250,222,212)); // Fondo rosado claro
 
-        if (lblCarrito == null) lblCarrito = new JLabel();
-        if (txtCodigo == null) txtCodigo = new JTextField();
-        if (btnBuscar == null) btnBuscar = new JButton();
-        if (btnListar == null) btnListar = new JButton();
-        if (txtTotalCarrito == null) txtTotalCarrito = new JTextField();
-        if (txtTotal == null) txtTotal = new JTextField();
-        if (tblPCarrito == null) tblPCarrito = new JTable();
+        // Inicializar componentes
+        lblCarrito = new JLabel("Código:");
+        txtCodigo = new JTextField();
+        btnBuscar = new JButton("Buscar");
+        btnListar = new JButton("Listar");
+        lblTotalCarrito = new JLabel("Total:");
+        txtTotalCarrito = new JTextField();
 
-        // Asignación de modelo a la tabla
-        modelo = new DefaultTableModel();
-        tblPCarrito.setModel(modelo);
-        Object[] columnas = {"Código", "Nombre", "Precio", "Cantidad", "Total"};
-        modelo.setColumnIdentifiers(columnas);
+        modelo = new DefaultTableModel(new Object[]{"Código", "Nombre", "Precio", "Cantidad", "Subtotal"}, 0);
+        tblPCarrito = new JTable(modelo);
+        JScrollPane scrollPane = new JScrollPane(tblPCarrito);
 
-        // Asignar panel y otros componentes
+        // Establecer posiciones
+        lblCarrito.setBounds(30, 20, 100, 25);
+        txtCodigo.setBounds(130, 20, 150, 25);
+        btnBuscar.setBounds(300, 20, 100, 30);
+        btnListar.setBounds(410, 20, 100, 30);
+        scrollPane.setBounds(30, 70, 480, 300);
+        lblTotalCarrito.setBounds(30, 390, 100, 25);
+        txtTotalCarrito.setBounds(130, 390, 100, 25);
+
+        // Agregar componentes al panel
+        panelPrincipal.add(lblCarrito);
+        panelPrincipal.add(txtCodigo);
+        panelPrincipal.add(btnBuscar);
+        panelPrincipal.add(btnListar);
+        panelPrincipal.add(scrollPane);
+        panelPrincipal.add(lblTotalCarrito);
+        panelPrincipal.add(txtTotalCarrito);
+
+        // Configurar ventana
         setContentPane(panelPrincipal);
-        setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         setSize(550, 550);
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
-
-        this.mensajeHandler = mensajeHandler;
-
-        // Llamar a cambiarIdioma para cargar los textos en el idioma correcto
-        cambiarIdioma(mensajeHandler);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         imagenIcono();
+        actualizarTextos(mensajeHandler);
     }
+
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajes) {
+        lblCarrito.setText(mensajes.get("carrito.codigo"));
+        lblTotalCarrito.setText(mensajes.get("carrito.total"));
+
+        btnBuscar.setText(mensajes.get("carrito.boton.buscar"));
+        btnListar.setText(mensajes.get("carrito.boton.listar"));
+
+        this.setTitle(mensajes.get("carrito.lista.titulo")); // Si es JInternalFrame
+    }
+
+
 
 
     private void imagenIcono() {
@@ -65,7 +89,7 @@ public class CarritoListaView extends JInternalFrame {
         if (btBuscar != null) {
             ImageIcon iconBtnBuscar = new ImageIcon(btBuscar);
             Image imgBuscar = iconBtnBuscar.getImage();  // Convierte ImageIcon a Image
-            Image newImgBuscar = imgBuscar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            Image newImgBuscar = imgBuscar.getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Redimensionar la imagen
             iconBtnBuscar = new ImageIcon(newImgBuscar);  // Crea un nuevo ImageIcon con la imagen redimensionada
             btnBuscar.setIcon(iconBtnBuscar);  // Establecer el icono en el botón
         } else {
@@ -77,7 +101,7 @@ public class CarritoListaView extends JInternalFrame {
         if (btListar != null) {
             ImageIcon iconBtnListar = new ImageIcon(btListar);
             Image imgListar = iconBtnListar.getImage();  // Convierte ImageIcon a Image
-            Image newImgListar = imgListar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            Image newImgListar = imgListar.getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Redimensionar la imagen
             iconBtnListar = new ImageIcon(newImgListar);  // Crea un nuevo ImageIcon con la imagen redimensionada
             btnListar.setIcon(iconBtnListar);  // Establecer el icono en el botón
         } else {
@@ -101,7 +125,7 @@ public class CarritoListaView extends JInternalFrame {
         // Actualiza los tooltips si es necesario
         txtCodigo.setToolTipText(mensajeHandler.get("carrito.codigo.tooltip"));
         txtTotalCarrito.setToolTipText(mensajeHandler.get("carrito.total.tooltip"));
-        txtTotal.setToolTipText(mensajeHandler.get("carrito.total.pagar"));
+        txtTotalCarrito.setToolTipText(mensajeHandler.get("carrito.total.pagar"));
     }
 
 
@@ -154,11 +178,11 @@ public class CarritoListaView extends JInternalFrame {
     }
 
     public JTextField getTxtTotal() {
-        return txtTotal;
+        return txtTotalCarrito;
     }
 
     public void setTxtTotal(JTextField txtTotal) {
-        this.txtTotal = txtTotal;
+        this.txtTotalCarrito = txtTotal;
     }
 
     public void mostrarMensaje(String mensaje) {

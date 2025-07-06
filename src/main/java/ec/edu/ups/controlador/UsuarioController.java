@@ -1,20 +1,27 @@
 package ec.edu.ups.controlador;
 
+import ec.edu.ups.dao.CarritoDAO;
 import ec.edu.ups.dao.PreguntasDAO;
 import ec.edu.ups.dao.UsuarioDAO;
+import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.MenuPrincipalView;
+import ec.edu.ups.vista.carrito.CarritoEliminarView;
+import ec.edu.ups.vista.carrito.CarritoModificarView;
 import ec.edu.ups.vista.preguntas.CambiarContraseniaView;
-import ec.edu.ups.vista.usuario.LoginView;
-import ec.edu.ups.vista.usuario.RegistrarseView;
-import ec.edu.ups.vista.usuario.UsuarioEliminarView;
-import ec.edu.ups.vista.usuario.UsuarioListaView;
+import ec.edu.ups.vista.usuario.*;
 import ec.edu.ups.vista.preguntas.CuestionarioView;
 
 import javax.swing.*;
+import javax.swing.event.InternalFrameAdapter;
 import javax.swing.table.DefaultTableModel;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UsuarioController {
@@ -25,22 +32,41 @@ public class UsuarioController {
     private RegistrarseView registrarseView;
     private MenuPrincipalView menuPrincipalView;
     private UsuarioEliminarView usuarioEliminarView;
-    private UsuarioListaView usuarioListarView;
-    private MensajeInternacionalizacionHandler mensajeI;
+    private MensajeInternacionalizacionHandler mensajeHandler;
     private CuestionarioView recuperarContraseniaView;
+    private CarritoDAO carritoDAO;
+    private CarritoModificarView carritoModificarView;
+    private UsuarioModificarView usuarioModificarView;
+    private UsuarioListaView usuarioListaView;
 
-    public UsuarioController(UsuarioDAO usuarioDAO, LoginView loginView, RegistrarseView registrarseView, MensajeInternacionalizacionHandler mensajeI) {
+    public UsuarioController(
+            UsuarioDAO usuarioDAO,
+            LoginView loginView,
+            RegistrarseView registrarseView,
+            UsuarioListaView usuarioListaView,
+            UsuarioModificarView usuarioModificarView,
+            UsuarioEliminarView usuarioEliminarView,
+            MenuPrincipalView menuPrincipalView,
+            MensajeInternacionalizacionHandler mensajeHandler) {
         this.usuarioDAO = usuarioDAO;
         this.loginView = loginView;
         this.usuario = null;
         this.registrarseView = registrarseView;
-        this.mensajeI = mensajeI;
+        this.usuarioListaView = usuarioListaView;
+        this.usuarioModificarView = usuarioModificarView;
+        this.usuarioEliminarView = usuarioEliminarView;
+        this.menuPrincipalView = menuPrincipalView;
+        this.mensajeHandler = mensajeHandler;
+
         configurarEventosLogin();
+        inicializarListenersRegistro();
     }
+
 
     public void setRecuperarContraseniaView(CuestionarioView recuperarContraseniaView) {
         this.recuperarContraseniaView = recuperarContraseniaView;
         configurarEventoOlvidoContrasena();
+        configurarEventosRecuperacion();
     }
 
     public void setUsuarioEliminarView(UsuarioEliminarView usuarioEliminarView) {
@@ -55,11 +81,11 @@ public class UsuarioController {
 
     public void setRegistrarseView(RegistrarseView registrarseView) {
         this.registrarseView = registrarseView;
-        configurarEventosRegistro();
+        inicializarListenersRegistro();
     }
 
     public void setUsuarioListarView(UsuarioListaView usuarioListarView) {
-        this.usuarioListarView = usuarioListarView;
+        this.usuarioListaView = usuarioListarView;
         configurarEventosListaUsuarios();
     }
 
@@ -74,7 +100,7 @@ public class UsuarioController {
     }
 
     private void configurarEventosListaUsuarios() {
-        usuarioListarView.getBtnBuscar().addActionListener(e -> buscarUsuarios());
+        usuarioListaView.getBtnBuscar().addActionListener(e -> buscarUsuarios());
     }
 
     private void configurarEventosEliminar() {
@@ -83,10 +109,6 @@ public class UsuarioController {
 
     private void configurarEventoCerrarSesion() {
         menuPrincipalView.getMenuItemCerrarSesion().addActionListener(e -> cerrarSesion());
-    }
-
-    private void configurarEventosRegistro() {
-        registrarseView.getBtnRegistrarse().addActionListener(e -> crear());
     }
 
     private void configurarEventosLogin() {
@@ -98,13 +120,24 @@ public class UsuarioController {
         });
     }
 
+    public void inicializarListenersRegistro() {
+        registrarseView.getBtnRegistro().addActionListener(e -> crear());
+
+        registrarseView.getBtnCancelar().addActionListener(e -> {
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(registrarseView.getContentPane());
+            if (frame != null) {
+                frame.dispose();
+            }
+        });
+    }
+
     private void buscarUsuarios() {
-        String nombre = usuarioListarView.getTxtNombre().getText().trim();
-        DefaultTableModel modelo = usuarioListarView.getModelo();
+        String nombre = usuarioListaView.getTxtNombre().getText().trim();
+        DefaultTableModel modelo = usuarioListaView.getModelo();
         modelo.setRowCount(0);
 
         if (nombre.isEmpty()) {
-            usuarioListarView.mostrarMensaje("Ingrese un nombre de usuario para buscar.");
+            usuarioListaView.mostrarMensaje("Ingrese un nombre de usuario para buscar.");
             return;
         }
 
@@ -112,13 +145,13 @@ public class UsuarioController {
         if (usuario != null) {
             modelo.addRow(new Object[]{usuario.getUsername(), usuario.getRol().name()});
         } else {
-            usuarioListarView.mostrarMensaje("Usuario no encontrado.");
+            usuarioListaView.mostrarMensaje("Usuario no encontrado.");
         }
     }
 
     private void listarUsuarios() {
         List<Usuario> lista = usuarioDAO.listarTodos();
-        DefaultTableModel modelo = usuarioListarView.getModelo();
+        DefaultTableModel modelo = usuarioListaView.getModelo();
         modelo.setRowCount(0);
         for (Usuario u : lista) {
             modelo.addRow(new Object[]{u.getUsername(), u.getRol().name()});
@@ -126,33 +159,35 @@ public class UsuarioController {
     }
 
     private void eliminarUsuario() {
-        String usernameEliminar = usuarioEliminarView.getTxtNombre().getText();
-        String contraseniaAdmin = new String(usuarioEliminarView.getTxtContraseña().getPassword());
+        String nombre = usuarioEliminarView.getTxtNombre().getText();
+        String contrasenia = new String(usuarioEliminarView.getTxtContraseña().getPassword());
+        String confirmar = new String(usuarioEliminarView.getTxtConfirmarContrasenia().getPassword());
 
-        if (getUsuarioAutenticado() == null || getUsuarioAutenticado().getRol() != Rol.ADMINISTRADOR) {
-            usuarioEliminarView.mostrarMensaje("No tienes permisos para eliminar usuarios.");
+        if (!contrasenia.equals(confirmar)) {
+            usuarioEliminarView.mostrarMensaje("Las contraseñas no coinciden.");
             return;
         }
 
-        if (!getUsuarioAutenticado().getContrasenia().equals(contraseniaAdmin)) {
-            usuarioEliminarView.mostrarMensaje("Contraseña incorrecta.");
-            return;
-        }
-
-        Usuario usuarioAEliminar = usuarioDAO.buscarPorUsername(usernameEliminar);
-        if (usuarioAEliminar == null) {
+        Usuario u = usuarioDAO.buscarPorUsername(nombre);
+        if (u == null) {
             usuarioEliminarView.mostrarMensaje("Usuario no encontrado.");
             return;
         }
 
-        if (usuarioAEliminar.getUsername().equals(getUsuarioAutenticado().getUsername())) {
-            usuarioEliminarView.mostrarMensaje("No puedes eliminar tu propia cuenta.");
+        if (!u.getContrasenia().equals(contrasenia)) {
+            usuarioEliminarView.mostrarMensaje("Contraseña incorrecta.");
             return;
         }
 
-        usuarioDAO.eliminar(usernameEliminar);
-        usuarioEliminarView.mostrarMensaje("Usuario eliminado con éxito.");
+        usuarioDAO.eliminar(u.getCodigo());
+        usuarioEliminarView.mostrarMensaje("Usuario eliminado correctamente.");
+
+        usuarioEliminarView.getTxtNombre().setText("");
+        usuarioEliminarView.getTxtContraseña().setText("");
+        usuarioEliminarView.getTxtConfirmarContrasenia().setText("");
     }
+
+
 
     public void cerrarSesion() {
         int opcion = JOptionPane.showConfirmDialog(menuPrincipalView, "¿Está seguro que desea cerrar sesión?", "Confirmar", JOptionPane.YES_NO_OPTION);
@@ -166,11 +201,25 @@ public class UsuarioController {
     }
 
     private void crear() {
-        String usuarioT = registrarseView.getTxtUsuario().getText();
+        String nombreCompleto = registrarseView.getTxtNombreCompleto().getText();
+        String username = registrarseView.getTxtUsuario().getText();
         String contrasenia = new String(registrarseView.getTxtContrasenia().getPassword());
         String confirmarContrasenia = new String(registrarseView.getTxtConfirmarContrasenia().getPassword());
+        String fechaNacimiento = registrarseView.getTxtFechaNacimiento().getText();
+        String correo = registrarseView.getTxtCorreo().getText();
+        String telefono = registrarseView.getTxtTelefono().getText();
 
-        if (usuarioT.isEmpty() || contrasenia.isEmpty() || confirmarContrasenia.isEmpty()) {
+        String pregunta1 = (String) registrarseView.getCbxPregunta1().getSelectedItem();
+        String respuesta1 = registrarseView.getTxtPregunta1().getText();
+        String pregunta2 = (String) registrarseView.getCbxPregunta2().getSelectedItem();
+        String respuesta2 = registrarseView.getTxtPregunta2().getText();
+        String pregunta3 = (String) registrarseView.getCbxPregunta3().getSelectedItem();
+        String respuesta3 = registrarseView.getTxtPregunta3().getText();
+
+        if (username.isEmpty() || contrasenia.isEmpty() || confirmarContrasenia.isEmpty()
+                || nombreCompleto.isEmpty() || fechaNacimiento.isEmpty()
+                || correo.isEmpty() || telefono.isEmpty()
+                || respuesta1.isEmpty() || respuesta2.isEmpty() || respuesta3.isEmpty()) {
             registrarseView.mostrarMensaje("Todos los campos son obligatorios.");
             return;
         }
@@ -180,12 +229,32 @@ public class UsuarioController {
             return;
         }
 
-        if (usuarioDAO.buscarPorUsername(usuarioT) != null) {
+        if (usuarioDAO.buscarPorUsername(username) != null) {
             registrarseView.mostrarMensaje("Ya existe un usuario con ese nombre.");
             return;
         }
 
-        Usuario nuevoUsuario = new Usuario(usuarioT, contrasenia);
+        Usuario nuevoUsuario = new Usuario(username, contrasenia);
+        DateTimeFormatter formatter;
+        try {
+            formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            LocalDate fecha = LocalDate.parse(fechaNacimiento, formatter);
+            nuevoUsuario.setFechaNacimiento(fecha);
+        } catch (DateTimeParseException ex) {
+            registrarseView.mostrarMensaje("La fecha debe tener el formato dd-MM-yyyy y ser válida.");
+            return;
+        }
+        nuevoUsuario.setFechaNacimiento(LocalDate.parse(fechaNacimiento, formatter));
+        nuevoUsuario.setNombreCompleto(nombreCompleto);
+        nuevoUsuario.setCorreo(correo);
+        nuevoUsuario.setTelefono(telefono);
+        nuevoUsuario.setPregunta1(pregunta1);
+        nuevoUsuario.setRespuesta1(respuesta1);
+        nuevoUsuario.setPregunta2(pregunta2);
+        nuevoUsuario.setRespuesta2(respuesta2);
+        nuevoUsuario.setPregunta3(pregunta3);
+        nuevoUsuario.setRespuesta3(respuesta3);
+
         usuarioDAO.crear(nuevoUsuario);
         registrarseView.mostrarMensaje("Usuario registrado con éxito.");
         registrarseView.dispose();
@@ -213,9 +282,260 @@ public class UsuarioController {
                                          PreguntasDAO preguntasDAO,
                                          MensajeInternacionalizacionHandler mensajeHandler) {
         this.recuperarContraseniaView = cuestionarioView;
-        this.mensajeI = mensajeHandler;
-        // Puedes guardar los demás si los necesitas en atributos
+        this.mensajeHandler = mensajeHandler;
     }
 
-}
+    private void configurarEventosRecuperacion() {
+        recuperarContraseniaView.getTxtUsuario().addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                String username = recuperarContraseniaView.getTxtUsuario().getText().trim();
+                Usuario usuario = usuarioDAO.buscarPorUsername(username);
+                if (usuario != null) {
+                    JComboBox<String> cbx = recuperarContraseniaView.getCbxPreguntas();
+                    cbx.removeAllItems();
+                    cbx.addItem(usuario.getPregunta1());
+                    cbx.addItem(usuario.getPregunta2());
+                    cbx.addItem(usuario.getPregunta3());
+                }
+            }
+        });
 
+        recuperarContraseniaView.getBtnValidar().addActionListener(e -> {
+            String username = recuperarContraseniaView.getTxtUsuario().getText().trim();
+            Usuario usuario = usuarioDAO.buscarPorUsername(username);
+            if (usuario == null) {
+                recuperarContraseniaView.mostrarMensaje("Usuario no válido.");
+                return;
+            }
+
+            String preguntaSeleccionada = (String) recuperarContraseniaView.getCbxPreguntas().getSelectedItem();
+            String respuestaIngresada = recuperarContraseniaView.getTxtRespuesta().getText().trim();
+
+            if (preguntaSeleccionada == null || respuestaIngresada.isEmpty()) {
+                recuperarContraseniaView.mostrarMensaje("Por favor seleccione una pregunta y escriba una respuesta.");
+                return;
+            }
+
+            boolean esCorrecta = (
+                    (preguntaSeleccionada.equals(usuario.getPregunta1()) && respuestaIngresada.equalsIgnoreCase(usuario.getRespuesta1())) ||
+                            (preguntaSeleccionada.equals(usuario.getPregunta2()) && respuestaIngresada.equalsIgnoreCase(usuario.getRespuesta2())) ||
+                            (preguntaSeleccionada.equals(usuario.getPregunta3()) && respuestaIngresada.equalsIgnoreCase(usuario.getRespuesta3()))
+            );
+
+            if (esCorrecta) {
+                recuperarContraseniaView.mostrarMensaje("Respuesta correcta. Ahora puedes cambiar tu contraseña.");
+            } else {
+                recuperarContraseniaView.mostrarMensaje("Respuesta incorrecta.");
+            }
+        });
+    }
+    private void modificarFecha() {
+        int codigo = Integer.parseInt(carritoModificarView.getTxtCodigo().getText());
+        Carrito c = carritoDAO.buscarPorCodigo(codigo);
+        if (c != null) {
+            c.setFechaCreacion(new Date());
+            carritoDAO.actualizar(c); // <-- ESTA LÍNEA ES IMPORTANTE
+            carritoModificarView.mostrarMensaje("Fecha modificada correctamente.");
+        } else {
+            carritoModificarView.mostrarMensaje("Carrito no encontrado.");
+        }
+    }
+
+    private void modificarUsuario() {
+        String usuarioBuscar = usuarioModificarView.getTxtBuscarUsuario().getText();
+        Usuario usuario = usuarioDAO.buscarPorUsername(usuarioBuscar);
+        if (usuario == null) {
+            usuarioModificarView.mostrarMensaje("Usuario no encontrado.");
+            return;
+        }
+
+        String nombre = usuarioModificarView.getTxtNombre().getText();
+        String correo = usuarioModificarView.getTxtCorreo().getText();
+        String telefono = usuarioModificarView.getTxtTelefono().getText();
+        String fechaStr = usuarioModificarView.getTxtFecha().getText();
+
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate fechaNacimiento = LocalDate.parse(fechaStr, formatter);
+
+            usuario.setNombreCompleto(nombre);
+            usuario.setCorreo(correo);
+            usuario.setTelefono(telefono);
+            usuario.setFechaNacimiento(fechaNacimiento);
+
+            usuarioModificarView.mostrarMensaje("Usuario modificado con éxito.");
+        } catch (Exception ex) {
+            usuarioModificarView.mostrarMensaje("Error al modificar: " + ex.getMessage());
+        }
+    }
+
+    public void configurarEventosModificar() {
+        usuarioModificarView.getBtnBuscar().addActionListener(e -> {
+            String username = usuarioModificarView.getTxtBuscarUsuario().getText();
+            Usuario usuario = usuarioDAO.buscarPorUsername(username);
+
+            if (usuario != null) {
+                usuarioModificarView.getTxtNombre().setText(usuario.getNombreCompleto());
+                usuarioModificarView.getTxtCorreo().setText(usuario.getCorreo());
+                usuarioModificarView.getTxtTelefono().setText(usuario.getTelefono());
+
+                // Convertir LocalDate a String para el campo de texto
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String fechaTexto = usuario.getFechaNacimiento().format(formatter);
+                usuarioModificarView.getTxtFecha().setText(fechaTexto);
+
+            } else {
+                usuarioModificarView.mostrarMensaje("Usuario no encontrado.");
+            }
+        });
+
+        usuarioModificarView.getBtnModificarUsuario().addActionListener(e -> {
+            String username = usuarioModificarView.getTxtBuscarUsuario().getText();
+            Usuario usuario = usuarioDAO.buscarPorUsername(username);
+
+            if (usuario != null) {
+                String nombre = usuarioModificarView.getTxtNombre().getText();
+                String correo = usuarioModificarView.getTxtCorreo().getText();
+                String telefono = usuarioModificarView.getTxtTelefono().getText();
+                String fechaTexto = usuarioModificarView.getTxtFecha().getText();
+
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    LocalDate fecha = LocalDate.parse(fechaTexto, formatter);
+
+                    usuario.setNombreCompleto(nombre);
+                    usuario.setCorreo(correo);
+                    usuario.setTelefono(telefono);
+                    usuario.setFechaNacimiento(fecha);
+
+                    usuarioModificarView.mostrarMensaje("Usuario modificado correctamente.");
+                    usuarioModificarView.limpiarCampos();
+                } catch (Exception ex) {
+                    usuarioModificarView.mostrarMensaje("Formato de fecha incorrecto. Usa yyyy-MM-dd");
+                }
+            } else {
+                usuarioModificarView.mostrarMensaje("No se pudo modificar. Usuario no encontrado.");
+            }
+        });
+
+        usuarioModificarView.getBtnCancelar().addActionListener(e -> {
+            usuarioModificarView.limpiarCampos();
+            usuarioModificarView.dispose();
+        });
+    }
+
+    public void setUsuarioModificarView(UsuarioModificarView usuarioModificarView) {
+        this.usuarioModificarView = usuarioModificarView;
+        configurarEventosModificar();
+    }
+
+    public void configurarEventosLista() {
+        usuarioListaView.getBtnBuscar().addActionListener(e -> {
+            String filtro = (String) usuarioListaView.getCbxFiltro().getSelectedItem();
+            String valor = usuarioListaView.getTxtNombre().getText().trim().toLowerCase();
+
+            List<Usuario> filtrados = usuarioDAO.obtenerTodos().stream()
+                    .filter(u -> {
+                        switch (filtro.toLowerCase()) {
+                            case "nombre":
+                                return u.getNombreCompleto().toLowerCase().contains(valor);
+                            case "correo":
+                                return u.getCorreo().toLowerCase().contains(valor);
+                            case "rol":
+                                return u.getRol().name().toLowerCase().contains(valor);
+                            case "código":
+                                return String.valueOf(u.getCodigo()).contains(valor);
+                            default:
+                                return false;
+                        }
+                    }).toList();
+
+            DefaultTableModel modelo = usuarioListaView.getModelo();
+            modelo.setRowCount(0);
+
+            for (Usuario u : filtrados) {
+                modelo.addRow(new Object[]{
+                        u.getCodigo(),
+                        u.getNombreCompleto(),
+                        u.getCorreo(),
+                        u.getTelefono(),
+                        u.getRol().name()
+                });
+            }
+        });
+
+        usuarioListaView.getBtnCerrar().addActionListener(e -> usuarioListaView.dispose());
+    }
+
+
+
+    public void actualizarTablaUsuarios() {
+        List<Usuario> lista = usuarioDAO.obtenerTodos();
+        DefaultTableModel modelo = usuarioListaView.getModelo();
+        modelo.setRowCount(0); // Limpia la tabla
+
+        for (Usuario u : lista) {
+            modelo.addRow(new Object[]{
+                    u.getCodigo(),
+                    u.getNombreCompleto(),
+                    u.getCorreo(),
+                    u.getTelefono(),
+                    u.getRol().name()
+            });
+        }
+    }
+
+
+    public void filtrarUsuarios() {
+        String filtro = usuarioListaView.getCbxFiltro().getSelectedItem().toString();
+        String texto = usuarioListaView.getTxtNombre().getText().trim().toLowerCase();
+
+        usuarioListaView.getBtnBuscar().addActionListener(e -> filtrarUsuarios());
+        DefaultTableModel modelo = usuarioListaView.getModelo();
+        modelo.setRowCount(0);
+
+        List<Usuario> usuarios = usuarioDAO.obtenerTodos();
+
+        for (Usuario usuario : usuarios) {
+            boolean coincide = false;
+            switch (filtro) {
+                case "Nombre":
+                    coincide = usuario.getNombreCompleto().toLowerCase().contains(texto);
+                    break;
+                case "Correo":
+                    coincide = usuario.getCorreo().toLowerCase().contains(texto);
+                    break;
+                case "Rol":
+                    coincide = usuario.getRol().toString().toLowerCase().contains(texto);
+                    break;
+                case "Código":
+                    coincide = String.valueOf(usuario.getCodigo()).contains(texto);
+                    break;
+            }
+
+            if (coincide) {
+                modelo.addRow(new Object[]{
+                        usuario.getCodigo(),
+                        usuario.getNombreCompleto(),
+                        usuario.getCorreo(),
+                        usuario.getTelefono(),
+                        usuario.getRol().toString()
+                });
+            }
+        }
+    }
+
+    private List<Usuario> buscarUsuariosPor(String filtro, String valor) {
+        return usuarioDAO.obtenerTodos().stream()
+                .filter(u -> {
+                    switch (filtro.toLowerCase()) {
+                        case "nombre": return u.getNombreCompleto().toLowerCase().contains(valor.toLowerCase());
+                        case "correo": return u.getCorreo().toLowerCase().contains(valor.toLowerCase());
+                        case "rol": return u.getRol().name().toLowerCase().contains(valor.toLowerCase());
+                        case "codigo": return String.valueOf(u.getCodigo()).contains(valor);
+                        default: return false;
+                    }
+                }).toList();
+    }
+}

@@ -41,6 +41,7 @@ public class CarritoDetalleView extends JInternalFrame {
         tblDetCarrito.setModel(modelo);
         this.mensajeHandler = mensajeHandler;
         cambiarIdioma(mensajeHandler);
+        actualizarTextos(mensajeHandler);
         iconoImagen();
     }
 
@@ -64,6 +65,19 @@ public class CarritoDetalleView extends JInternalFrame {
         txtSubTotal.setToolTipText(mensajeHandler.get("carrito.subtotal.tooltip"));
         txtIVA.setToolTipText(mensajeHandler.get("carrito.iva.tooltip"));
         txtTotal.setToolTipText(mensajeHandler.get("carrito.total.tooltip"));
+    }
+
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajes) {
+        lblDetallesCarrito.setText(mensajes.get("detalle.titulo"));
+        lblID.setText(mensajes.get("detalle.id"));
+        lblSubTotal.setText(mensajes.get("detalle.subtotal"));
+        lblIVA.setText(mensajes.get("detalle.iva"));
+        lblTotal.setText(mensajes.get("detalle.total"));
+
+        btnBuscarDetalle.setText(mensajes.get("detalle.boton.buscar"));
+        btnAceptarDetalle.setText(mensajes.get("detalle.boton.aceptar"));
+
+        this.setTitle(mensajes.get("detalle.titulo")); // Si es JInternalFrame
     }
 
 
@@ -213,4 +227,9 @@ public class CarritoDetalleView extends JInternalFrame {
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
     }
+
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
 }

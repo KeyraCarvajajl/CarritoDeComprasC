@@ -6,6 +6,7 @@ public class Usuario {
     private String username;
     private String contrasenia;
     private Rol rol;
+    private int codigo;
 
     private String nombreCompleto;
     private LocalDate fechaNacimiento;
@@ -33,7 +34,22 @@ public class Usuario {
     }
 
 
-    // Getters y Setters
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -64,14 +80,6 @@ public class Usuario {
 
     public void setNombreCompleto(String nombreCompleto) {
         this.nombreCompleto = nombreCompleto;
-    }
-
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
     }
 
     public String getCorreo() {

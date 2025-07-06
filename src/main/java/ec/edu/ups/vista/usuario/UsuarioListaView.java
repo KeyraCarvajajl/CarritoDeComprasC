@@ -9,13 +9,14 @@ import java.net.URL;
 
 public class UsuarioListaView extends JInternalFrame {
 
-    private JTable tblUsuarios;
+    private JTable tablaUsuarios;
     private JComboBox<String> cbxFiltro;
-    private JButton btnBuscar;
+    private JButton btnListar;
     private JButton btnCerrar;
     private JTextField txtNombre;
     private JLabel lblNombre;
     private JPanel panelPrincipal;
+    private JButton btnBuscar;
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler mensajeHandler;
 
@@ -31,12 +32,19 @@ public class UsuarioListaView extends JInternalFrame {
         setIconifiable(true);
         setResizable(true);
 
+        // Llenar el comboBox de filtro
+        cbxFiltro.addItem("Nombre");
+        cbxFiltro.addItem("Correo");
+        cbxFiltro.addItem("Rol");
+        cbxFiltro.addItem("Código");
+
         modelo = new DefaultTableModel();
-        tblUsuarios.setModel(modelo);
+        tablaUsuarios.setModel(modelo);
 
         cambiarIdioma(mensajeHandler);
         imagenIcon();
     }
+
 
     private void imagenIcon() {
         // Redimensionar icono "Listar"
@@ -46,9 +54,20 @@ public class UsuarioListaView extends JInternalFrame {
             Image imgListar = iconBtnListar.getImage();  // Convierte ImageIcon a Image
             Image newImgListar = imgListar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
             iconBtnListar = new ImageIcon(newImgListar);  // Crea un nuevo ImageIcon con la imagen redimensionada
-            btnBuscar.setIcon(iconBtnListar);  // Establecer el icono en el botón
+            btnListar.setIcon(iconBtnListar);  // Establecer el icono en el botón
         } else {
             System.err.println("Error: No se ha cargado el icono de Listar");
+        }
+
+        URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
+        if (btBuscar != null) {
+            ImageIcon iconBtnBuscar = new ImageIcon(btBuscar);
+            Image imgBuscar = iconBtnBuscar.getImage();  // Convierte ImageIcon a Image
+            Image newImgBuscar = imgBuscar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
+            iconBtnBuscar = new ImageIcon(newImgBuscar);  // Crea un nuevo ImageIcon con la imagen redimensionada
+            btnBuscar.setIcon(iconBtnBuscar);  // Establecer el icono en el botón
+        } else {
+            System.err.println("Error: No se ha cargado el icono de Buscar");
         }
 
 // Redimensionar icono "Cerrar"
@@ -69,13 +88,13 @@ public class UsuarioListaView extends JInternalFrame {
         setTitle(mensajeHandler.get("usuario.lista.titulo"));
 
         lblNombre.setText(mensajeHandler.get("usuario.lista.nombre"));
-        btnBuscar.setText(mensajeHandler.get("usuario.lista.buscar"));
+        btnListar.setText(mensajeHandler.get("usuario.lista.buscar"));
         btnCerrar.setText(mensajeHandler.get("usuario.lista.cerrar"));
     }
 
     // Getters
     public JTable getTblUsuarios() {
-        return tblUsuarios;
+        return tablaUsuarios;
     }
 
     public JComboBox<String> getCbxFiltro() {
@@ -83,7 +102,7 @@ public class UsuarioListaView extends JInternalFrame {
     }
 
     public JButton getBtnBuscar() {
-        return btnBuscar;
+        return btnListar;
     }
 
     public JButton getBtnCerrar() {
@@ -102,6 +121,53 @@ public class UsuarioListaView extends JInternalFrame {
         return modelo;
     }
 
+    public JTable getTablaUsuarios() {
+        return tablaUsuarios;
+    }
+
+    public void setTablaUsuarios(JTable tablaUsuarios) {
+        this.tablaUsuarios = tablaUsuarios;
+    }
+
+    public void setCbxFiltro(JComboBox<String> cbxFiltro) {
+        this.cbxFiltro = cbxFiltro;
+    }
+
+    public void setBtnBuscar(JButton btnBuscar) {
+        this.btnListar = btnBuscar;
+    }
+
+    public void setBtnCerrar(JButton btnCerrar) {
+        this.btnCerrar = btnCerrar;
+    }
+
+    public void setTxtNombre(JTextField txtNombre) {
+        this.txtNombre = txtNombre;
+    }
+
+    public JLabel getLblNombre() {
+        return lblNombre;
+    }
+
+    public void setLblNombre(JLabel lblNombre) {
+        this.lblNombre = lblNombre;
+    }
+
+    public JPanel getPanelPrincipal() {
+        return panelPrincipal;
+    }
+
+    public void setPanelPrincipal(JPanel panelPrincipal) {
+        this.panelPrincipal = panelPrincipal;
+    }
+
+    public void setModelo(DefaultTableModel modelo) {
+        this.modelo = modelo;
+    }
+
+    public MensajeInternacionalizacionHandler getMensajeHandler() {
+        return mensajeHandler;
+    }
 
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;

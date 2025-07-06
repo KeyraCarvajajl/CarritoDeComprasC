@@ -5,8 +5,6 @@ import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JMenuBar;
 
 public class MenuPrincipalView extends JFrame {
@@ -141,8 +139,6 @@ public class MenuPrincipalView extends JFrame {
                 login.setVisible(true);
             }
         });
-
-
     }
 
     public MensajeInternacionalizacionHandler getMensajeInternacionalizacionHandler() {
@@ -393,4 +389,9 @@ public class MenuPrincipalView extends JFrame {
     public void setLblUsuario(JLabel lblUsuario) {
         this.lblUsuario = lblUsuario;
     }
+
+    public JDesktopPane getDesktopPane() {
+        return jDesktopPane;  // o el nombre real que   tu JDesktopPane
+    }
+
 }

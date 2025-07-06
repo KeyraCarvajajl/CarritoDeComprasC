@@ -21,23 +21,40 @@ public class CarritoModificarView extends JInternalFrame {
     private MensajeInternacionalizacionHandler mensajeHandler;
 
     public CarritoModificarView(MensajeInternacionalizacionHandler mensajeHandler) {
-        super("Modificar Carrito",true,true,false,true);
+        super("Modificar Carrito", true, true, false, true);
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-
         setSize(650, 700);
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
 
-        modelo = new DefaultTableModel();
-        Object[] columnas = {"Código", "Nombre", "Precio", "Cantidad", "Total"};
-        modelo.setColumnIdentifiers(columnas);
+        // Modelo de tabla personalizado: solo columna 3 ("Cantidad") editable
+        modelo = new DefaultTableModel(new Object[]{"Código", "Nombre", "Precio", "Cantidad", "Total"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 3; // Solo se puede editar la cantidad
+            }
+        };
         tblView.setModel(modelo);
+
         this.mensajeHandler = mensajeHandler;
         cambiarIdioma(mensajeHandler);
         imagenIcono();
+        actualizarTextos(mensajeHandler);
     }
+
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajes) {
+        lblCodigo.setText(mensajes.get("carrito.codigo"));
+        lblFecha.setText(mensajes.get("carrito.fecha"));
+
+        btnBuscar.setText(mensajes.get("carrito.boton.buscar"));
+        btnModificar.setText(mensajes.get("carrito.boton.modificar"));
+
+        this.setTitle(mensajes.get("carrito.modificar.titulo")); // Si es JInternalFrame
+    }
+
+
 
     private void imagenIcono() {
         // Redimensionar icono "Buscar"
@@ -82,6 +99,13 @@ public class CarritoModificarView extends JInternalFrame {
         txtCodigo.setToolTipText(mensajeHandler.get("producto.codigo.tooltip"));
         txtFecha.setToolTipText(mensajeHandler.get("producto.fecha.tooltip"));
     }
+
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+
+
 
 
     public JTextField getTxtCodigo() {

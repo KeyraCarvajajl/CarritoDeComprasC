@@ -19,8 +19,9 @@ public class UsuarioModificarView extends JInternalFrame {
     private JLabel lblCorreo;
     private JLabel lblTelefono;
     private JTextField txtTelefono;
-    private JButton btnGuardar;
+    private JButton btnModificarUsuario;
     private JButton btnCancelar;
+    private JLabel lblFecha;
 
     private MensajeInternacionalizacionHandler mensajeHandler;
 
@@ -61,7 +62,7 @@ public class UsuarioModificarView extends JInternalFrame {
             Image imgGuardar = iconBtnGuardar.getImage();  // Convierte ImageIcon a Image
             Image newImgGuardar = imgGuardar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
             iconBtnGuardar = new ImageIcon(newImgGuardar);  // Crea un nuevo ImageIcon con la imagen redimensionada
-            btnGuardar.setIcon(iconBtnGuardar);  // Establecer el icono en el botón
+            btnModificarUsuario.setIcon(iconBtnGuardar);  // Establecer el icono en el botón
         } else {
             System.err.println("Error: No se ha cargado el icono de Guardar");
         }
@@ -89,25 +90,9 @@ public class UsuarioModificarView extends JInternalFrame {
         lblTelefono.setText(mensajeHandler.get("usuario.modificar.telefono"));
 
         btnBuscar.setText(mensajeHandler.get("usuario.modificar.buscar"));
-        btnGuardar.setText(mensajeHandler.get("usuario.modificar.guardar"));
+        btnModificarUsuario.setText(mensajeHandler.get("usuario.modificar.guardar"));
         btnCancelar.setText(mensajeHandler.get("usuario.modificar.cancelar"));
     }
-
-    public JTextField getTxtBuscarUsuario() { return txtBuscarUsuario; }
-
-    public JButton getBtnBuscar() { return btnBuscar; }
-
-    public JTextField getTxtNombre() { return txtNombre; }
-
-    public JFormattedTextField getTxtFecha() { return txtFecha; }
-
-    public JTextField getTxtCorreo() { return txtCorreo; }
-
-    public JTextField getTxtTelefono() { return txtTelefono; }
-
-    public JButton getBtnGuardar() { return btnGuardar; }
-
-    public JButton getBtnCancelar() { return btnCancelar; }
 
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
@@ -120,4 +105,126 @@ public class UsuarioModificarView extends JInternalFrame {
         txtCorreo.setText("");
         txtTelefono.setText("");
     }
+
+    public JTextField getTxtBuscarUsuario() {
+        return txtBuscarUsuario;
+    }
+
+    public void setTxtBuscarUsuario(JTextField txtBuscarUsuario) {
+        this.txtBuscarUsuario = txtBuscarUsuario;
+    }
+
+    public JPanel getPanelPrincipal() {
+        return panelPrincipal;
+    }
+
+    public void setPanelPrincipal(JPanel panelPrincipal) {
+        this.panelPrincipal = panelPrincipal;
+    }
+
+    public JLabel getLblUsuarioBuscar() {
+        return lblUsuarioBuscar;
+    }
+
+    public void setLblUsuarioBuscar(JLabel lblUsuarioBuscar) {
+        this.lblUsuarioBuscar = lblUsuarioBuscar;
+    }
+
+    public JButton getBtnBuscar() {
+        return btnBuscar;
+    }
+
+    public void setBtnBuscar(JButton btnBuscar) {
+        this.btnBuscar = btnBuscar;
+    }
+
+    public JLabel getLblNombre() {
+        return lblNombre;
+    }
+
+    public void setLblNombre(JLabel lblNombre) {
+        this.lblNombre = lblNombre;
+    }
+
+    public JTextField getTxtNombre() {
+        return txtNombre;
+    }
+
+    public void setTxtNombre(JTextField txtNombre) {
+        this.txtNombre = txtNombre;
+    }
+
+    public JFormattedTextField getTxtFecha() {
+        return txtFecha;
+    }
+
+    public void setTxtFecha(JFormattedTextField txtFecha) {
+        this.txtFecha = txtFecha;
+    }
+
+    public JTextField getTxtCorreo() {
+        return txtCorreo;
+    }
+
+    public void setTxtCorreo(JTextField txtCorreo) {
+        this.txtCorreo = txtCorreo;
+    }
+
+    public JLabel getLblCorreo() {
+        return lblCorreo;
+    }
+
+    public void setLblCorreo(JLabel lblCorreo) {
+        this.lblCorreo = lblCorreo;
+    }
+
+    public JLabel getLblTelefono() {
+        return lblTelefono;
+    }
+
+    public void setLblTelefono(JLabel lblTelefono) {
+        this.lblTelefono = lblTelefono;
+    }
+
+    public JTextField getTxtTelefono() {
+        return txtTelefono;
+    }
+
+    public void setTxtTelefono(JTextField txtTelefono) {
+        this.txtTelefono = txtTelefono;
+    }
+
+    public JButton getBtnModificarUsuario() {
+        return btnModificarUsuario;
+    }
+
+    public void setBtnModificarUsuario(JButton btnModificarUsuario) {
+        this.btnModificarUsuario = btnModificarUsuario;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public void setBtnCancelar(JButton btnCancelar) {
+        this.btnCancelar = btnCancelar;
+    }
+
+    public JLabel getLblFecha() {
+        return lblFecha;
+    }
+
+    public void setLblFecha(JLabel lblFecha) {
+        this.lblFecha = lblFecha;
+    }
+
+    public MensajeInternacionalizacionHandler getMensajeHandler() {
+        return mensajeHandler;
+    }
+
+    public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
+        this.mensajeHandler = mensajeHandler;
+    }
+
+
 }

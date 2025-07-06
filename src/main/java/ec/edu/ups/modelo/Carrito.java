@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Carrito {
 
-    private final double IVA = 0.12;
+    private final double IVA = 0.15;
 
     private static int contador = 1;
 

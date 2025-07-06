@@ -3,6 +3,7 @@ package ec.edu.ups.controlador;
 import ec.edu.ups.dao.ProductoDAO;
 import ec.edu.ups.modelo.Producto;
 import ec.edu.ups.vista.carrito.CarritoAnadirView;
+import ec.edu.ups.vista.carrito.CarritoEliminarView;
 import ec.edu.ups.vista.producto.ProductoAnadirView;
 import ec.edu.ups.vista.producto.ProductoEliminarView;
 import ec.edu.ups.vista.producto.ProductoListaView;
@@ -18,6 +19,7 @@ public class ProductoController {
     private ProductoModificarView productoModificarView;
     private ProductoEliminarView productoEliminarView;
     private CarritoAnadirView carritoAnadirView;
+    private CarritoEliminarView carritoEliminarView;
     private final ProductoDAO productoDAO;
 
     public ProductoController(ProductoAnadirView productoAnadirView,
@@ -56,6 +58,10 @@ public class ProductoController {
 
     public void setCarritoAnadirView(CarritoAnadirView carritoAnadirView) {
         this.carritoAnadirView = carritoAnadirView;
+    }
+
+    public void setCarritoEliminarView(CarritoEliminarView carritoEliminarView) {
+        this.carritoEliminarView = carritoEliminarView;
     }
 
     private void configurarEliminarEventos() {

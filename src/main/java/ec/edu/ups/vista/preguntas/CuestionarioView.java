@@ -175,10 +175,6 @@ public class CuestionarioView extends JInternalFrame {
         this.lblPreguntas = lblPreguntas;
     }
 
-    public JComboBox<String> getCbxPreguntas() {
-        return cbxPreguntas;
-    }
-
     public void setCbxPreguntas(JComboBox<String> cbxPreguntas) {
         this.cbxPreguntas = cbxPreguntas;
     }
@@ -230,4 +226,9 @@ public class CuestionarioView extends JInternalFrame {
     public void setUsuarioActual(Usuario usuarioActual) {
         this.usuarioActual = usuarioActual;
     }
+
+    public JComboBox<String> getCbxPreguntas() {
+        return cbxPreguntas;
+    }
+
 }

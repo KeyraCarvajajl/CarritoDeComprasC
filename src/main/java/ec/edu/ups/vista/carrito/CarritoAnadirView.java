@@ -51,15 +51,15 @@ public class CarritoAnadirView extends JInternalFrame {
 
         cargarDatos();
         cambiarIdioma(mensajeHandler);
+        actualizarTextos(mensajeHandler);
         limpiarCampos();
         iconoImagen();
     }
 
-    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        // Actualiza los títulos de la ventana
-        setTitle(mensajeHandler.get("producto.lista.titulo"));
 
-        // Actualiza las etiquetas
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
+        setTitle(mensajeHandler.get("carrito.anadir.titulo"));
+
         lblCodigo.setText(mensajeHandler.get("producto.codigo"));
         lblNombre.setText(mensajeHandler.get("producto.nombre"));
         lblPrecio.setText(mensajeHandler.get("producto.precio"));
@@ -68,17 +68,33 @@ public class CarritoAnadirView extends JInternalFrame {
         lblIva.setText(mensajeHandler.get("producto.iva"));
         lblTotal.setText(mensajeHandler.get("producto.total"));
 
-        // Actualiza los botones
         btnBuscar.setText(mensajeHandler.get("producto.buscar"));
         btnAnadir.setText(mensajeHandler.get("producto.anadir"));
         btnGuardar.setText(mensajeHandler.get("producto.guardar"));
         btnLimpiar.setText(mensajeHandler.get("producto.limpiar"));
 
-        // Actualiza los combobox y otros textos si es necesario
         cbxCantidad.setToolTipText(mensajeHandler.get("producto.cantidad.tooltip"));
+        txtCodigo.setToolTipText(mensajeHandler.get("producto.codigo.tooltip"));
+        txtNombre.setToolTipText(mensajeHandler.get("producto.nombre.tooltip"));
+        txtPrecio.setToolTipText(mensajeHandler.get("producto.precio.tooltip"));
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajes) {
+        lblCodigo.setText(mensajes.get("producto.codigo"));
+        lblNombre.setText(mensajes.get("producto.nombre"));
+        lblPrecio.setText(mensajes.get("producto.precio"));
+        lblCantidad.setText(mensajes.get("producto.cantidad"));
+        lblSubTotal.setText(mensajes.get("producto.subtotal"));
+        lblIva.setText(mensajes.get("producto.iva"));
+        lblTotal.setText(mensajes.get("producto.total"));
 
+        btnBuscar.setText(mensajes.get("producto.boton.buscar"));
+        btnAnadir.setText(mensajes.get("producto.boton.anadir"));
+        btnGuardar.setText(mensajes.get("producto.boton.guardar"));
+        btnLimpiar.setText(mensajes.get("producto.boton.limpiar"));
+
+        this.setTitle(mensajes.get("producto.titulo")); // Si es JInternalFrame o JFrame
+    }
 
     private void cargarDatos(){
         cbxCantidad.removeAllItems();
@@ -112,7 +128,7 @@ public class CarritoAnadirView extends JInternalFrame {
         if (btAnadir != null) {
             ImageIcon iconBtnAceptar = new ImageIcon(btAnadir);
             Image imgAnadir = iconBtnAceptar.getImage();
-            Image newImgAnadir = imgAnadir.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Ajustar el tamaño
+            Image newImgAnadir = imgAnadir.getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Ajustar el tamaño
             iconBtnAceptar = new ImageIcon(newImgAnadir);
             btnAnadir.setIcon(iconBtnAceptar);
         } else {
@@ -124,7 +140,7 @@ public class CarritoAnadirView extends JInternalFrame {
         if (btGuardar != null) {
             ImageIcon iconBtnAceptar = new ImageIcon(btGuardar);
             Image imgGuardar = iconBtnAceptar.getImage();
-            Image newImgGuardar = imgGuardar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Ajustar el tamaño
+            Image newImgGuardar = imgGuardar.getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Ajustar el tamaño
             iconBtnAceptar = new ImageIcon(newImgGuardar);
             btnGuardar.setIcon(iconBtnAceptar);
         } else {
@@ -136,7 +152,7 @@ public class CarritoAnadirView extends JInternalFrame {
         if (btLimpiar != null) {
             ImageIcon iconBtnAceptar = new ImageIcon(btLimpiar);
             Image imgLimpiar = iconBtnAceptar.getImage();
-            Image newImgLimpiar = imgLimpiar.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Ajustar el tamaño
+            Image newImgLimpiar = imgLimpiar.getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Ajustar el tamaño
             iconBtnAceptar = new ImageIcon(newImgLimpiar);
             btnLimpiar.setIcon(iconBtnAceptar);
         } else {

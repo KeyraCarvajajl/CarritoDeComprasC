@@ -11,6 +11,8 @@ import java.util.List;
 public class UsuarioDAOMemoria implements UsuarioDAO {
 
     private final List<Usuario> usuarios;
+    private int contadorCodigo = 1;
+    private List<Usuario> listaUsuarios = new ArrayList<>();
 
     public UsuarioDAOMemoria() {
         usuarios = new ArrayList<>();
@@ -48,9 +50,9 @@ public class UsuarioDAOMemoria implements UsuarioDAO {
 
     @Override
     public void crear(Usuario usuario) {
+        usuario.setCodigo(contadorCodigo++);
         usuarios.add(usuario);
     }
-
     @Override
     public Usuario buscarPorUsername(String username) {
         for (Usuario usuario : usuarios) {
@@ -62,11 +64,11 @@ public class UsuarioDAOMemoria implements UsuarioDAO {
     }
 
     @Override
-    public void eliminar(String username) {
+    public void eliminar(int codigo) {
         Iterator<Usuario> iterator = usuarios.iterator();
         while (iterator.hasNext()) {
             Usuario usuario = iterator.next();
-            if (usuario.getUsername().equalsIgnoreCase(username)) {
+            if (usuario.getUsername().equalsIgnoreCase(String.valueOf(usuario))) {
                 iterator.remove();
                 break;
             }
@@ -109,5 +111,10 @@ public class UsuarioDAOMemoria implements UsuarioDAO {
             }
         }
         return resultado;
+    }
+
+    @Override
+    public List<Usuario> obtenerTodos() {
+        return new ArrayList<>(listaUsuarios);
     }
 }

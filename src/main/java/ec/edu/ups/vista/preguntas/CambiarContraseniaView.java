@@ -29,7 +29,7 @@ public class CambiarContraseniaView extends JInternalFrame {
         setLocation(100, 100);
 
         initComponents();
-        cambiarIdioma();
+        cambiarIdioma(mensajeHandler);
         imagenIcon();
     }
 
@@ -96,7 +96,7 @@ public class CambiarContraseniaView extends JInternalFrame {
         add(panelPrincipal);
     }
 
-    public void cambiarIdioma() {
+    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
         setTitle(mensajeHandler.get("ventana.cambiar.contrasenia"));
         lblNuevaContrasenia.setText(mensajeHandler.get("label.nueva.contrasenia"));
         lblConfirmarContrasenia.setText(mensajeHandler.get("label.confirmar.contrasenia"));

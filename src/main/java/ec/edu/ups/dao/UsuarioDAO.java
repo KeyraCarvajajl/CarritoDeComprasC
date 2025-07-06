@@ -12,7 +12,7 @@ public interface UsuarioDAO {
 
     Usuario buscarPorUsername(String username);
 
-    void eliminar(String username);
+    void eliminar(int codigo); // En lugar de int
 
     void actualizar(Usuario usuario);
 
@@ -21,4 +21,7 @@ public interface UsuarioDAO {
     List<Usuario> listarAdministradores();
 
     List<Usuario> listarPorRol(Rol rol);
+
+    List<Usuario> obtenerTodos();
+
 }

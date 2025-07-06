@@ -37,7 +37,7 @@ public class CarritoEliminarView extends JInternalFrame {
         tblLProductos.setModel(modelo);
         this.mensajeHandler = mensajeHandler;
 
-
+        actualizarTextos(mensajeHandler);
         cambiarIdioma(mensajeHandler);
         iconoImagen();
     }
@@ -99,7 +99,16 @@ public class CarritoEliminarView extends JInternalFrame {
         txtFecha.setToolTipText(mensajeHandler.get("producto.fecha.tooltip"));
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajes) {
+        lblCodigo.setText(mensajes.get("producto.codigo"));
+        lblFecha.setText(mensajes.get("producto.fecha"));
 
+        btnBuscar.setText(mensajes.get("producto.boton.buscar"));
+        btnEliminar.setText(mensajes.get("producto.boton.eliminar"));
+        btnVaciar.setText(mensajes.get("producto.boton.vaciar"));
+
+        this.setTitle(mensajes.get("producto.eliminar.titulo")); // Si es JInternalFrame
+    }
 
     public JTextField getTxtCodigo() {
         return txtCodigo;
@@ -145,13 +154,32 @@ public class CarritoEliminarView extends JInternalFrame {
         return btnBuscar;
     }
 
+    public JTextField getTxtFecha() {
+        return txtFecha;
+    }
+
+    public void setTxtFecha(JTextField txtFecha) {
+        this.txtFecha = txtFecha;
+    }
+
+    public MensajeInternacionalizacionHandler getMensajeHandler() {
+        return mensajeHandler;
+    }
+
+    public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
+        this.mensajeHandler = mensajeHandler;
+    }
+
     public void setBtnBuscar(JButton btnBuscar) {
         this.btnBuscar = btnBuscar;
     }
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
+
     public void limpiarCampos() {
         txtCodigo.setText("");
     }
+
+
 }

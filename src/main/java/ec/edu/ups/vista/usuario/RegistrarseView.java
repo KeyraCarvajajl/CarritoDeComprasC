@@ -24,7 +24,7 @@ public class RegistrarseView extends JInternalFrame {
     private JComboBox cbxPregunta3;
     private JTextField txtPregunta3;
 
-    private JButton btnRegistrarse;
+    private JButton btnRegistro;
     private JButton btnCancelar;
 
     private JLabel lblNombre;
@@ -62,7 +62,7 @@ public class RegistrarseView extends JInternalFrame {
             Image imgRegistro = iconBtnRegistro.getImage();  // Convierte ImageIcon a Image
             Image newImgRegistro = imgRegistro.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // Redimensionar la imagen
             iconBtnRegistro = new ImageIcon(newImgRegistro);  // Crea un nuevo ImageIcon con la imagen redimensionada
-            btnRegistrarse.setIcon(iconBtnRegistro);  // Establecer el icono en el botón
+            btnRegistro.setIcon(iconBtnRegistro);  // Establecer el icono en el botón
         } else {
             System.err.println("Error: No se ha cargado el icono de Registro");
         }
@@ -98,7 +98,7 @@ public class RegistrarseView extends JInternalFrame {
         lblPregunta2.setText(mensajeHandler.get("usuario.registro.pregunta2"));
         lblPregunta3.setText(mensajeHandler.get("usuario.registro.pregunta3"));
 
-        btnRegistrarse.setText(mensajeHandler.get("usuario.registro.registrarse"));
+        btnRegistro.setText(mensajeHandler.get("usuario.registro.registrarse"));
         btnCancelar.setText(mensajeHandler.get("usuario.registro.cancelar"));
     }
 
@@ -116,7 +116,7 @@ public class RegistrarseView extends JInternalFrame {
         lblPregunta2.setText(RegistrarseView.this.mensajeHandler.get("usuario.pregunta2"));
         lblPregunta3.setText(RegistrarseView.this.mensajeHandler.get("usuario.pregunta3"));
 
-        btnRegistrarse.setText(RegistrarseView.this.mensajeHandler.get("usuario.registrarse"));
+        btnRegistro.setText(RegistrarseView.this.mensajeHandler.get("usuario.registrarse"));
         btnCancelar.setText(RegistrarseView.this.mensajeHandler.get("usuario.cancelar"));
 
         setTitle(RegistrarseView.this.mensajeHandler.get("usuario.view.registrar.titulo"));
@@ -151,7 +151,7 @@ public class RegistrarseView extends JInternalFrame {
 
     public JTextField getTxtPregunta3() { return txtPregunta3; }
 
-    public JButton getBtnRegistrarse() { return btnRegistrarse; }
+    public JButton getBtnRegistro() { return btnRegistro; }
 
     public JButton getBtnCancelar() { return btnCancelar; }
 
@@ -172,50 +172,24 @@ public class RegistrarseView extends JInternalFrame {
         txtPregunta3.setText("");
     }
 
-    public void cargarPreguntas() {
-        cbxPregunta1.removeAllItems();
-        cbxPregunta2.removeAllItems();
-        cbxPregunta3.removeAllItems();
+    private void cargarPreguntas() {
+        String[] preguntas = {
+                "¿Cuál es tu color favorito?",
+                "¿Cuál es el nombre de tu primera mascota?",
+                "¿Cuál es tu comida favorita?",
+                "¿Cuál es tu canción favorita?",
+                "¿En qué ciudad naciste?",
+                "¿Cuál es tu película favorita?",
+                "¿Cuál es el nombre de tu mejor amigo de la infancia?",
+                "¿Cuál es tu deporte favorito?",
+                "¿Qué país te gustaría visitar?",
+                "¿Cómo se llama tu profesor favorito?"
+        };
 
-        String idioma = mensajeHandler.getLocale().getLanguage();
-
-        if (idioma.equals("es")) {
-            cbxPregunta1.addItem("¿Color favorito?");
-            cbxPregunta1.addItem("¿Nombre de tu mascota?");
-            cbxPregunta1.addItem("¿Ciudad natal?");
-
-            cbxPregunta2.addItem("¿Color favorito?");
-            cbxPregunta2.addItem("¿Nombre de tu mascota?");
-            cbxPregunta2.addItem("¿Ciudad natal?");
-
-            cbxPregunta3.addItem("¿Color favorito?");
-            cbxPregunta3.addItem("¿Nombre de tu mascota?");
-            cbxPregunta3.addItem("¿Ciudad natal?");
-        } else if (idioma.equals("en")) {
-            cbxPregunta1.addItem("Favorite color?");
-            cbxPregunta1.addItem("Pet's name?");
-            cbxPregunta1.addItem("Hometown?");
-
-            cbxPregunta2.addItem("Favorite color?");
-            cbxPregunta2.addItem("Pet's name?");
-            cbxPregunta2.addItem("Hometown?");
-
-            cbxPregunta3.addItem("Favorite color?");
-            cbxPregunta3.addItem("Pet's name?");
-            cbxPregunta3.addItem("Hometown?");
-        } else if (idioma.equals("fr")) {
-
-            cbxPregunta1.addItem("Couleur préférée ?");
-            cbxPregunta1.addItem("Nom de votre animal de compagnie ?");
-            cbxPregunta1.addItem("Ville natale ?");
-
-            cbxPregunta2.addItem("Couleur préférée ?");
-            cbxPregunta2.addItem("Nom de votre animal de compagnie ?");
-            cbxPregunta2.addItem("Ville natale ?");
-
-            cbxPregunta3.addItem("Couleur préférée ?");
-            cbxPregunta3.addItem("Nom de votre animal de compagnie ?");
-            cbxPregunta3.addItem("Ville natale ?");
+        for (String p : preguntas) {
+            cbxPregunta1.addItem(p);
+            cbxPregunta2.addItem(p);
+            cbxPregunta3.addItem(p);
         }
     }
 }
