@@ -1,6 +1,8 @@
 package ec.edu.ups.vista;
 
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
+import ec.edu.ups.vista.carrito.*;
+import ec.edu.ups.vista.producto.ProductoAnadirView;
 import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
@@ -43,6 +45,13 @@ public class MenuPrincipalView extends JFrame {
 
     private MiJDesktopPane jDesktopPane;
     private JLabel lblUsuario;
+
+    private CarritoAnadirView carritoAnadirView;
+    private ProductoAnadirView productoAnadirView;
+    private CarritoDetalleView carritoDetalleView;
+    private CarritoEliminarView carritoEliminarView;
+    private CarritoModificarView carritoModificarView;
+    private CarritoListaView carritoListaView;
 
     public MenuPrincipalView(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeInternacionalizacionHandler = mensajeHandler;
@@ -139,6 +148,86 @@ public class MenuPrincipalView extends JFrame {
                 login.setVisible(true);
             }
         });
+
+        menuItemIdiomaEspanol.addActionListener(e -> {
+            actualizarTextos("es", "EC");
+
+            if (carritoAnadirView != null) {
+                carritoAnadirView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+            if (productoAnadirView != null) {
+                productoAnadirView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (carritoDetalleView != null) {
+                carritoDetalleView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (carritoListaView != null) {
+                carritoDetalleView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (carritoModificarView != null) {
+                carritoModificarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (carritoEliminarView != null) {
+                carritoEliminarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+        });
+
+        menuItemIdiomaIngles.addActionListener(e -> {
+            actualizarTextos("en", "US");
+
+            if (carritoAnadirView != null) {
+                carritoAnadirView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+            if (productoAnadirView != null) {
+                productoAnadirView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+            if (carritoDetalleView != null) {
+                carritoDetalleView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (carritoListaView != null) {
+                carritoDetalleView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (carritoModificarView != null) {
+                carritoModificarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (carritoEliminarView != null) {
+                carritoEliminarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+        });
+
+        menuItemIdiomaFrances.addActionListener(e -> {
+            actualizarTextos("fr", "FR");
+
+            if (carritoAnadirView != null) {
+                carritoAnadirView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+            if (productoAnadirView != null) {
+                productoAnadirView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+            if (carritoDetalleView != null) {
+                carritoDetalleView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (carritoListaView != null) {
+                carritoDetalleView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (carritoModificarView != null) {
+                carritoModificarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (carritoEliminarView != null) {
+                carritoEliminarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+        });
+
     }
 
     public MensajeInternacionalizacionHandler getMensajeInternacionalizacionHandler() {
@@ -149,7 +238,7 @@ public class MenuPrincipalView extends JFrame {
         this.mensajeInternacionalizacionHandler = mensajeInternacionalizacionHandler;
     }
 
-    public void cambiarIdioma(String lenguaje, String pais){
+    public void actualizarTextos(String lenguaje, String pais){
         mensajeInternacionalizacionHandler.setLenguaje(lenguaje, pais);
         setTitle(mensajeInternacionalizacionHandler.get("app.titulo"));
 

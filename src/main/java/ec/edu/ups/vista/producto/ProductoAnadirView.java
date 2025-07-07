@@ -42,8 +42,8 @@ public class ProductoAnadirView extends JInternalFrame {
             }
         });
 
-        cambiarIdioma(mensajeHandler);
         imagenIcon();
+        actualizarTextos(mensajeHandler);
     }
 
     private void imagenIcon() {
@@ -73,16 +73,17 @@ public class ProductoAnadirView extends JInternalFrame {
 
     }
 
-    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        setTitle(mensajeHandler.get("producto.anadir.titulo"));
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblCodigo.setText(mensajeHandler.get("producto.codigo"));
+        lblNombre.setText(mensajeHandler.get("producto.nombre"));
+        lblPrecio.setText(mensajeHandler.get("producto.precio"));
 
-        lblCodigo.setText(mensajeHandler.get("producto.anadir.codigo"));
-        lblNombre.setText(mensajeHandler.get("producto.anadir.nombre"));
-        lblPrecio.setText(mensajeHandler.get("producto.anadir.precio"));
+        btnAceptar.setText(mensajeHandler.get("boton.aceptar"));
+        btnLimpiar.setText(mensajeHandler.get("boton.limpiar"));
 
-        btnAceptar.setText(mensajeHandler.get("producto.anadir.aceptar"));
-        btnLimpiar.setText(mensajeHandler.get("producto.anadir.limpiar"));
+        setTitle(mensajeHandler.get("producto.anadir.titulo")); // Solo si usas JInternalFrame o JFrame
     }
+
 
     public JPanel getPanelPrincipal() {
         return panelPrincipal;

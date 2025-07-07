@@ -46,7 +46,6 @@ public class UsuarioController {
             UsuarioListaView usuarioListaView,
             UsuarioModificarView usuarioModificarView,
             UsuarioEliminarView usuarioEliminarView,
-            MenuPrincipalView menuPrincipalView,
             MensajeInternacionalizacionHandler mensajeHandler) {
         this.usuarioDAO = usuarioDAO;
         this.loginView = loginView;

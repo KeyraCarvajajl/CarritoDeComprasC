@@ -61,7 +61,7 @@ public class CarritoListaView extends JInternalFrame {
 
         // Configurar ventana
         setContentPane(panelPrincipal);
-        setSize(550, 550);
+        setSize(600, 600);
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
@@ -70,16 +70,23 @@ public class CarritoListaView extends JInternalFrame {
         actualizarTextos(mensajeHandler);
     }
 
-    public void actualizarTextos(MensajeInternacionalizacionHandler mensajes) {
-        lblCarrito.setText(mensajes.get("carrito.codigo"));
-        lblTotalCarrito.setText(mensajes.get("carrito.total"));
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblCarrito.setText(mensajeHandler.get("carrito.lista.titulo"));
+        lblTotalCarrito.setText(mensajeHandler.get("carrito.total"));
 
-        btnBuscar.setText(mensajes.get("carrito.boton.buscar"));
-        btnListar.setText(mensajes.get("carrito.boton.listar"));
+        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
+        btnListar.setText(mensajeHandler.get("boton.listar"));
 
-        this.setTitle(mensajes.get("carrito.lista.titulo")); // Si es JInternalFrame
+        setTitle(mensajeHandler.get("carrito.lista.titulo"));
+
+        modelo.setColumnIdentifiers(new String[]{
+                mensajeHandler.get("producto.codigo"),
+                mensajeHandler.get("producto.nombre"),
+                mensajeHandler.get("producto.precio"),
+                mensajeHandler.get("producto.cantidad"),
+                mensajeHandler.get("carrito.subtotal")
+        });
     }
-
 
 
 

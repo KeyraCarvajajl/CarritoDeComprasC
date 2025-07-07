@@ -39,22 +39,27 @@ public class CarritoModificarView extends JInternalFrame {
         tblView.setModel(modelo);
 
         this.mensajeHandler = mensajeHandler;
-        cambiarIdioma(mensajeHandler);
         imagenIcono();
         actualizarTextos(mensajeHandler);
     }
 
-    public void actualizarTextos(MensajeInternacionalizacionHandler mensajes) {
-        lblCodigo.setText(mensajes.get("carrito.codigo"));
-        lblFecha.setText(mensajes.get("carrito.fecha"));
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblCodigo.setText(mensajeHandler.get("carrito.codigo"));
+        lblFecha.setText(mensajeHandler.get("carrito.fecha"));
 
-        btnBuscar.setText(mensajes.get("carrito.boton.buscar"));
-        btnModificar.setText(mensajes.get("carrito.boton.modificar"));
+        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
+        btnModificar.setText(mensajeHandler.get("boton.modificar"));
 
-        this.setTitle(mensajes.get("carrito.modificar.titulo")); // Si es JInternalFrame
+        setTitle(mensajeHandler.get("carrito.modificar.titulo"));
+
+        modelo.setColumnIdentifiers(new String[]{
+                mensajeHandler.get("producto.codigo"),
+                mensajeHandler.get("producto.nombre"),
+                mensajeHandler.get("producto.precio"),
+                mensajeHandler.get("producto.cantidad"),
+                mensajeHandler.get("carrito.subtotal")
+        });
     }
-
-
 
     private void imagenIcono() {
         // Redimensionar icono "Buscar"

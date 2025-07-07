@@ -50,51 +50,37 @@ public class CarritoAnadirView extends JInternalFrame {
         tblProductos.setModel(modelo);
 
         cargarDatos();
-        cambiarIdioma(mensajeHandler);
         actualizarTextos(mensajeHandler);
         limpiarCampos();
         iconoImagen();
     }
 
-
-    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        setTitle(mensajeHandler.get("carrito.anadir.titulo"));
-
-        lblCodigo.setText(mensajeHandler.get("producto.codigo"));
-        lblNombre.setText(mensajeHandler.get("producto.nombre"));
-        lblPrecio.setText(mensajeHandler.get("producto.precio"));
-        lblCantidad.setText(mensajeHandler.get("producto.cantidad"));
-        lblSubTotal.setText(mensajeHandler.get("producto.subtotal"));
-        lblIva.setText(mensajeHandler.get("producto.iva"));
-        lblTotal.setText(mensajeHandler.get("producto.total"));
-
-        btnBuscar.setText(mensajeHandler.get("producto.buscar"));
-        btnAnadir.setText(mensajeHandler.get("producto.anadir"));
-        btnGuardar.setText(mensajeHandler.get("producto.guardar"));
-        btnLimpiar.setText(mensajeHandler.get("producto.limpiar"));
-
-        cbxCantidad.setToolTipText(mensajeHandler.get("producto.cantidad.tooltip"));
-        txtCodigo.setToolTipText(mensajeHandler.get("producto.codigo.tooltip"));
-        txtNombre.setToolTipText(mensajeHandler.get("producto.nombre.tooltip"));
-        txtPrecio.setToolTipText(mensajeHandler.get("producto.precio.tooltip"));
-    }
-
     public void actualizarTextos(MensajeInternacionalizacionHandler mensajes) {
+        setTitle(mensajes.get("carrito.anadir.titulo")); // Título ventana
         lblCodigo.setText(mensajes.get("producto.codigo"));
         lblNombre.setText(mensajes.get("producto.nombre"));
         lblPrecio.setText(mensajes.get("producto.precio"));
         lblCantidad.setText(mensajes.get("producto.cantidad"));
-        lblSubTotal.setText(mensajes.get("producto.subtotal"));
-        lblIva.setText(mensajes.get("producto.iva"));
-        lblTotal.setText(mensajes.get("producto.total"));
+        lblSubTotal.setText(mensajes.get("carrito.subtotal"));
+        lblIva.setText(mensajes.get("carrito.iva"));
+        lblTotal.setText(mensajes.get("carrito.total"));
 
-        btnBuscar.setText(mensajes.get("producto.boton.buscar"));
-        btnAnadir.setText(mensajes.get("producto.boton.anadir"));
-        btnGuardar.setText(mensajes.get("producto.boton.guardar"));
-        btnLimpiar.setText(mensajes.get("producto.boton.limpiar"));
+        btnBuscar.setText(mensajes.get("boton.buscar"));
+        btnAnadir.setText(mensajes.get("boton.anadir"));
+        btnGuardar.setText(mensajes.get("boton.guardar"));
+        btnLimpiar.setText(mensajes.get("boton.limpiar"));
 
-        this.setTitle(mensajes.get("producto.titulo")); // Si es JInternalFrame o JFrame
+        // Puedes actualizar también los headers de la tabla si es necesario
+        modelo.setColumnIdentifiers(new String[]{
+                mensajes.get("producto.codigo"),
+                mensajes.get("producto.nombre"),
+                mensajes.get("producto.precio"),
+                mensajes.get("producto.cantidad"),
+                mensajes.get("carrito.subtotal")
+        });
     }
+
+
 
     private void cargarDatos(){
         cbxCantidad.removeAllItems();

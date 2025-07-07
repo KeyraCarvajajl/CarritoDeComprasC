@@ -26,7 +26,7 @@ public class CarritoEliminarView extends JInternalFrame {
         setContentPane(panelPrincipal);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 
-        setSize(550, 550);
+        setSize(600, 600);
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
@@ -38,7 +38,6 @@ public class CarritoEliminarView extends JInternalFrame {
         this.mensajeHandler = mensajeHandler;
 
         actualizarTextos(mensajeHandler);
-        cambiarIdioma(mensajeHandler);
         iconoImagen();
     }
 
@@ -81,34 +80,17 @@ public class CarritoEliminarView extends JInternalFrame {
 
     }
 
-    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        // Actualiza el título de la ventana
-        setTitle(mensajeHandler.get("producto.lista.titulo"));
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblCodigo.setText(mensajeHandler.get("carrito.codigo"));
+        lblFecha.setText(mensajeHandler.get("carrito.fecha"));
 
-        // Actualiza las etiquetas
-        lblCodigo.setText(mensajeHandler.get("producto.codigo"));
-        lblFecha.setText(mensajeHandler.get("producto.fecha"));
+        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
+        btnEliminar.setText(mensajeHandler.get("boton.eliminar"));
+        btnVaciar.setText(mensajeHandler.get("boton.vaciar"));
 
-        // Actualiza los botones
-        btnBuscar.setText(mensajeHandler.get("producto.buscar"));
-        btnEliminar.setText(mensajeHandler.get("producto.eliminar"));
-        btnVaciar.setText(mensajeHandler.get("producto.vaciar"));
-
-        // Actualiza los tooltips si es necesario
-        txtCodigo.setToolTipText(mensajeHandler.get("producto.codigo.tooltip"));
-        txtFecha.setToolTipText(mensajeHandler.get("producto.fecha.tooltip"));
+        setTitle(mensajeHandler.get("carrito.eliminar.titulo"));
     }
 
-    public void actualizarTextos(MensajeInternacionalizacionHandler mensajes) {
-        lblCodigo.setText(mensajes.get("producto.codigo"));
-        lblFecha.setText(mensajes.get("producto.fecha"));
-
-        btnBuscar.setText(mensajes.get("producto.boton.buscar"));
-        btnEliminar.setText(mensajes.get("producto.boton.eliminar"));
-        btnVaciar.setText(mensajes.get("producto.boton.vaciar"));
-
-        this.setTitle(mensajes.get("producto.eliminar.titulo")); // Si es JInternalFrame
-    }
 
     public JTextField getTxtCodigo() {
         return txtCodigo;

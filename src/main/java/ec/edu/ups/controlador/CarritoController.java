@@ -72,7 +72,7 @@ public class CarritoController {
 
     private void anadirProducto() {
         if (carrito == null) {
-            carrito = new Carrito(); // evita NullPointerException
+            carrito = new Carrito();
         }
         int codigo = Integer.parseInt(carritoAnadirView.getTxtCodigo().getText());
         int cantidad = Integer.parseInt(carritoAnadirView.getCbxCantidad().getSelectedItem().toString());
@@ -82,7 +82,7 @@ public class CarritoController {
             cargarTablaAnadir();
             mostrarTotales();
         } else {
-            carritoAnadirView.mostrarMensaje("Producto no encontrado."); // si quieres un mensaje de error
+            carritoAnadirView.mostrarMensaje("Producto no encontrado.");
         }
     }
 
@@ -113,10 +113,10 @@ public class CarritoController {
 
     private void guardarCarrito() {
         carrito.setCodigo(generarCodigo());
-        carritoDAO.crear(carrito);  // guarda el carrito actual
+        carritoDAO.crear(carrito);
         carritoAnadirView.mostrarMensaje("Carrito guardado correctamente.");
         limpiarCarrito();
-        carrito = new Carrito(); // 🔁 REINICIA con un carrito nuevo
+        carrito = new Carrito();
     }
 
 
@@ -125,10 +125,10 @@ public class CarritoController {
     }
 
     private void limpiarCarrito() {
-        carrito = new Carrito(); // reemplaza el carrito actual con uno vacío
-        carritoAnadirView.limpiarCampos(); // limpia campos visuales
+        carrito = new Carrito();
+        carritoAnadirView.limpiarCampos();
         DefaultTableModel modelo = (DefaultTableModel) carritoAnadirView.getTblProductos().getModel();
-        modelo.setRowCount(0); // limpia tabla
+        modelo.setRowCount(0);
         carritoAnadirView.getTxtSubTotal().setText("");
         carritoAnadirView.getTxtIVA().setText("");
         carritoAnadirView.getTxtTotal().setText("");
@@ -166,7 +166,7 @@ public class CarritoController {
 
         } else {
             carritoEliminarView.mostrarMensaje("Carrito no encontrado.");
-            carritoEliminarView.getTxtFecha().setText(""); // Limpia si no se encontró
+            carritoEliminarView.getTxtFecha().setText("");
         }
     }
 
@@ -312,14 +312,13 @@ public class CarritoController {
 
         DefaultTableModel modelo = (DefaultTableModel) carritoModificarView.getTblView().getModel();
 
-        carritoMod.vaciarCarrito(); // primero limpia el carrito
-
+        carritoMod.vaciarCarrito();
         for (int i = 0; i < modelo.getRowCount(); i++) {
             int codProducto = Integer.parseInt(modelo.getValueAt(i, 0).toString());
             int nuevaCantidad = Integer.parseInt(modelo.getValueAt(i, 3).toString());
 
             Producto producto = productoDAO.buscarPorCodigo(codProducto);
-            carritoMod.agregarProducto(producto, nuevaCantidad); // vuelve a agregar con nueva cantidad
+            carritoMod.agregarProducto(producto, nuevaCantidad);
         }
 
         carritoModificarView.mostrarMensaje("Carrito actualizado correctamente.");

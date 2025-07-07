@@ -47,14 +47,14 @@ public class Main {
                 CambiarContraseniaView cambiarContraseniaView = new CambiarContraseniaView(mensajeHandler);
                 CuestionarioView cuestionarioView = new CuestionarioView(mensajeHandler, usuarioDAO);
 
+                UsuarioEliminarView usuarioEliminarView = new UsuarioEliminarView(mensajeHandler);
                 UsuarioListaView usuarioListaView = new UsuarioListaView(mensajeHandler);
                 UsuarioModificarView usuarioModificarView = new UsuarioModificarView(mensajeHandler);
-                MenuPrincipalView principalView = new MenuPrincipalView(mensajeHandler);
 
                 UsuarioController usuarioController = new UsuarioController(
                         usuarioDAO, loginView, registrarseView,
-                        usuarioListaView, mensajeHandler,
-                        usuarioModificarView, principalView
+                        usuarioListaView, usuarioModificarView,
+                        usuarioEliminarView, mensajeHandler
                 );
 
                 PreguntasDAO preguntasDAO = new PreguntasDAOMemoria();
@@ -280,7 +280,7 @@ public class Main {
                             principalView.getMenuItemIdiomaEspanol().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                    principalView.cambiarIdioma("es", "EC");
+                                    principalView.actualizarTextos("es", "EC");
                                 }
                             });
 
@@ -356,21 +356,45 @@ public class Main {
                             principalView.getMenuItemIdiomaIngles().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                   principalView.cambiarIdioma("en", "US");
+                                    principalView.actualizarTextos("en", "US");
+
+                                    productoAnadirView.actualizarTextos(mensajeHandler);
+                                    carritoAnadirView.actualizarTextos(mensajeHandler);
+                                    carritoDetalleView.actualizarTextos(mensajeHandler);
+                                    carritoEliminarView.actualizarTextos(mensajeHandler);
+                                    carritoListaView.actualizarTextos(mensajeHandler);
+                                    carritoModificarView.actualizarTextos(mensajeHandler);
                                 }
                             });
+
+                            principalView.getMenuItemIdiomaEspanol().addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    principalView.actualizarTextos("es", "EC");
+
+                                    productoAnadirView.actualizarTextos(mensajeHandler);
+                                    carritoAnadirView.actualizarTextos(mensajeHandler);
+                                    carritoDetalleView.actualizarTextos(mensajeHandler);
+                                    carritoEliminarView.actualizarTextos(mensajeHandler);
+                                    carritoListaView.actualizarTextos(mensajeHandler);
+                                    carritoModificarView.actualizarTextos(mensajeHandler);
+                                }
+                            });
+
                             principalView.getMenuItemIdiomaFrances().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                   principalView.cambiarIdioma("fr", "FR");
+                                    principalView.actualizarTextos("fr", "FR");
+
+                                    productoAnadirView.actualizarTextos(mensajeHandler);
+                                    carritoAnadirView.actualizarTextos(mensajeHandler);
+                                    carritoDetalleView.actualizarTextos(mensajeHandler);
+                                    carritoEliminarView.actualizarTextos(mensajeHandler);
+                                    carritoListaView.actualizarTextos(mensajeHandler);
+                                    carritoModificarView.actualizarTextos(mensajeHandler);
                                 }
                             });
-                            principalView.getMenuItemCerrarSesion().addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    usuarioController.cerrarSesion();
-                                }
-                            });
+
                         }
                     }
                 });

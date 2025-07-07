@@ -40,44 +40,19 @@ public class CarritoDetalleView extends JInternalFrame {
         modelo.setColumnIdentifiers(columnas);
         tblDetCarrito.setModel(modelo);
         this.mensajeHandler = mensajeHandler;
-        cambiarIdioma(mensajeHandler);
         actualizarTextos(mensajeHandler);
         iconoImagen();
     }
 
-    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        // Cambiar el título de la ventana
-        setTitle(mensajeHandler.get("carrito.detalle.titulo"));
-
-        // Cambiar los textos de las etiquetas
-        lblDetallesCarrito.setText(mensajeHandler.get("carrito.detalles"));
-        lblID.setText(mensajeHandler.get("carrito.id"));
-        lblSubTotal.setText(mensajeHandler.get("carrito.subtotal"));
-        lblIVA.setText(mensajeHandler.get("carrito.iva"));
-        lblTotal.setText(mensajeHandler.get("carrito.total"));
-
-        // Cambiar los textos de los botones
-        btnBuscarDetalle.setText(mensajeHandler.get("carrito.buscar"));
-        btnAceptarDetalle.setText(mensajeHandler.get("carrito.aceptar"));
-
-        // Actualizar los tooltips de los campos si es necesario
-        txtIdDet.setToolTipText(mensajeHandler.get("carrito.id.tooltip"));
-        txtSubTotal.setToolTipText(mensajeHandler.get("carrito.subtotal.tooltip"));
-        txtIVA.setToolTipText(mensajeHandler.get("carrito.iva.tooltip"));
-        txtTotal.setToolTipText(mensajeHandler.get("carrito.total.tooltip"));
-    }
-
     public void actualizarTextos(MensajeInternacionalizacionHandler mensajes) {
-        lblDetallesCarrito.setText(mensajes.get("detalle.titulo"));
-        lblID.setText(mensajes.get("detalle.id"));
-        lblSubTotal.setText(mensajes.get("detalle.subtotal"));
-        lblIVA.setText(mensajes.get("detalle.iva"));
-        lblTotal.setText(mensajes.get("detalle.total"));
-
-        btnBuscarDetalle.setText(mensajes.get("detalle.boton.buscar"));
-        btnAceptarDetalle.setText(mensajes.get("detalle.boton.aceptar"));
-
-        this.setTitle(mensajes.get("detalle.titulo")); // Si es JInternalFrame
+        setTitle(mensajes.get("carrito.detalle.titulo"));
+        lblID.setText(mensajes.get("carrito.detalle.id"));
+        lblSubTotal.setText(mensajes.get("carrito.subtotal"));
+        lblIVA.setText(mensajes.get("carrito.iva"));
+        lblTotal.setText(mensajes.get("carrito.total"));
+        lblDetallesCarrito.setText(mensajes.get("carrito.detalle.etiqueta"));
+        btnBuscarDetalle.setText(mensajes.get("boton.buscar"));
+        btnAceptarDetalle.setText(mensajes.get("boton.aceptar"));
     }
 
 
