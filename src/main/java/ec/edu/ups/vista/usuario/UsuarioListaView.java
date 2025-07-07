@@ -41,13 +41,19 @@ public class UsuarioListaView extends JInternalFrame {
         modelo = new DefaultTableModel();
         tablaUsuarios.setModel(modelo);
 
-        cambiarIdioma(mensajeHandler);
+        actualizarTextos(mensajeHandler);
         imagenIcon();
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblNombre.setText(mensajeHandler.get("usuario.nombre"));
+        btnListar.setText(mensajeHandler.get("boton.listar"));
+        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
+        btnCerrar.setText(mensajeHandler.get("boton.cerrar"));
+        setTitle(mensajeHandler.get("usuario.lista.titulo"));
+    }
 
     private void imagenIcon() {
-        // Redimensionar icono "Listar"
         URL btListar = LoginView.class.getClassLoader().getResource("imagenes/listar.png");
         if (btListar != null) {
             ImageIcon iconBtnListar = new ImageIcon(btListar);
@@ -70,7 +76,6 @@ public class UsuarioListaView extends JInternalFrame {
             System.err.println("Error: No se ha cargado el icono de Buscar");
         }
 
-// Redimensionar icono "Cerrar"
         URL btCerrar = LoginView.class.getClassLoader().getResource("imagenes/cerrar.png");
         if (btCerrar != null) {
             ImageIcon iconBtnCerrar = new ImageIcon(btCerrar);
@@ -84,15 +89,7 @@ public class UsuarioListaView extends JInternalFrame {
 
     }
 
-    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        setTitle(mensajeHandler.get("usuario.lista.titulo"));
 
-        lblNombre.setText(mensajeHandler.get("usuario.lista.nombre"));
-        btnListar.setText(mensajeHandler.get("usuario.lista.buscar"));
-        btnCerrar.setText(mensajeHandler.get("usuario.lista.cerrar"));
-    }
-
-    // Getters
     public JTable getTblUsuarios() {
         return tablaUsuarios;
     }

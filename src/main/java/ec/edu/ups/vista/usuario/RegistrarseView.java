@@ -49,13 +49,13 @@ public class RegistrarseView extends JInternalFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(800, 800);
         setTitle(mensajeHandler.get("usuario.view.registrar.titulo"));
-        cambiarIdioma(mensajeHandler);
+
+        actualizarTextos(mensajeHandler);
         cargarPreguntas();
         imagenIcon();
     }
 
     private void imagenIcon() {
-        // Redimensionar icono "Registro"
         URL btRegistro = LoginView.class.getClassLoader().getResource("imagenes/registro.png");
         if (btRegistro != null) {
             ImageIcon iconBtnRegistro = new ImageIcon(btRegistro);
@@ -67,7 +67,6 @@ public class RegistrarseView extends JInternalFrame {
             System.err.println("Error: No se ha cargado el icono de Registro");
         }
 
-// Redimensionar icono "Cancelar"
         URL btCancelar = LoginView.class.getClassLoader().getResource("imagenes/cancelar.png");
         if (btCancelar != null) {
             ImageIcon iconBtnCancelar = new ImageIcon(btCancelar);
@@ -81,46 +80,27 @@ public class RegistrarseView extends JInternalFrame {
 
     }
 
-    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        setTitle(mensajeHandler.get("usuario.registro.titulo"));
-
-        lblRegistrar.setText(mensajeHandler.get("usuario.registro.titulo"));
-        lblNombre.setText(mensajeHandler.get("usuario.registro.nombre"));
-        lblUsuario.setText(mensajeHandler.get("usuario.registro.usuario"));
-        lblContrasenia.setText(mensajeHandler.get("usuario.registro.contrasenia"));
-        lblConfirmarContrasenia.setText(mensajeHandler.get("usuario.registro.confirmar"));
-        lblFechaDeNacimiento.setText(mensajeHandler.get("usuario.registro.fecha"));
-        lblCorreoElectrónico.setText(mensajeHandler.get("usuario.registro.correo"));
-        lblTeléfono.setText(mensajeHandler.get("usuario.registro.telefono"));
-
-        lblPreuntasSeguridad.setText(mensajeHandler.get("usuario.registro.preguntas"));
-        lblPregunta1.setText(mensajeHandler.get("usuario.registro.pregunta1"));
-        lblPregunta2.setText(mensajeHandler.get("usuario.registro.pregunta2"));
-        lblPregunta3.setText(mensajeHandler.get("usuario.registro.pregunta3"));
-
-        btnRegistro.setText(mensajeHandler.get("usuario.registro.registrarse"));
-        btnCancelar.setText(mensajeHandler.get("usuario.registro.cancelar"));
-    }
-
     public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
-        lblRegistrar.setText(RegistrarseView.this.mensajeHandler.get("usuario.view.registrar.titulo"));
-        lblNombre.setText(RegistrarseView.this.mensajeHandler.get("usuario.nombre"));
-        lblUsuario.setText(RegistrarseView.this.mensajeHandler.get("usuario.usuario"));
-        lblContrasenia.setText(RegistrarseView.this.mensajeHandler.get("usuario.contrasenia"));
-        lblConfirmarContrasenia.setText(RegistrarseView.this.mensajeHandler.get("usuario.confirmar"));
-        lblFechaDeNacimiento.setText(RegistrarseView.this.mensajeHandler.get("usuario.fecha"));
-        lblCorreoElectrónico.setText(RegistrarseView.this.mensajeHandler.get("usuario.correo"));
-        lblTeléfono.setText(RegistrarseView.this.mensajeHandler.get("usuario.telefono"));
-        lblPreuntasSeguridad.setText(RegistrarseView.this.mensajeHandler.get("usuario.preguntas"));
-        lblPregunta1.setText(RegistrarseView.this.mensajeHandler.get("usuario.pregunta1"));
-        lblPregunta2.setText(RegistrarseView.this.mensajeHandler.get("usuario.pregunta2"));
-        lblPregunta3.setText(RegistrarseView.this.mensajeHandler.get("usuario.pregunta3"));
+        lblNombre.setText(mensajeHandler.get("registro.nombre"));
+        lblUsuario.setText(mensajeHandler.get("registro.usuario"));
+        lblContrasenia.setText(mensajeHandler.get("registro.contrasenia"));
+        lblConfirmarContrasenia.setText(mensajeHandler.get("registro.confirmar"));
+        lblFechaDeNacimiento.setText(mensajeHandler.get("registro.fecha"));
+        lblCorreoElectrónico.setText(mensajeHandler.get("registro.correo"));
+        lblTeléfono.setText(mensajeHandler.get("registro.telefono"));
+        lblRegistrar.setText(mensajeHandler.get("registro.titulo"));
 
-        btnRegistro.setText(RegistrarseView.this.mensajeHandler.get("usuario.registrarse"));
-        btnCancelar.setText(RegistrarseView.this.mensajeHandler.get("usuario.cancelar"));
+        lblPreuntasSeguridad.setText(mensajeHandler.get("registro.seguridad"));
+        lblPregunta1.setText(mensajeHandler.get("registro.pregunta1"));
+        lblPregunta2.setText(mensajeHandler.get("registro.pregunta2"));
+        lblPregunta3.setText(mensajeHandler.get("registro.pregunta3"));
 
-        setTitle(RegistrarseView.this.mensajeHandler.get("usuario.view.registrar.titulo"));
+        btnRegistro.setText(mensajeHandler.get("boton.registrar"));
+        btnCancelar.setText(mensajeHandler.get("boton.cancelar"));
+
+        setTitle(mensajeHandler.get("registro.titulo"));
     }
+
 
 
 

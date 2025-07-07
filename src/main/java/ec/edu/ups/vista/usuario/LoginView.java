@@ -50,16 +50,15 @@ public class LoginView extends JFrame {
                         mensajeHandler.setLocale(new Locale("fr", "FR"));
                         break;
                 }
-                cambiarIdioma(mensajeHandler); // Actualiza los textos en pantalla
+                actualizarTextos(mensajeHandler); // Actualiza los textos en pantalla
             }
         });
 
-        cambiarIdioma(mensajeHandler);
+        actualizarTextos(mensajeHandler);
         imagenIcon();
     }
 
     private void imagenIcon() {
-        // Redimensionar icono "Iniciar Sesión"
         URL btIniciarSesion = LoginView.class.getClassLoader().getResource("imagenes/iniciarSesión.png");
         if (btIniciarSesion != null) {
             ImageIcon iconBtnIniciarSesion = new ImageIcon(btIniciarSesion);
@@ -71,7 +70,6 @@ public class LoginView extends JFrame {
             System.err.println("Error: No se ha cargado el icono de Iniciar Sesión");
         }
 
-// Redimensionar icono "Registro"
         URL btRegistro = LoginView.class.getClassLoader().getResource("imagenes/registro.png");
         if (btRegistro != null) {
             ImageIcon iconBtnRegistro = new ImageIcon(btRegistro);
@@ -83,7 +81,6 @@ public class LoginView extends JFrame {
             System.err.println("Error: No se ha cargado el icono de Registro");
         }
 
-// Redimensionar icono "Olvidaste Contraseña"
         URL btOlvidasteContrasena = LoginView.class.getClassLoader().getResource("imagenes/olvidarContraseña.png");
         if (btOlvidasteContrasena != null) {
             ImageIcon iconBtnOlvidasteContrasena = new ImageIcon(btOlvidasteContrasena);
@@ -97,9 +94,7 @@ public class LoginView extends JFrame {
 
     }
 
-    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        setTitle(mensajeHandler.get("login.titulo"));
-
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
         lblUsuario.setText(mensajeHandler.get("login.usuario"));
         lblContrasenia.setText(mensajeHandler.get("login.contrasenia"));
         lblIdioma.setText(mensajeHandler.get("login.idioma"));
@@ -107,22 +102,9 @@ public class LoginView extends JFrame {
         btnIniciarSesion.setText(mensajeHandler.get("login.iniciar"));
         btnRegistrarse.setText(mensajeHandler.get("login.registrarse"));
         btnOlvidarContrasenia.setText(mensajeHandler.get("login.olvidaste"));
+
+        setTitle(mensajeHandler.get("login.titulo"));
     }
-
-    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
-        lblUsuario.setText(LoginView.this.mensajeHandler.get("login.usuario"));
-        lblContrasenia.setText(LoginView.this.mensajeHandler.get("login.contrasenia"));
-        lblIdioma.setText(LoginView.this.mensajeHandler.get("login.idioma"));
-
-        btnIniciarSesion.setText(LoginView.this.mensajeHandler.get("login.iniciar"));
-        btnRegistrarse.setText(LoginView.this.mensajeHandler.get("login.registrarse"));
-        btnOlvidarContrasenia.setText(LoginView.this.mensajeHandler.get("login.olvidar"));
-
-        setTitle(LoginView.this.mensajeHandler.get("ventana.login"));
-    }
-
-
-
 
     public JComboBox getComboBox1() {return comboBox1;}
 
@@ -184,6 +166,6 @@ public class LoginView extends JFrame {
 
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
-        cambiarIdioma(mensajeHandler);
+        actualizarTextos(mensajeHandler);
     }
 }

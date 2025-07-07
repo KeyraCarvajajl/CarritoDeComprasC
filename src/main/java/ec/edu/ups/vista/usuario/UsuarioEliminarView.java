@@ -28,12 +28,11 @@ public class UsuarioEliminarView extends JInternalFrame {
         setIconifiable(true);
         setResizable(true);
 
-        cambiarIdioma(mensajeHandler);
+        actualizarTextos(mensajeHandler);
         imagenIcon();
     }
 
     private void imagenIcon() {
-        // Redimensionar icono "Eliminar"
         URL btEliminar = LoginView.class.getClassLoader().getResource("imagenes/eliminar.png");
         if (btEliminar != null) {
             ImageIcon iconBtnEliminar = new ImageIcon(btEliminar);
@@ -47,26 +46,14 @@ public class UsuarioEliminarView extends JInternalFrame {
 
     }
 
-    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        setTitle(mensajeHandler.get("usuario.eliminar.titulo"));
-
-        lblNombre.setText(mensajeHandler.get("usuario.eliminar.nombre"));
-        lblContrasenia.setText(mensajeHandler.get("usuario.eliminar.contrasenia"));
-        lblConfirmarContrasenia.setText(mensajeHandler.get("usuario.eliminar.confirmar"));
-
-        btnEliminarUsuario.setText(mensajeHandler.get("usuario.eliminar.eliminar"));
-    }
 
     public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
-        lblNombre.setText(UsuarioEliminarView.this.mensajeHandler.get("usuario.nombre"));
-        lblContrasenia.setText(UsuarioEliminarView.this.mensajeHandler.get("usuario.contrasenia"));
-        lblConfirmarContrasenia.setText(UsuarioEliminarView.this.mensajeHandler.get("usuario.confirmar"));
-
-        btnEliminarUsuario.setText(UsuarioEliminarView.this.mensajeHandler.get("usuario.eliminar"));
-
-        setTitle(UsuarioEliminarView.this.mensajeHandler.get("usuario.eliminar.titulo"));
+        lblNombre.setText(mensajeHandler.get("usuario.nombre"));
+        lblContrasenia.setText(mensajeHandler.get("usuario.contrasenia"));
+        lblConfirmarContrasenia.setText(mensajeHandler.get("usuario.confirmar"));
+        btnEliminarUsuario.setText(mensajeHandler.get("usuario.boton.eliminar"));
+        setTitle(mensajeHandler.get("usuario.eliminar.titulo"));
     }
-
 
 
     public JTextField getTxtNombre() {

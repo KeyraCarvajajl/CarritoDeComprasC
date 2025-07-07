@@ -8,7 +8,7 @@ import ec.edu.ups.vista.producto.ProductoAnadirView;
 import ec.edu.ups.vista.producto.ProductoEliminarView;
 import ec.edu.ups.vista.producto.ProductoListaView;
 import ec.edu.ups.vista.producto.ProductoModificarView;
-import ec.edu.ups.vista.usuario.LoginView;
+import ec.edu.ups.vista.usuario.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -64,6 +64,12 @@ public class MenuPrincipalView extends JFrame {
 
     private CambiarContraseniaView cambiarContraseniaView;
     private CuestionarioView cuestionarioView;
+
+    private LoginView loginView;
+    private RegistrarseView registrarseView;
+    private UsuarioEliminarView usuarioEliminarView;
+    private UsuarioListaView usuarioListaView;
+    private UsuarioModificarView usuarioModificarView;
 
     public MenuPrincipalView(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeInternacionalizacionHandler = mensajeHandler;
@@ -207,6 +213,26 @@ public class MenuPrincipalView extends JFrame {
             if (productoListaView != null) {
                 productoListaView.actualizarTextos(mensajeInternacionalizacionHandler);
             }
+
+            if (loginView != null) {
+                loginView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (registrarseView != null) {
+                registrarseView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (usuarioEliminarView != null) {
+                usuarioEliminarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (usuarioModificarView != null) {
+                usuarioModificarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (usuarioListaView != null) {
+                usuarioListaView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
         });
 
         menuItemIdiomaIngles.addActionListener(e -> {
@@ -255,6 +281,26 @@ public class MenuPrincipalView extends JFrame {
             if (productoListaView != null) {
                 productoListaView.actualizarTextos(mensajeInternacionalizacionHandler);
             }
+
+            if (loginView != null) {
+                loginView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (registrarseView != null) {
+                registrarseView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (usuarioEliminarView != null) {
+                usuarioEliminarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (usuarioModificarView != null) {
+                usuarioModificarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (usuarioListaView != null) {
+                usuarioListaView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
         });
 
         menuItemIdiomaFrances.addActionListener(e -> {
@@ -302,6 +348,26 @@ public class MenuPrincipalView extends JFrame {
 
             if (productoListaView != null) {
                 productoListaView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (loginView != null) {
+                loginView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (registrarseView != null) {
+                registrarseView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (usuarioEliminarView != null) {
+                usuarioEliminarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (usuarioModificarView != null) {
+                usuarioModificarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (usuarioListaView != null) {
+                usuarioListaView.actualizarTextos(mensajeInternacionalizacionHandler);
             }
         });
 

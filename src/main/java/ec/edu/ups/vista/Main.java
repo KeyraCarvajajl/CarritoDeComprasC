@@ -351,8 +351,6 @@ public class Main {
                                 }
                             });
 
-
-
                             principalView.getMenuItemIdiomaIngles().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -371,6 +369,12 @@ public class Main {
 
                                     cambiarContraseniaView.actualizarTextos(mensajeHandler);
                                     cuestionarioView.actualizarTextos(mensajeHandler);
+
+                                    loginView.actualizarTextos(mensajeHandler);
+                                    registrarseView.actualizarTextos(mensajeHandler);
+                                    usuarioEliminarView.actualizarTextos(mensajeHandler);
+                                    usuarioListaView.actualizarTextos(mensajeHandler);
+                                    usuarioModificarView.actualizarTextos(mensajeHandler);
                                 }
                             });
 
@@ -392,6 +396,12 @@ public class Main {
 
                                     cambiarContraseniaView.actualizarTextos(mensajeHandler);
                                     cuestionarioView.actualizarTextos(mensajeHandler);
+
+                                    loginView.actualizarTextos(mensajeHandler);
+                                    registrarseView.actualizarTextos(mensajeHandler);
+                                    usuarioEliminarView.actualizarTextos(mensajeHandler);
+                                    usuarioListaView.actualizarTextos(mensajeHandler);
+                                    usuarioModificarView.actualizarTextos(mensajeHandler);
                                 }
                             });
 
@@ -413,6 +423,12 @@ public class Main {
 
                                     cambiarContraseniaView.actualizarTextos(mensajeHandler);
                                     cuestionarioView.actualizarTextos(mensajeHandler);
+
+                                    loginView.actualizarTextos(mensajeHandler);
+                                    registrarseView.actualizarTextos(mensajeHandler);
+                                    usuarioEliminarView.actualizarTextos(mensajeHandler);
+                                    usuarioListaView.actualizarTextos(mensajeHandler);
+                                    usuarioModificarView.actualizarTextos(mensajeHandler);
                                 }
                             });
 

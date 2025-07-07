@@ -37,13 +37,25 @@ public class UsuarioModificarView extends JInternalFrame {
         setResizable(true);
 
         setTitle(mensajeHandler.get("usuario.view.modificar.titulo"));
-        cambiarIdioma(mensajeHandler);
+        actualizarTextos(mensajeHandler);
         limpiarCampos();
         imagenIcon();
     }
 
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblUsuarioBuscar.setText(mensajeHandler.get("usuario.buscar.usuario"));
+        lblNombre.setText(mensajeHandler.get("usuario.nombre"));
+        lblFecha.setText(mensajeHandler.get("usuario.fecha"));
+        lblCorreo.setText(mensajeHandler.get("usuario.correo"));
+        lblTelefono.setText(mensajeHandler.get("usuario.telefono"));
+        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
+        btnModificarUsuario.setText(mensajeHandler.get("boton.modificar"));
+        btnCancelar.setText(mensajeHandler.get("boton.cancelar"));
+        setTitle(mensajeHandler.get("usuario.view.modificar.titulo"));
+    }
+
+
     private void imagenIcon() {
-        // Redimensionar icono "Buscar"
         URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
         if (btBuscar != null) {
             ImageIcon iconBtnBuscar = new ImageIcon(btBuscar);
@@ -55,7 +67,6 @@ public class UsuarioModificarView extends JInternalFrame {
             System.err.println("Error: No se ha cargado el icono de Buscar");
         }
 
-// Redimensionar icono "Guardar"
         URL btGuardar = LoginView.class.getClassLoader().getResource("imagenes/guardar.png");
         if (btGuardar != null) {
             ImageIcon iconBtnGuardar = new ImageIcon(btGuardar);
@@ -67,7 +78,6 @@ public class UsuarioModificarView extends JInternalFrame {
             System.err.println("Error: No se ha cargado el icono de Guardar");
         }
 
-// Redimensionar icono "Cancelar"
         URL btCancelar = LoginView.class.getClassLoader().getResource("imagenes/cancelar.png");
         if (btCancelar != null) {
             ImageIcon iconBtnCancelar = new ImageIcon(btCancelar);
@@ -79,19 +89,6 @@ public class UsuarioModificarView extends JInternalFrame {
             System.err.println("Error: No se ha cargado el icono de Cancelar");
         }
 
-    }
-
-    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        setTitle(mensajeHandler.get("usuario.modificar.titulo"));
-
-        lblUsuarioBuscar.setText(mensajeHandler.get("usuario.modificar.buscar.usuario"));
-        lblNombre.setText(mensajeHandler.get("usuario.modificar.nombre"));
-        lblCorreo.setText(mensajeHandler.get("usuario.modificar.correo"));
-        lblTelefono.setText(mensajeHandler.get("usuario.modificar.telefono"));
-
-        btnBuscar.setText(mensajeHandler.get("usuario.modificar.buscar"));
-        btnModificarUsuario.setText(mensajeHandler.get("usuario.modificar.guardar"));
-        btnCancelar.setText(mensajeHandler.get("usuario.modificar.cancelar"));
     }
 
     public void mostrarMensaje(String mensaje) {
