@@ -29,9 +29,20 @@ public class CambiarContraseniaView extends JInternalFrame {
         setLocation(100, 100);
 
         initComponents();
-        cambiarIdioma(mensajeHandler);
+        actualizarTextos(mensajeHandler);
         imagenIcon();
     }
+
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblNuevaContrasenia.setText(mensajeHandler.get("contrasenia.nueva"));
+        lblConfirmarContrasenia.setText(mensajeHandler.get("contrasenia.confirmar"));
+
+        btnGuardar.setText(mensajeHandler.get("boton.guardar"));
+        btnCancelar.setText(mensajeHandler.get("boton.cancelar"));
+
+        setTitle(mensajeHandler.get("contrasenia.cambiar.titulo"));
+    }
+
 
     private void imagenIcon() {
         // Redimensionar icono "Guardar"

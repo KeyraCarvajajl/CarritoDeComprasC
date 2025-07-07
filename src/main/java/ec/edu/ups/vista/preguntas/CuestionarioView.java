@@ -38,6 +38,7 @@ public class CuestionarioView extends JInternalFrame {
         setSize(400, 300);
 
         imagenIcon();
+        actualizarTextos(mensajeHandler);
 
         btnValidar.addActionListener(e -> validarRespuesta());
         btnCancelar.addActionListener(e -> dispose());
@@ -45,16 +46,19 @@ public class CuestionarioView extends JInternalFrame {
         txtUsuario.addActionListener(e -> cargarPreguntasAleatorias(txtUsuario.getText().trim()));
     }
 
-    public void cambiarIdioma() {
-        lblUsuario.setText(mensajeHandler.get("label.usuario"));
-        lblPreguntas.setText(mensajeHandler.get("label.preguntas"));
-        lblRespuesta.setText(mensajeHandler.get("label.respuesta"));
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblUsuario.setText(mensajeHandler.get("recuperar.usuario"));
+        lblPreguntas.setText(mensajeHandler.get("recuperar.pregunta"));
+        lblRespuesta.setText(mensajeHandler.get("recuperar.respuesta"));
+
         btnValidar.setText(mensajeHandler.get("boton.validar"));
         btnCancelar.setText(mensajeHandler.get("boton.cancelar"));
+
+        setTitle(mensajeHandler.get("recuperar.titulo"));
     }
 
+
     private void imagenIcon(){
-        // Redimensionar icono "Validar"
         URL btValidar = LoginView.class.getClassLoader().getResource("imagenes/validar.png");
         if (btValidar != null) {
             ImageIcon iconBtnValidar = new ImageIcon(btValidar);
@@ -66,7 +70,6 @@ public class CuestionarioView extends JInternalFrame {
             System.err.println("Error: No se ha cargado el icono de Validar");
         }
 
-// Redimensionar icono "Cancelar"
         URL btCancelar = LoginView.class.getClassLoader().getResource("imagenes/cancelar.png");
         if (btCancelar != null) {
             ImageIcon iconBtnCancelar = new ImageIcon(btCancelar);
@@ -132,15 +135,6 @@ public class CuestionarioView extends JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(this, mensajeHandler.get("recuperar.incorrecto"));
         }
-    }
-
-    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
-        setTitle(CuestionarioView.this.mensajeHandler.get("recuperar.titulo"));
-        lblUsuario.setText(CuestionarioView.this.mensajeHandler.get("recuperar.usuario"));
-        lblPreguntas.setText(CuestionarioView.this.mensajeHandler.get("recuperar.pregunta"));
-        lblRespuesta.setText(CuestionarioView.this.mensajeHandler.get("recuperar.respuesta"));
-        btnValidar.setText(CuestionarioView.this.mensajeHandler.get("recuperar.validar"));
-        btnCancelar.setText(CuestionarioView.this.mensajeHandler.get("recuperar.cancelar"));
     }
 
     public JPanel getPanelPrincipal() {

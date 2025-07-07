@@ -359,11 +359,18 @@ public class Main {
                                     principalView.actualizarTextos("en", "US");
 
                                     productoAnadirView.actualizarTextos(mensajeHandler);
+                                    productoEliminarView.actualizarTextos(mensajeHandler);
+                                    productoListaView.actualizarTextos(mensajeHandler);
+                                    productoModificarView.actualizarTextos(mensajeHandler);
+
                                     carritoAnadirView.actualizarTextos(mensajeHandler);
                                     carritoDetalleView.actualizarTextos(mensajeHandler);
                                     carritoEliminarView.actualizarTextos(mensajeHandler);
                                     carritoListaView.actualizarTextos(mensajeHandler);
                                     carritoModificarView.actualizarTextos(mensajeHandler);
+
+                                    cambiarContraseniaView.actualizarTextos(mensajeHandler);
+                                    cuestionarioView.actualizarTextos(mensajeHandler);
                                 }
                             });
 
@@ -373,11 +380,18 @@ public class Main {
                                     principalView.actualizarTextos("es", "EC");
 
                                     productoAnadirView.actualizarTextos(mensajeHandler);
+                                    productoEliminarView.actualizarTextos(mensajeHandler);
+                                    productoListaView.actualizarTextos(mensajeHandler);
+                                    productoModificarView.actualizarTextos(mensajeHandler);
+
                                     carritoAnadirView.actualizarTextos(mensajeHandler);
                                     carritoDetalleView.actualizarTextos(mensajeHandler);
                                     carritoEliminarView.actualizarTextos(mensajeHandler);
                                     carritoListaView.actualizarTextos(mensajeHandler);
                                     carritoModificarView.actualizarTextos(mensajeHandler);
+
+                                    cambiarContraseniaView.actualizarTextos(mensajeHandler);
+                                    cuestionarioView.actualizarTextos(mensajeHandler);
                                 }
                             });
 
@@ -387,11 +401,18 @@ public class Main {
                                     principalView.actualizarTextos("fr", "FR");
 
                                     productoAnadirView.actualizarTextos(mensajeHandler);
+                                    productoEliminarView.actualizarTextos(mensajeHandler);
+                                    productoListaView.actualizarTextos(mensajeHandler);
+                                    productoModificarView.actualizarTextos(mensajeHandler);
+
                                     carritoAnadirView.actualizarTextos(mensajeHandler);
                                     carritoDetalleView.actualizarTextos(mensajeHandler);
                                     carritoEliminarView.actualizarTextos(mensajeHandler);
                                     carritoListaView.actualizarTextos(mensajeHandler);
                                     carritoModificarView.actualizarTextos(mensajeHandler);
+
+                                    cambiarContraseniaView.actualizarTextos(mensajeHandler);
+                                    cuestionarioView.actualizarTextos(mensajeHandler);
                                 }
                             });
 

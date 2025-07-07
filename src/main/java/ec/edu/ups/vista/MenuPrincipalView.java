@@ -2,7 +2,12 @@ package ec.edu.ups.vista;
 
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.carrito.*;
+import ec.edu.ups.vista.preguntas.CambiarContraseniaView;
+import ec.edu.ups.vista.preguntas.CuestionarioView;
 import ec.edu.ups.vista.producto.ProductoAnadirView;
+import ec.edu.ups.vista.producto.ProductoEliminarView;
+import ec.edu.ups.vista.producto.ProductoListaView;
+import ec.edu.ups.vista.producto.ProductoModificarView;
 import ec.edu.ups.vista.usuario.LoginView;
 
 import javax.swing.*;
@@ -46,12 +51,19 @@ public class MenuPrincipalView extends JFrame {
     private MiJDesktopPane jDesktopPane;
     private JLabel lblUsuario;
 
-    private CarritoAnadirView carritoAnadirView;
     private ProductoAnadirView productoAnadirView;
+    private ProductoEliminarView productoEliminarView;
+    private ProductoModificarView productoModificarView;
+    private ProductoListaView productoListaView;
+
     private CarritoDetalleView carritoDetalleView;
     private CarritoEliminarView carritoEliminarView;
     private CarritoModificarView carritoModificarView;
     private CarritoListaView carritoListaView;
+    private CarritoAnadirView carritoAnadirView;
+
+    private CambiarContraseniaView cambiarContraseniaView;
+    private CuestionarioView cuestionarioView;
 
     public MenuPrincipalView(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeInternacionalizacionHandler = mensajeHandler;
@@ -155,9 +167,6 @@ public class MenuPrincipalView extends JFrame {
             if (carritoAnadirView != null) {
                 carritoAnadirView.actualizarTextos(mensajeInternacionalizacionHandler);
             }
-            if (productoAnadirView != null) {
-                productoAnadirView.actualizarTextos(mensajeInternacionalizacionHandler);
-            }
 
             if (carritoDetalleView != null) {
                 carritoDetalleView.actualizarTextos(mensajeInternacionalizacionHandler);
@@ -173,6 +182,30 @@ public class MenuPrincipalView extends JFrame {
 
             if (carritoEliminarView != null) {
                 carritoEliminarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (cambiarContraseniaView != null) {
+                cambiarContraseniaView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (cuestionarioView != null) {
+                cuestionarioView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (productoAnadirView != null) {
+                productoAnadirView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (productoEliminarView != null) {
+                productoEliminarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (productoModificarView != null) {
+                productoModificarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (productoListaView != null) {
+                productoListaView.actualizarTextos(mensajeInternacionalizacionHandler);
             }
         });
 
@@ -182,9 +215,7 @@ public class MenuPrincipalView extends JFrame {
             if (carritoAnadirView != null) {
                 carritoAnadirView.actualizarTextos(mensajeInternacionalizacionHandler);
             }
-            if (productoAnadirView != null) {
-                productoAnadirView.actualizarTextos(mensajeInternacionalizacionHandler);
-            }
+
             if (carritoDetalleView != null) {
                 carritoDetalleView.actualizarTextos(mensajeInternacionalizacionHandler);
             }
@@ -199,6 +230,30 @@ public class MenuPrincipalView extends JFrame {
 
             if (carritoEliminarView != null) {
                 carritoEliminarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (cambiarContraseniaView != null) {
+                cambiarContraseniaView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (cuestionarioView != null) {
+                cuestionarioView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (productoAnadirView != null) {
+                productoAnadirView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (productoEliminarView != null) {
+                productoEliminarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (productoModificarView != null) {
+                productoModificarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (productoListaView != null) {
+                productoListaView.actualizarTextos(mensajeInternacionalizacionHandler);
             }
         });
 
@@ -208,9 +263,7 @@ public class MenuPrincipalView extends JFrame {
             if (carritoAnadirView != null) {
                 carritoAnadirView.actualizarTextos(mensajeInternacionalizacionHandler);
             }
-            if (productoAnadirView != null) {
-                productoAnadirView.actualizarTextos(mensajeInternacionalizacionHandler);
-            }
+
             if (carritoDetalleView != null) {
                 carritoDetalleView.actualizarTextos(mensajeInternacionalizacionHandler);
             }
@@ -225,6 +278,30 @@ public class MenuPrincipalView extends JFrame {
 
             if (carritoEliminarView != null) {
                 carritoEliminarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (cambiarContraseniaView != null) {
+                cambiarContraseniaView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (cuestionarioView != null) {
+                cuestionarioView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (productoAnadirView != null) {
+                productoAnadirView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (productoEliminarView != null) {
+                productoEliminarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (productoModificarView != null) {
+                productoModificarView.actualizarTextos(mensajeInternacionalizacionHandler);
+            }
+
+            if (productoListaView != null) {
+                productoListaView.actualizarTextos(mensajeInternacionalizacionHandler);
             }
         });
 

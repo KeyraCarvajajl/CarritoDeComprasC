@@ -34,7 +34,7 @@ public class ProductoModificarView extends JInternalFrame {
         setIconifiable(true);
         setResizable(true);
 
-        cambiarIdioma(mensajeHandler);
+        actualizarTextos(mensajeHandler);
         imagenIcon();
     }
 
@@ -51,7 +51,6 @@ public class ProductoModificarView extends JInternalFrame {
             System.err.println("Error: No se ha cargado el icono de Modificar");
         }
 
-// Redimensionar icono "Eliminar"
         URL btEliminar = LoginView.class.getClassLoader().getResource("imagenes/eliminar.png");
         if (btEliminar != null) {
             ImageIcon iconBtnEliminar = new ImageIcon(btEliminar);
@@ -63,7 +62,6 @@ public class ProductoModificarView extends JInternalFrame {
             System.err.println("Error: No se ha cargado el icono de Eliminar");
         }
 
-// Redimensionar icono "Buscar"
         URL btBuscar = LoginView.class.getClassLoader().getResource("imagenes/buscar.png");
         if (btBuscar != null) {
             ImageIcon iconBtnBuscar = new ImageIcon(btBuscar);
@@ -77,33 +75,18 @@ public class ProductoModificarView extends JInternalFrame {
 
     }
 
-    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        setTitle(mensajeHandler.get("producto.modificar.titulo"));
-
-        lblModificarProducto.setText(mensajeHandler.get("producto.modificar.titulo"));
-        lblCodigo.setText(mensajeHandler.get("producto.modificar.codigo"));
-        lblNombre.setText(mensajeHandler.get("producto.modificar.nombre"));
-        lblPrecio.setText(mensajeHandler.get("producto.modificar.precio"));
-
-        btnBuscar.setText(mensajeHandler.get("producto.modificar.buscar"));
-        btnEliminar.setText(mensajeHandler.get("producto.modificar.eliminar"));
-        btnModificar.setText(mensajeHandler.get("producto.modificar.modificar"));
-    }
-
     public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
-        lblModificarProducto.setText(ProductoModificarView.this.mensajeHandler.get("producto.modificar.titulo"));
-        lblCodigo.setText(ProductoModificarView.this.mensajeHandler.get("producto.codigo"));
-        lblNombre.setText(ProductoModificarView.this.mensajeHandler.get("producto.nombre"));
-        lblPrecio.setText(ProductoModificarView.this.mensajeHandler.get("producto.precio"));
+        lblModificarProducto.setText(mensajeHandler.get("producto.modificar.titulo"));
+        lblCodigo.setText(mensajeHandler.get("producto.codigo"));
+        lblNombre.setText(mensajeHandler.get("producto.nombre"));
+        lblPrecio.setText(mensajeHandler.get("producto.precio"));
 
-        btnBuscar.setText(ProductoModificarView.this.mensajeHandler.get("producto.buscar"));
-        btnEliminar.setText(ProductoModificarView.this.mensajeHandler.get("producto.eliminar"));
-        btnModificar.setText(ProductoModificarView.this.mensajeHandler.get("producto.modificar"));
+        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
+        btnEliminar.setText(mensajeHandler.get("boton.eliminar"));
+        btnModificar.setText(mensajeHandler.get("boton.modificar"));
 
-        setTitle(ProductoModificarView.this.mensajeHandler.get("producto.modificar.titulo"));
+        setTitle(mensajeHandler.get("producto.modificar.titulo"));
     }
-
-
 
     public JTextField getTxtCodigo() {
         return txtCodigo;
@@ -174,6 +157,6 @@ public class ProductoModificarView extends JInternalFrame {
 
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
-        cambiarIdioma(mensajeHandler);
+        actualizarTextos(mensajeHandler);
     }
 }

@@ -32,9 +32,22 @@ public class ProductoEliminarView extends JInternalFrame {
         setIconifiable(true);
         setResizable(true);
 
-        cambiarIdioma(mensajeHandler);
+        actualizarTextos(mensajeHandler);
         imagenIcon();
     }
+
+    public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
+        lblCodigo.setText(mensajeHandler.get("producto.codigo"));
+        lblNombre.setText(mensajeHandler.get("producto.nombre"));
+        lblPrecio.setText(mensajeHandler.get("producto.precio"));
+        lblEliminarProducto.setText(mensajeHandler.get("producto.eliminar.titulo"));
+
+        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
+        btnEliminar.setText(mensajeHandler.get("boton.eliminar"));
+
+        setTitle(mensajeHandler.get("producto.eliminar.titulo"));
+    }
+
 
     private void imagenIcon() {
         // Redimensionar icono "Buscar"

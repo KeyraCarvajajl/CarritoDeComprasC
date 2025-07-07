@@ -38,7 +38,7 @@ public class ProductoListaView extends JInternalFrame {
         modelo.setColumnIdentifiers(columnas);
         tblProductos.setModel(modelo);
 
-        cambiarIdioma(mensajeHandler);
+        actualizarTextos(mensajeHandler);
         imagenIcon();
     }
 
@@ -71,19 +71,14 @@ public class ProductoListaView extends JInternalFrame {
 
     }
 
-    public void cambiarIdioma(MensajeInternacionalizacionHandler mensajeHandler) {
-        setTitle(mensajeHandler.get("producto.lista.titulo"));
-
-        lblNombre.setText(mensajeHandler.get("producto.lista.nombre"));
-        btnListar.setText(mensajeHandler.get("producto.lista.listar"));
-    }
-
     public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
-        lblNombre.setText(ProductoListaView.this.mensajeHandler.get("producto.nombre"));
-        btnListar.setText(ProductoListaView.this.mensajeHandler.get("producto.listar"));
+        lblNombre.setText(mensajeHandler.get("producto.nombre"));
+        btnBuscar.setText(mensajeHandler.get("boton.buscar"));
+        btnListar.setText(mensajeHandler.get("boton.listar"));
 
-        setTitle(ProductoListaView.this.mensajeHandler.get("producto.lista.titulo"));
+        setTitle(mensajeHandler.get("producto.lista.titulo"));
     }
+
 
     public JLabel getLblNombre() {
         return lblNombre;
@@ -160,6 +155,6 @@ public class ProductoListaView extends JInternalFrame {
 
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
-        cambiarIdioma(mensajeHandler);
+        actualizarTextos(mensajeHandler);
     }
 }
