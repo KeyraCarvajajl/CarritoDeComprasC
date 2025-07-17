@@ -8,10 +8,7 @@ import ec.edu.ups.dao.CarritoDAO;
 import ec.edu.ups.dao.PreguntasDAO;
 import ec.edu.ups.dao.ProductoDAO;
 import ec.edu.ups.dao.UsuarioDAO;
-import ec.edu.ups.dao.impl.CarritoDAOMemoria;
-import ec.edu.ups.dao.impl.PreguntasDAOMemoria;
-import ec.edu.ups.dao.impl.ProductoDAOMemoria;
-import ec.edu.ups.dao.impl.UsuarioDAOMemoria;
+import ec.edu.ups.dao.impl.*;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
@@ -34,7 +31,23 @@ public class Main {
     @SuppressWarnings("all")
     public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        UsuarioDAO usuarioDAO = new UsuarioDAOMemoria();
+        String[] opciones = {"Memoria", "Archivo de Texto", "Archivo Binario"};
+        String seleccion = (String) JOptionPane.showInputDialog(null,
+                "Seleccione el tipo de almacenamiento:",
+                "Configuración de almacenamiento",
+                JOptionPane.QUESTION_MESSAGE,
+                null, opciones, opciones[0]);
+        UsuarioDAO usuarioDAO;
+
+        if ("Archivo Binario".equals(seleccion)) {
+            usuarioDAO = new UsuarioDAOBinario();
+        } else if ("Archivo de Texto".equals(seleccion)) {
+            usuarioDAO = new UsuarioDAOArchivoTexto();
+        } else {
+            usuarioDAO = new UsuarioDAOMemoria();
+        }
+
+
         PreguntasDAO preguntasDAO = new PreguntasDAOMemoria();
         MensajeInternacionalizacionHandler mensajeHandler = new MensajeInternacionalizacionHandler("es","EC");
 
