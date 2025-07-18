@@ -11,17 +11,48 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * Implementación de la interfaz {@link CarritoDAO} que utiliza un archivo de texto
+ * para almacenar información de los carritos y sus productos.
+ * <p>
+ * El archivo se encuentra en la ruta {@code data/carritos.txt}, donde cada línea
+ * representa un ítem de un carrito con el formato:
+ * {@code codigoCarrito;fechaCreacion;codigoProducto;cantidad}.
+ * </p>
+ * <p>
+ * Esta implementación permite persistencia legible para humanos y puede ser utilizada
+ * cuando se desee un almacenamiento más simple y portable que los archivos binarios.
+ * </p>
+ *
+ * @author Keyra
+ * @version 1.0
+ */
 public class CarritoDAOArchivoTexto implements CarritoDAO {
 
+    /** Ruta del archivo donde se almacenan los carritos. */
     private static final String ARCHIVO = "data/carritos.txt";
+
+    /** Formato de fecha utilizado en el archivo de texto. */
     private SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+
+    /** DAO para recuperar productos al reconstruir carritos desde el archivo. */
     private ProductoDAO productoDAO;
 
+    /**
+     * Constructor que recibe una implementación de {@link ProductoDAO},
+     * necesaria para reconstruir los productos al leer los carritos desde el archivo.
+     *
+     * @param productoDAO Implementación de {@code ProductoDAO}
+     */
     public CarritoDAOArchivoTexto(ProductoDAO productoDAO) {
         this.productoDAO = productoDAO;
     }
 
-
+    /**
+     * Guarda los ítems del carrito en el archivo de texto.
+     *
+     * @param carrito Carrito a guardar.
+     */
     @Override
     public void crear(Carrito carrito) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO, true))) {
@@ -39,7 +70,12 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
         }
     }
 
-
+    /**
+     * Busca un carrito por su código.
+     *
+     * @param codigo Código del carrito.
+     * @return El carrito correspondiente o {@code null} si no se encuentra.
+     */
     @Override
     public Carrito buscarPorCodigo(int codigo) {
         List<Carrito> carritos = listarTodos();
@@ -51,6 +87,13 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
         return null;
     }
 
+    /**
+     * Busca un carrito por su código y fecha de creación.
+     *
+     * @param codigo Código del carrito.
+     * @param fecha Fecha de creación.
+     * @return El carrito correspondiente o {@code null} si no se encuentra.
+     */
     @Override
     public Carrito buscarPorCodigoYFecha(int codigo, Date fecha) {
         List<Carrito> carritos = listarTodos();
@@ -62,12 +105,22 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
         return null;
     }
 
+    /**
+     * Actualiza la información de un carrito sobrescribiendo su contenido en el archivo.
+     *
+     * @param carrito Carrito con la información actualizada.
+     */
     @Override
     public void actualizar(Carrito carrito) {
         eliminar(carrito.getCodigo());
         crear(carrito);
     }
 
+    /**
+     * Elimina un carrito del archivo de texto.
+     *
+     * @param codigo Código del carrito a eliminar.
+     */
     @Override
     public void eliminar(int codigo) {
         List<Carrito> carritos = listarTodos();
@@ -86,6 +139,12 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
         }
     }
 
+    /**
+     * Lista todos los carritos almacenados en el archivo de texto.
+     * Reconstruye los objetos {@code Carrito} y sus productos.
+     *
+     * @return Lista de carritos leídos desde el archivo.
+     */
     @Override
     public List<Carrito> listarTodos() {
         List<Carrito> carritos = new ArrayList<>();
@@ -104,14 +163,12 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
                     int codProducto = Integer.parseInt(partes[2]);
                     int cantidad = Integer.parseInt(partes[3]);
 
-                    // Buscar o crear carrito
                     Carrito carrito = mapaCarritos.get(codigo);
                     if (carrito == null) {
                         carrito = new Carrito(codigo, fecha);
                         mapaCarritos.put(codigo, carrito);
                     }
 
-                    // Buscar producto
                     Producto producto = productoDAO.buscarPorCodigo(codProducto);
                     if (producto != null) {
                         carrito.agregarProducto(producto, cantidad);
@@ -121,7 +178,6 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
                 }
             }
 
-            // Añadir todos los carritos al resultado
             carritos.addAll(mapaCarritos.values());
 
         } catch (IOException | ParseException e) {
@@ -131,6 +187,11 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
         return carritos;
     }
 
+    /**
+     * Guarda los ítems del carrito como líneas independientes en el archivo.
+     *
+     * @param carrito Carrito a guardar.
+     */
     @Override
     public void guardar(Carrito carrito) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO, true))) {
@@ -147,7 +208,4 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
             System.err.println("Error al guardar carrito: " + e.getMessage());
         }
     }
-
-
-
 }
