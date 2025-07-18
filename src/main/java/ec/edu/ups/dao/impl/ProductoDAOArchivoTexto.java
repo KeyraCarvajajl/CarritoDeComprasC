@@ -7,10 +7,31 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementación de la interfaz {@link ProductoDAO} que utiliza un archivo de texto
+ * para almacenar y recuperar productos del sistema.
+ * <p>
+ * Cada producto se guarda en una línea del archivo {@code productos.txt}, usando el formato:
+ * {@code codigo;nombre;precio}.
+ * </p>
+ * <p>
+ * Este enfoque permite una persistencia simple y legible por humanos, útil para pruebas
+ * o sistemas con bajo volumen de datos.
+ * </p>
+ *
+ * @author Keyra
+ * @version 1.0
+ */
 public class ProductoDAOArchivoTexto implements ProductoDAO {
 
+    /** Ruta del archivo donde se almacenan los productos en formato de texto. */
     private static final String ARCHIVO = "data/productos.txt";
 
+    /**
+     * Guarda un nuevo producto en el archivo de texto.
+     *
+     * @param producto Producto a guardar.
+     */
     @Override
     public void crear(Producto producto) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO, true))) {
@@ -24,6 +45,12 @@ public class ProductoDAOArchivoTexto implements ProductoDAO {
         }
     }
 
+    /**
+     * Busca un producto por su código.
+     *
+     * @param codigo Código del producto.
+     * @return El producto correspondiente o {@code null} si no se encuentra.
+     */
     @Override
     public Producto buscarPorCodigo(int codigo) {
         try (BufferedReader reader = new BufferedReader(new FileReader(ARCHIVO))) {
@@ -42,6 +69,12 @@ public class ProductoDAOArchivoTexto implements ProductoDAO {
         return null;
     }
 
+    /**
+     * Busca productos cuyo nombre contenga la cadena dada (sin distinción de mayúsculas).
+     *
+     * @param nombre Nombre o parte del nombre a buscar.
+     * @return Lista de productos que coincidan parcialmente con el nombre.
+     */
     @Override
     public List<Producto> buscarPorNombre(String nombre) {
         List<Producto> encontrados = new ArrayList<>();
@@ -61,6 +94,11 @@ public class ProductoDAOArchivoTexto implements ProductoDAO {
         return encontrados;
     }
 
+    /**
+     * Actualiza un producto existente sobrescribiendo su información en el archivo.
+     *
+     * @param producto Producto con los datos actualizados.
+     */
     @Override
     public void actualizar(Producto producto) {
         List<Producto> lista = listarTodos();
@@ -78,6 +116,11 @@ public class ProductoDAOArchivoTexto implements ProductoDAO {
         }
     }
 
+    /**
+     * Elimina un producto del archivo por su código.
+     *
+     * @param codigo Código del producto a eliminar.
+     */
     @Override
     public void eliminar(int codigo) {
         List<Producto> lista = listarTodos();
@@ -94,6 +137,12 @@ public class ProductoDAOArchivoTexto implements ProductoDAO {
         }
     }
 
+    /**
+     * Modifica un producto ya existente en el archivo.
+     *
+     * @param producto Producto con los datos nuevos.
+     * @return {@code true} si se modificó correctamente, {@code false} si no se encontró.
+     */
     @Override
     public boolean modificar(Producto producto) {
         List<Producto> lista = listarTodos();
@@ -114,6 +163,11 @@ public class ProductoDAOArchivoTexto implements ProductoDAO {
         return modificado;
     }
 
+    /**
+     * Retorna la lista completa de productos almacenados en el archivo.
+     *
+     * @return Lista de productos existentes.
+     */
     @Override
     public List<Producto> listarTodos() {
         List<Producto> lista = new ArrayList<>();

@@ -7,21 +7,45 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementación de la interfaz {@link ProductoDAO} que utiliza archivos binarios
+ * para almacenar y recuperar productos del sistema.
+ * <p>
+ * Los productos se serializan usando {@code ObjectOutputStream} y se guardan en el archivo
+ * {@code productos.bin}. La información se mantiene persistente entre ejecuciones.
+ * </p>
+ *
+ * <p>Esta clase permite la gestión completa de productos: crear, buscar, actualizar,
+ * eliminar y listar, todo a través de operaciones sobre el archivo binario.</p>
+ *
+ * @author Keyra
+ */
 public class ProductoDAOArchivoBinario implements ProductoDAO {
 
+    /** Ruta del archivo binario donde se almacenan los productos. */
     private static final String ARCHIVO = "productos.bin";
+
+    /** Lista interna de productos cargados desde el archivo. */
     private List<Producto> productos;
 
     public ProductoDAOArchivoBinario() {
         productos = cargarDesdeArchivo();
     }
 
+    /**
+     * Constructor que carga los productos desde el archivo binario al iniciar la clase.
+     */
     @Override
     public void crear(Producto producto) {
         productos.add(producto);
         guardarEnArchivo();
     }
 
+    /**
+     * Crea un nuevo producto y lo guarda tanto en memoria como en el archivo.
+     *
+     * @paramproducto Producto a guardar.
+     */
     @Override
     public Producto buscarPorCodigo(int codigo) {
         for (Producto p : productos) {
@@ -32,6 +56,12 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         return null;
     }
 
+    /**
+     * Busca productos cuyo nombre contenga la cadena dada (sin distinción de mayúsculas).
+     *
+     * @param nombre Nombre o fragmento del nombre a buscar.
+     * @return Lista de productos que coincidan parcialmente con el nombre.
+     */
     @Override
     public List<Producto> buscarPorNombre(String nombre) {
         List<Producto> encontrados = new ArrayList<>();
@@ -43,6 +73,11 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         return encontrados;
     }
 
+    /**
+     * Actualiza un producto existente en la lista, identificándolo por su código.
+     *
+     * @param productoActualizado Producto con datos nuevos.
+     */
     @Override
     public void actualizar(Producto productoActualizado) {
         for (int i = 0; i < productos.size(); i++) {
@@ -54,12 +89,23 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         }
     }
 
+    /**
+     * Elimina un producto por su código.
+     *
+     * @param codigo Código del producto a eliminar.
+     */
     @Override
     public void eliminar(int codigo) {
         productos.removeIf(p -> p.getCodigo() == codigo);
         guardarEnArchivo();
     }
 
+    /**
+     * Modifica un producto existente (alias de actualizar).
+     *
+     * @param productoModificado Producto con datos nuevos.
+     * @return {@code true} si se modificó exitosamente, {@code false} si no se encontró.
+     */
     @Override
     public boolean modificar(Producto productoModificado) {
         for (int i = 0; i < productos.size(); i++) {
@@ -72,12 +118,19 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         return false;
     }
 
+    /**
+     * Devuelve una copia de la lista de todos los productos almacenados.
+     *
+     * @return Lista de productos.
+     */
     @Override
     public List<Producto> listarTodos() {
         return new ArrayList<>(productos);
     }
 
-
+    /**
+     * Guarda la lista actual de productos en el archivo binario.
+     */
     private void guardarEnArchivo() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO))) {
             oos.writeObject(productos);
@@ -86,6 +139,11 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         }
     }
 
+    /**
+     * Carga los productos desde el archivo binario.
+     *
+     * @return Lista de productos leídos o una lista vacía si el archivo no existe o hay error.
+     */
     private List<Producto> cargarDesdeArchivo() {
         File archivo = new File(ARCHIVO);
         if (!archivo.exists()) {
