@@ -1,6 +1,10 @@
 package ec.edu.ups.dao.impl;
 
 import ec.edu.ups.dao.UsuarioDAO;
+import ec.edu.ups.excepciones.CamposException;
+import ec.edu.ups.excepciones.CedulaException;
+import ec.edu.ups.excepciones.ContraseniaException;
+import ec.edu.ups.excepciones.CorreoException;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
 
@@ -37,7 +41,7 @@ public class UsuarioDAOMemoria implements UsuarioDAO {
     /**
      * Constructor. Inicializa la lista y agrega tres usuarios de ejemplo: admin, keyra y user.
      */
-    public UsuarioDAOMemoria() {
+    public UsuarioDAOMemoria() throws CedulaException, ContraseniaException, CamposException, CorreoException {
         usuarios = new ArrayList<>();
 
         Usuario admin = new Usuario("admin", "12345", Rol.ADMINISTRADOR);

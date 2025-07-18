@@ -1,5 +1,7 @@
 package ec.edu.ups.modelo;
 
+import java.io.Serializable;
+
 /**
  * Clase que representa un producto disponible para ser añadido al carrito de compras.
  * Contiene atributos como código, nombre y precio del producto.
@@ -9,7 +11,7 @@ package ec.edu.ups.modelo;
  *
  * @author Keyra
  */
-public class Producto {
+public class Producto implements Serializable {
     /**
      * Código único del producto.
      */
@@ -25,10 +27,12 @@ public class Producto {
      */
     private double precio;
 
+    private int cantidad;
+
     /**
      * Constructor vacío requerido para serialización o frameworks que lo necesiten.
      */
-    public Producto() {
+    public Producto(int codigo, String nombre, double precio) {
     }
 
     /**
@@ -38,10 +42,11 @@ public class Producto {
      * @param nombre Nombre del producto.
      * @param precio Precio del producto.
      */
-    public Producto(int codigo, String nombre, double precio) {
+    public Producto(int codigo, String nombre, double precio, int cantidad) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.precio = precio;
+        this.cantidad = cantidad;
     }
 
     /**
@@ -108,4 +113,7 @@ public class Producto {
         return nombre + " - $" + precio;
     }
 
+    public int getCantidad() {
+        return cantidad;
+    }
 }

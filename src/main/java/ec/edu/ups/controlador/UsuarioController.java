@@ -3,6 +3,7 @@ package ec.edu.ups.controlador;
 import ec.edu.ups.dao.CarritoDAO;
 import ec.edu.ups.dao.PreguntasDAO;
 import ec.edu.ups.dao.UsuarioDAO;
+import ec.edu.ups.excepciones.*;
 import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
@@ -272,7 +273,16 @@ public class UsuarioController {
      */
 
     public void inicializarListenersRegistro() {
-        registrarseView.getBtnRegistro().addActionListener(e -> crear());
+        registrarseView.getBtnRegistro().addActionListener(e -> {
+            try {
+                crear();
+            } catch (CedulaException | ContraseniaException | FechaException | CamposException | CorreoException ex) {
+                registrarseView.mostrarMensaje("⚠️ " + ex.getMessage());
+            } catch (Exception ex) {
+                registrarseView.mostrarMensaje("⚠️ Error inesperado: " + ex.getMessage());
+                ex.printStackTrace(); // Solo para desarrollo
+            }
+        });
 
         registrarseView.getBtnCancelar().addActionListener(e -> {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(registrarseView.getContentPane());
@@ -378,7 +388,7 @@ public class UsuarioController {
      * Si todo es correcto, crea el usuario, lo guarda en el DAO y cierra la vista de registro.
      */
 
-    private void crear() {
+    private void crear() throws CedulaException, ContraseniaException, FechaException, CamposException, CorreoException {
         String nombreCompleto = registrarseView.getTxtNombreCompleto().getText();
         String username = registrarseView.getTxtUsuario().getText();
         String contrasenia = new String(registrarseView.getTxtContrasenia().getPassword());
@@ -418,7 +428,7 @@ public class UsuarioController {
             formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate fecha = LocalDate.parse(fechaNacimiento, formatter);
             nuevoUsuario.setFechaNacimiento(fecha);
-        } catch (DateTimeParseException ex) {
+        } catch (DateTimeParseException | FechaException ex) {
             registrarseView.mostrarMensaje("La fecha debe tener el formato dd-MM-yyyy y ser válida.");
             return;
         }

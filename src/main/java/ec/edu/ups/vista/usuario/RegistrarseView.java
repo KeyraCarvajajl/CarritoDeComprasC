@@ -63,12 +63,12 @@ public class RegistrarseView extends JInternalFrame {
     /**
      * Campo de texto para ingresar el correo electrónico del usuario.
      */
-    private JTextField txtCorreoElectrónico;
+    private JTextField txtCorreoElectronico;
 
     /**
      * Campo de texto para ingresar el número de teléfono del usuario.
      */
-    private JTextField txtTeléfono;
+    private JTextField txtTelefono;
 
     /**
      * ComboBox para seleccionar la primera pregunta de seguridad.
@@ -312,7 +312,7 @@ public class RegistrarseView extends JInternalFrame {
      * @return JTextField del correo electrónico.
      */
     public JTextField getTxtCorreo() {
-        return txtCorreoElectrónico;
+        return txtCorreoElectronico;
     }
 
     /**
@@ -320,7 +320,7 @@ public class RegistrarseView extends JInternalFrame {
      * @return JTextField del teléfono.
      */
     public JTextField getTxtTelefono() {
-        return txtTeléfono;
+        return txtTelefono;
     }
 
     /**
@@ -408,8 +408,8 @@ public class RegistrarseView extends JInternalFrame {
         txtContrasenia.setText("");
         txtConfirmarContrasenia.setText("");
         jFormatedFecha.setText("");
-        txtCorreoElectrónico.setText("");
-        txtTeléfono.setText("");
+        txtCorreoElectronico.setText("");
+        txtTelefono.setText("");
         txtPregunta1.setText("");
         txtPregunta2.setText("");
         txtPregunta3.setText("");

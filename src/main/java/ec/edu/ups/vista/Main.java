@@ -20,8 +20,9 @@ import ec.edu.ups.vista.producto.ProductoEliminarView;
 import ec.edu.ups.vista.producto.ProductoListaView;
 import ec.edu.ups.vista.producto.ProductoModificarView;
 import ec.edu.ups.vista.usuario.*;
-
+import java.util.List;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -48,22 +49,18 @@ public class Main {
                 "Configuración de almacenamiento",
                 JOptionPane.QUESTION_MESSAGE,
                 null, opciones, opciones[0]);
-        UsuarioDAO usuarioDAO;
 
-        if ("Archivo Binario".equals(seleccion)) {
-            usuarioDAO = new UsuarioDAOBinario();
-        } else if ("Archivo de Texto".equals(seleccion)) {
-            usuarioDAO = new UsuarioDAOArchivoTexto();
-        } else {
-            usuarioDAO = new UsuarioDAOMemoria();
+        UsuarioDAO usuarioDAO = new UsuarioDAOArchivoTexto();
+        List<Usuario> usuarios = usuarioDAO.listarTodos();
+        for (Usuario u : usuarios) {
+            System.out.println("Usuario: " + u.getUsername() + " - " + u.getNombre() + " - " + u.getRol());
         }
-
 
         PreguntasDAO preguntasDAO = new PreguntasDAOMemoria();
         MensajeInternacionalizacionHandler mensajeHandler = new MensajeInternacionalizacionHandler("es","EC");
 
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        EventQueue.invokeLater(new Runnable() {
 
             /**
              * Método que ejecuta la lógica principal del sistema de carrito de compras.

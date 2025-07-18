@@ -48,6 +48,19 @@ public class Carrito {
     }
 
     /**
+     * Constructor con parámetros para reconstrucción desde archivo.
+     *
+     * @param codigo Código del carrito.
+     * @param fecha Fecha de creación.
+     */
+    public Carrito(int codigo, Date fecha) {
+        this.codigo = codigo;
+        this.fechaCreacion = fecha;
+        this.items = new ArrayList<>();
+    }
+
+
+    /**
      * Retorna el código del carrito.
      *
      * @return código numérico único del carrito.
