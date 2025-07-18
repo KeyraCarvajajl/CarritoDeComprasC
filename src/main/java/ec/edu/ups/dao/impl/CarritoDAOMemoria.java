@@ -2,8 +2,12 @@ package ec.edu.ups.dao.impl;
 
 import ec.edu.ups.dao.CarritoDAO;
 import ec.edu.ups.modelo.Carrito;
+import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.util.FormateadorUtils;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -23,7 +27,7 @@ import java.util.List;
 
 public class CarritoDAOMemoria implements CarritoDAO {
 
-
+    private static final String ARCHIVO = "carritos.txt";
     /** Lista de carritos almacenados en memoria. */
     private List<Carrito> carritos;
 
@@ -128,4 +132,21 @@ public class CarritoDAOMemoria implements CarritoDAO {
     public List<Carrito> listarTodos() {
         return carritos;
     }
+
+    @Override
+    public void guardar(Carrito carrito) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO, true))) {
+            for (ItemCarrito item : carrito.obtenerItems()) {
+                String linea = String.format("%d;%d;%d",
+                        carrito.getCodigo(),
+                        item.getProducto().getCodigo(),
+                        item.getCantidad());
+                writer.write(linea);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error al guardar carrito: " + e.getMessage());
+        }
+    }
+
 }

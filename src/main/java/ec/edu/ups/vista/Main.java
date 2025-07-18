@@ -52,7 +52,7 @@ public class Main {
 
         UsuarioDAO usuarioDAO = new UsuarioDAOArchivoTexto();
         ProductoDAO productoDAO = new ProductoDAOArchivoTexto();
-        CarritoDAO carritoDAO = new CarritoDAOArchivoTexto();
+        CarritoDAO carritoDAO = new CarritoDAOArchivoTexto(productoDAO);
         PreguntasDAO preguntasDAO = new PreguntasDAOArchivoTexto();
         RespuestaDAO respuestaDAO = new RespuestaDAOArchivoTexto();
         List<Usuario> usuarios = usuarioDAO.listarTodos();

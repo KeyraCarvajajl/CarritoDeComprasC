@@ -70,4 +70,6 @@ public interface CarritoDAO {
      */
 
     List<Carrito> listarTodos();
+
+    void guardar(Carrito carrito);
 }
