@@ -8,13 +8,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementación del DAO de Preguntas usando archivo de texto.
- * Guarda cada pregunta como una línea: username|pregunta
+ * Implementación de la interfaz {@link PreguntasDAO} que utiliza un archivo de texto
+ * para almacenar preguntas de seguridad relacionadas a los usuarios.
+ * <p>
+ * Cada línea del archivo {@code preguntas.txt} tiene el formato:
+ * {@code username|pregunta}. Esto permite asociar múltiples preguntas a un mismo usuario.
+ * </p>
+ *
+ * <p>La clase permite guardar nuevas preguntas, obtener todas las registradas,
+ * o filtrar por nombre de usuario.</p>
+ *
+ * @author Keyra
+ * @version 1.0
  */
 public class PreguntasDAOArchivoTexto implements PreguntasDAO {
 
+    /** Ruta del archivo donde se almacenan las preguntas. */
     private static final String ARCHIVO = "data/preguntas.txt";
 
+    /**
+     * Guarda una nueva pregunta en el archivo de texto.
+     * Cada línea representa una pregunta asociada a un usuario.
+     *
+     * @param pregunta Objeto {@link Preguntas} que contiene el nombre de usuario y la pregunta.
+     */
     @Override
     public void guardar(Preguntas pregunta) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO, true))) {
@@ -25,6 +42,12 @@ public class PreguntasDAOArchivoTexto implements PreguntasDAO {
         }
     }
 
+    /**
+     * Busca todas las preguntas asociadas a un usuario específico.
+     *
+     * @param username Nombre de usuario.
+     * @return Lista de objetos {@link Preguntas} relacionadas con el usuario.
+     */
     @Override
     public List<Preguntas> buscarPorUsername(String username) {
         List<Preguntas> lista = new ArrayList<>();
@@ -42,6 +65,11 @@ public class PreguntasDAOArchivoTexto implements PreguntasDAO {
         return lista;
     }
 
+    /**
+     * Obtiene todas las preguntas registradas en el archivo de texto.
+     *
+     * @return Lista completa de objetos {@link Preguntas}.
+     */
     @Override
     public List<Preguntas> obtenerTodas() {
         List<Preguntas> lista = new ArrayList<>();
