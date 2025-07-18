@@ -11,12 +11,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementación de UsuarioDAO que guarda los usuarios en un archivo de texto plano.
+ * Implementación de la interfaz {@link UsuarioDAO} que utiliza archivos de texto plano
+ * para almacenar y recuperar usuarios.
+ * <p>
+ * Cada línea del archivo {@code usuarios.txt} tiene el formato delimitado por {@code |}:
+ * {@code username|contraseña|rol|codigo|nombre|nombreCompleto|fechaNacimiento|correo|telefono}
+ * </p>
+ * <p>
+ * Esta clase permite operaciones completas de autenticación, creación, búsqueda, modificación,
+ * eliminación y filtrado de usuarios, aplicando validaciones personalizadas.
+ * </p>
+ *
+ * @author Keyra
+ * @version 1.0
  */
 public class UsuarioDAOArchivoTexto implements UsuarioDAO {
 
+    /** Ruta del archivo de texto donde se almacenan los usuarios. */
     private static final String ARCHIVO = "data/usuarios.txt";
 
+    /**
+     * Autentica un usuario comparando nombre de usuario y contraseña.
+     *
+     * @param username Nombre de usuario.
+     * @param contrasenia Contraseña.
+     * @return El usuario autenticado o {@code null} si no se encuentra.
+     */
     @Override
     public Usuario autenticar(String username, String contrasenia) {
         List<Usuario> usuarios = listarTodos();
@@ -28,6 +48,11 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         return null;
     }
 
+    /**
+     * Guarda un nuevo usuario en el archivo de texto.
+     *
+     * @param usuario Usuario a guardar.
+     */
     @Override
     public void crear(Usuario usuario) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO, true))) {
@@ -38,6 +63,12 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         }
     }
 
+    /**
+     * Busca un usuario por su nombre de usuario.
+     *
+     * @param username Nombre de usuario.
+     * @return Usuario encontrado o {@code null} si no existe.
+     */
     @Override
     public Usuario buscarPorUsername(String username) {
         List<Usuario> usuarios = listarTodos();
@@ -49,6 +80,11 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         return null;
     }
 
+    /**
+     * Elimina un usuario del archivo por su código.
+     *
+     * @param codigo Código del usuario a eliminar.
+     */
     @Override
     public void eliminar(int codigo) {
         List<Usuario> usuarios = listarTodos();
@@ -56,6 +92,11 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         sobrescribirArchivo(usuarios);
     }
 
+    /**
+     * Actualiza los datos de un usuario en el archivo.
+     *
+     * @param usuarioActualizado Usuario con los datos actualizados.
+     */
     @Override
     public void actualizar(Usuario usuarioActualizado) {
         List<Usuario> usuarios = listarTodos();
@@ -68,6 +109,11 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         sobrescribirArchivo(usuarios);
     }
 
+    /**
+     * Lista todos los usuarios almacenados en el archivo de texto.
+     *
+     * @return Lista de objetos {@link Usuario}.
+     */
     @Override
     public List<Usuario> listarTodos() {
         List<Usuario> usuarios = new ArrayList<>();
@@ -103,7 +149,11 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         return usuarios;
     }
 
-
+    /**
+     * Lista los usuarios con rol ADMINISTRADOR.
+     *
+     * @return Lista de usuarios administradores.
+     */
     @Override
     public List<Usuario> listarAdministradores() {
         List<Usuario> resultado = new ArrayList<>();
@@ -115,6 +165,12 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         return resultado;
     }
 
+    /**
+     * Lista los usuarios por su rol.
+     *
+     * @param rol Rol a filtrar.
+     * @return Lista de usuarios con el rol especificado.
+     */
     @Override
     public List<Usuario> listarPorRol(Rol rol) {
         List<Usuario> resultado = new ArrayList<>();
@@ -126,17 +182,34 @@ public class UsuarioDAOArchivoTexto implements UsuarioDAO {
         return resultado;
     }
 
+
+    /**
+     * Devuelve todos los usuarios (alias de {@link #listarTodos()}).
+     *
+     * @return Lista de usuarios.
+     */
     @Override
     public List<Usuario> obtenerTodos() {
         return listarTodos();
     }
 
+    /**
+     * Convierte un objeto {@link Usuario} en una línea de texto con separador '|'.
+     *
+     * @param u Usuario a formatear.
+     * @return Línea lista para escritura en archivo.
+     */
     private String formatearUsuario(Usuario u) {
         return u.getUsername() + "|" + u.getContrasenia() + "|" + u.getRol() + "|" +
                 u.getCodigo() + "|" + u.getNombre() + "|" + u.getNombreCompleto() + "|" +
                 u.getFechaNacimiento() + "|" + u.getCorreo() + "|" + u.getTelefono();
     }
 
+    /**
+     * Sobrescribe todo el archivo con una nueva lista de usuarios.
+     *
+     * @param usuarios Lista completa a escribir en el archivo.
+     */
     private void sobrescribirArchivo(List<Usuario> usuarios) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO))) {
             for (Usuario u : usuarios) {
