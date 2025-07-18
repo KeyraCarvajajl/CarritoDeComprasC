@@ -308,5 +308,6 @@ public class CarritoEliminarView extends JInternalFrame {
     }
 
     public void limpiarCampos() {
+
     }
 }

@@ -13,7 +13,6 @@ import java.util.Locale;
  * También proporciona acceso a las funcionalidades de recuperación de contraseña y registro de nuevos usuarios.</p>
  *
  * <p>Esta clase implementa una interfaz gráfica utilizando Swing y permite el cambio de idioma dinámico
- * gracias al uso de {@link ec.edu.ups.util.MensajeInternacionalizacionHandler}.</p>
  *
  * <p>Componentes destacados:</p>
  * <ul>
@@ -93,13 +92,13 @@ public class LoginView extends JFrame {
             if (seleccion != null) {
                 switch (seleccion) {
                     case "Español":
-                        mensajeHandler.setLocale(new Locale("es", "EC"));
+                        mensajeHandler.setLocale(Locale.forLanguageTag("es-ES"));
                         break;
                     case "Ingles":
-                        mensajeHandler.setLocale(new Locale("en", "US"));
+                        mensajeHandler.setLocale(Locale.forLanguageTag("en-US"));
                         break;
                     case "Francés":
-                        mensajeHandler.setLocale(new Locale("fr", "FR"));
+                        mensajeHandler.setLocale(Locale.forLanguageTag("fr-FR"));
                         break;
                 }
                 actualizarTextos(mensajeHandler); // Actualiza los textos en pantalla

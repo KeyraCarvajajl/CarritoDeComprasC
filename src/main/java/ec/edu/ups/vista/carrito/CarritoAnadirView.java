@@ -176,8 +176,6 @@ public class CarritoAnadirView extends JInternalFrame {
         });
     }
 
-
-
     private void cargarDatos(){
         cbxCantidad.removeAllItems();
         for(int i = 0; i < 20; i++){
