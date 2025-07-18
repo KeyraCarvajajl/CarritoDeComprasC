@@ -1,0 +1,5 @@
+1;Manzanas;0.3
+2;Pan;0.15
+3;Leche;1.2
+4;Arroz;0.5
+5;Huevos;1.8

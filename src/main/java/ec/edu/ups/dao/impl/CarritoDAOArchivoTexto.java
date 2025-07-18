@@ -16,7 +16,7 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
     private ProductoDAO productoDAO;
     private SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 
-    public CarritoDAOArchivoTexto(ProductoDAO productoDAO) {
+    public CarritoDAOArchivoTexto() {
         this.productoDAO = productoDAO;
     }
 

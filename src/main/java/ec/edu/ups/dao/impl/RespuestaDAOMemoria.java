@@ -57,6 +57,11 @@ public class RespuestaDAOMemoria implements RespuestaDAO {
         return result;
     }
 
+    @Override
+    public List<Respuesta> listarTodos() {
+        return List.of();
+    }
+
     /**
      * Valida si las respuestas proporcionadas por un usuario coinciden con las almacenadas.
      * Se compara tanto la pregunta como la respuesta (ignorando mayúsculas/minúsculas).

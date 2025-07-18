@@ -1,0 +1,10 @@
+base|¿Cuál es tu color favorito?
+base|¿Cuál es el nombre de tu primer mascota?
+base|¿En qué ciudad naciste?
+base|¿Cuál es tu comida favorita?
+base|¿Cuál es tu película favorita?
+base|¿Cuál es tu canción favorita?
+base|¿Qué deporte practicaste en la infancia?
+base|¿Cuál es tu libro favorito?
+base|¿A qué escuela primaria asististe?
+base|¿Cuál es el segundo nombre de tu madre?

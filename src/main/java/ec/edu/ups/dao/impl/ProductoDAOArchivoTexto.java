@@ -16,8 +16,7 @@ public class ProductoDAOArchivoTexto implements ProductoDAO {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO, true))) {
             String linea = producto.getCodigo() + ";" +
                     producto.getNombre() + ";" +
-                    producto.getPrecio() + ";" +
-                    producto.getCantidad();
+                    producto.getPrecio();
             writer.write(linea);
             writer.newLine();
         } catch (IOException e) {
@@ -33,8 +32,8 @@ public class ProductoDAOArchivoTexto implements ProductoDAO {
                 String[] datos = linea.split(";");
                 if (Integer.parseInt(datos[0]) == codigo) {
                     return new Producto(codigo, datos[1],
-                            Double.parseDouble(datos[2]),
-                            Integer.parseInt(datos[3]));
+                            Double.parseDouble(datos[2]));
+
                 }
             }
         } catch (IOException | NumberFormatException e) {
@@ -52,7 +51,8 @@ public class ProductoDAOArchivoTexto implements ProductoDAO {
                 String[] datos = linea.split(";");
                 if (datos[1].toLowerCase().contains(nombre.toLowerCase())) {
                     encontrados.add(new Producto(Integer.parseInt(datos[0]), datos[1],
-                            Double.parseDouble(datos[2]), Integer.parseInt(datos[3])));
+                            Double.parseDouble(datos[2])));
+
                 }
             }
         } catch (IOException e) {
@@ -70,7 +70,7 @@ public class ProductoDAOArchivoTexto implements ProductoDAO {
                     p = producto;
                 }
                 writer.write(p.getCodigo() + ";" + p.getNombre() + ";" +
-                        p.getPrecio() + ";" + p.getCantidad());
+                        p.getPrecio());
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -85,7 +85,7 @@ public class ProductoDAOArchivoTexto implements ProductoDAO {
             for (Producto p : lista) {
                 if (p.getCodigo() != codigo) {
                     writer.write(p.getCodigo() + ";" + p.getNombre() + ";" +
-                            p.getPrecio() + ";" + p.getCantidad());
+                            p.getPrecio());
                     writer.newLine();
                 }
             }
@@ -105,7 +105,7 @@ public class ProductoDAOArchivoTexto implements ProductoDAO {
                     modificado = true;
                 }
                 writer.write(p.getCodigo() + ";" + p.getNombre() + ";" +
-                        p.getPrecio() + ";" + p.getCantidad());
+                        p.getPrecio());
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -122,7 +122,8 @@ public class ProductoDAOArchivoTexto implements ProductoDAO {
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(";");
                 lista.add(new Producto(Integer.parseInt(datos[0]), datos[1],
-                        Double.parseDouble(datos[2]), Integer.parseInt(datos[3])));
+                        Double.parseDouble(datos[2])));
+
             }
         } catch (IOException e) {
             System.err.println("Error al listar productos: " + e.getMessage());

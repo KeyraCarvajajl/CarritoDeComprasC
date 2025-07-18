@@ -4,13 +4,9 @@ import ec.edu.ups.controlador.CarritoController;
 import ec.edu.ups.controlador.PreguntasController;
 import ec.edu.ups.controlador.ProductoController;
 import ec.edu.ups.controlador.UsuarioController;
-import ec.edu.ups.dao.CarritoDAO;
-import ec.edu.ups.dao.PreguntasDAO;
-import ec.edu.ups.dao.ProductoDAO;
-import ec.edu.ups.dao.UsuarioDAO;
+import ec.edu.ups.dao.*;
 import ec.edu.ups.dao.impl.*;
-import ec.edu.ups.modelo.Rol;
-import ec.edu.ups.modelo.Usuario;
+import ec.edu.ups.modelo.*;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.carrito.*;
 import ec.edu.ups.vista.preguntas.CambiarContraseniaView;
@@ -20,6 +16,10 @@ import ec.edu.ups.vista.producto.ProductoEliminarView;
 import ec.edu.ups.vista.producto.ProductoListaView;
 import ec.edu.ups.vista.producto.ProductoModificarView;
 import ec.edu.ups.vista.usuario.*;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.*;
 import java.awt.*;
@@ -51,13 +51,61 @@ public class Main {
                 null, opciones, opciones[0]);
 
         UsuarioDAO usuarioDAO = new UsuarioDAOArchivoTexto();
+        ProductoDAO productoDAO = new ProductoDAOArchivoTexto();
+        CarritoDAO carritoDAO = new CarritoDAOArchivoTexto();
+        PreguntasDAO preguntasDAO = new PreguntasDAOArchivoTexto();
+        RespuestaDAO respuestaDAO = new RespuestaDAOArchivoTexto();
         List<Usuario> usuarios = usuarioDAO.listarTodos();
         for (Usuario u : usuarios) {
             System.out.println("Usuario: " + u.getUsername() + " - " + u.getNombre() + " - " + u.getRol());
         }
 
-        PreguntasDAO preguntasDAO = new PreguntasDAOMemoria();
         MensajeInternacionalizacionHandler mensajeHandler = new MensajeInternacionalizacionHandler("es","EC");
+
+        if (preguntasDAO.obtenerTodas().isEmpty()) {
+            preguntasDAO.guardar(new Preguntas("base", "¿Cuál es tu color favorito?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿Cuál es el nombre de tu primer mascota?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿En qué ciudad naciste?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿Cuál es tu comida favorita?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿Cuál es tu película favorita?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿Cuál es tu canción favorita?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿Qué deporte practicaste en la infancia?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿Cuál es tu libro favorito?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿A qué escuela primaria asististe?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿Cuál es el segundo nombre de tu madre?"));
+        }
+
+        if (productoDAO.listarTodos().isEmpty()) {
+            productoDAO.crear(new Producto(1, "Manzanas", 0.30));
+            productoDAO.crear(new Producto(2, "Pan", 0.15));
+            productoDAO.crear(new Producto(3, "Leche", 1.20));
+            productoDAO.crear(new Producto(4, "Arroz", 0.50));
+            productoDAO.crear(new Producto(5, "Huevos", 1.80));
+            System.out.println("Productos iniciales cargados.");
+        }
+
+
+        if (carritoDAO.listarTodos().isEmpty()) {
+            Producto p1 = new Producto(1, "Camiseta", 10.0);
+            Producto p2 = new Producto(2, "Zapatos", 25.0);
+
+            Carrito carrito = new Carrito(100, new Date());
+            carrito.agregarProducto(p1, 2); // cantidad 2
+            carrito.agregarProducto(p2, 1); // cantidad 1
+
+            carritoDAO.crear(carrito);
+            System.out.println("Carrito inicial cargado.");
+        }
+
+
+
+        if (respuestaDAO.listarTodos().isEmpty()) {
+            respuestaDAO.guardarRespuesta(new Respuesta("Keyra2006", "¿Nombre de tu primer mascota?", "Toby"));
+            respuestaDAO.guardarRespuesta(new Respuesta("Keyra2006", "¿Nombre de tu escuela?", "Salesiana"));
+            System.out.println("Respuestas guardadas exitosamente.");
+        }
+
+
 
 
         EventQueue.invokeLater(new Runnable() {

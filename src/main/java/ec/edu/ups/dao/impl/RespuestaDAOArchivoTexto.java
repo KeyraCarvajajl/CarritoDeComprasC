@@ -58,4 +58,21 @@ public class RespuestaDAOArchivoTexto implements RespuestaDAO {
 
         return coincidencias >= 2; // Se puede ajustar el umbral si deseas
     }
+    @Override
+    public List<Respuesta> listarTodos() {
+        List<Respuesta> respuestas = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(ARCHIVO))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] partes = linea.split("\\|");
+                if (partes.length == 3) {
+                    respuestas.add(new Respuesta(partes[0], partes[1], partes[2]));
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error al leer respuestas: " + e.getMessage());
+        }
+        return respuestas;
+    }
+
 }

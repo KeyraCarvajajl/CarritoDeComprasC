@@ -1,5 +1,6 @@
 package ec.edu.ups.modelo;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -11,7 +12,7 @@ import java.util.*;
  *
  * @author Keyra
  */
-public class Carrito {
+public class Carrito implements Serializable {
 
     /**
      * Porcentaje de IVA aplicado al subtotal (15%).
@@ -193,4 +194,6 @@ public class Carrito {
                 calcularIVA(),
                 calcularTotal());
     }
+
+
 }

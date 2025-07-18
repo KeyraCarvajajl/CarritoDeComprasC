@@ -34,6 +34,8 @@ public interface RespuestaDAO {
      */
 
     List<Respuesta>obtenerRespuestasPorUsuario(String username);
+    List<Respuesta> listarTodos();
+
 
     /**
      * Valida si las respuestas proporcionadas por un usuario coinciden con las almacenadas.

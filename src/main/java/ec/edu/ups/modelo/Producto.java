@@ -27,14 +27,6 @@ public class Producto implements Serializable {
      */
     private double precio;
 
-    private int cantidad;
-
-    /**
-     * Constructor vacío requerido para serialización o frameworks que lo necesiten.
-     */
-    public Producto(int codigo, String nombre, double precio) {
-    }
-
     /**
      * Constructor principal que permite inicializar un producto con todos sus atributos.
      *
@@ -42,11 +34,10 @@ public class Producto implements Serializable {
      * @param nombre Nombre del producto.
      * @param precio Precio del producto.
      */
-    public Producto(int codigo, String nombre, double precio, int cantidad) {
+    public Producto(int codigo, String nombre, double precio) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.precio = precio;
-        this.cantidad = cantidad;
     }
 
     /**
@@ -113,7 +104,4 @@ public class Producto implements Serializable {
         return nombre + " - $" + precio;
     }
 
-    public int getCantidad() {
-        return cantidad;
-    }
 }
