@@ -5,21 +5,55 @@ import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Clase personalizada que extiende JDesktopPane para proporcionar un fondo personalizado
+ * con una imagen, utilizada como contenedor principal en la interfaz MDI del sistema
+ * de carrito de compras.
+ *
+ * Esta clase permite dibujar una imagen de fondo en el escritorio interno
+ * de la aplicación, mejorando la estética visual del entorno gráfico.
+ *
+ * @author Keyra
+ */
 
 public class MiJDesktopPane extends JDesktopPane {
 
+    /**
+     * Manejador de mensajes para soporte de internacionalización.
+     * Permite cambiar dinámicamente el idioma del mensaje mostrado.
+     */
     private MensajeInternacionalizacionHandler mensajeHandler;
 
+    /**
+     * Constructor por defecto que inicializa el manejador de internacionalización
+     * con el idioma por defecto "es_EC" (Español de Ecuador).
+     */
     public MiJDesktopPane() {
         this.mensajeHandler = new MensajeInternacionalizacionHandler("es", "EC");
     }
 
-
+    /**
+     * Establece un nuevo manejador de mensajes para cambiar el idioma mostrado.
+     * Llama al método {@code repaint()} para actualizar la visualización.
+     *
+     * @param mensajeHandler Nuevo manejador de internacionalización.
+     */
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
         repaint();  // Se actualiza el fondo cuando cambie el idioma
     }
 
+    /**
+     * Método sobrescrito que pinta en el escritorio una escena visual con:
+     * - Un mensaje internacionalizado de bienvenida centrado.
+     * - Un carrito de compras estilizado con degradado, sombra y ruedas.
+     * - Cajas y un logo decorativo dentro del carrito.
+     *
+     * Este diseño gráfico se adapta al tamaño del escritorio y cambia dinámicamente
+     * cuando se modifica el idioma a través del manejador de mensajes.
+     *
+     * @param g Objeto {@link Graphics} usado para dibujar en el componente.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);  // Llamada al super para asegurar la renderización base

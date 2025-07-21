@@ -3,6 +3,7 @@ package ec.edu.ups.controlador;
 import ec.edu.ups.dao.CarritoDAO;
 import ec.edu.ups.dao.PreguntasDAO;
 import ec.edu.ups.dao.UsuarioDAO;
+import ec.edu.ups.excepciones.*;
 import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.Rol;
 import ec.edu.ups.modelo.Usuario;
@@ -24,20 +25,108 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Clase UsuarioController
+ * ------------------------
+ * Controlador principal encargado de gestionar toda la lógica relacionada con la autenticación,
+ * registro, modificación, eliminación, listado, filtrado y recuperación de contraseña de usuarios.
+ * Aplica el patrón MVC, separando la lógica del negocio de las vistas.
+ *
+ * Esta clase hace uso de:
+ * - Vistas: LoginView, RegistrarseView, MenuPrincipalView, UsuarioModificarView, UsuarioEliminarView, UsuarioListaView, CuestionarioView
+ * - DAOs: UsuarioDAO, PreguntasDAO, CarritoDAO
+ * - Modelos: Usuario, Carrito
+ * - Utilidades: MensajeInternacionalizacionHandler
+ *
+ * Autor: Keyra Carvajal
+ */
+
 public class UsuarioController {
 
+    /**
+     * Usuario actualmente autenticado en el sistema.
+     */
+
     private Usuario usuario;
+
+    /**
+     * Objeto DAO para manejar operaciones de persistencia relacionadas con usuarios.
+     */
+
     private final UsuarioDAO usuarioDAO;
+
+    /**
+     * Vista de inicio de sesión donde el usuario ingresa sus credenciales.
+     */
+
     private final LoginView loginView;
+
+    /**
+     * Vista para registrar nuevos usuarios en el sistema.
+     */
+
     private RegistrarseView registrarseView;
+
+    /**
+     * Vista del menú principal mostrada después del inicio de sesión exitoso.
+     */
+
     private MenuPrincipalView menuPrincipalView;
+
+    /**
+     * Vista que permite eliminar un usuario del sistema.
+     */
+
     private UsuarioEliminarView usuarioEliminarView;
+
+    /**
+     * Manejador para la internacionalización de mensajes y etiquetas en diferentes idiomas.
+     */
+
     private MensajeInternacionalizacionHandler mensajeHandler;
+
+    /**
+     * Vista para la recuperación de contraseña mediante preguntas de seguridad.
+     */
+
     private CuestionarioView recuperarContraseniaView;
+
+    /**
+     * DAO para la gestión de carritos, usado en funciones auxiliares como modificar fecha.
+     */
+
     private CarritoDAO carritoDAO;
+
+    /**
+     * Vista para modificar la fecha de creación de un carrito.
+     */
+
     private CarritoModificarView carritoModificarView;
+
+    /**
+     * Vista para modificar los datos de un usuario existente.
+     */
+
     private UsuarioModificarView usuarioModificarView;
+
+    /**
+     * Vista para listar todos los usuarios registrados, con opción de búsqueda y filtrado.
+     */
+
     private UsuarioListaView usuarioListaView;
+
+    /**
+     * Constructor del controlador de usuarios. Inicializa las vistas y el DAO de usuario,
+     * y configura los eventos correspondientes para el login y el registro de usuario.
+     *
+     * @param usuarioDAO Objeto DAO para la gestión de usuarios.
+     * @param loginView Vista para el inicio de sesión del usuario.
+     * @param registrarseView Vista para registrar nuevos usuarios.
+     * @param usuarioListaView Vista para listar usuarios registrados.
+     * @param usuarioModificarView Vista para modificar los datos de un usuario.
+     * @param usuarioEliminarView Vista para eliminar usuarios del sistema.
+     * @param mensajeHandler Manejador para internacionalización de textos y mensajes.
+     */
 
     public UsuarioController(
             UsuarioDAO usuarioDAO,
@@ -61,6 +150,12 @@ public class UsuarioController {
         inicializarListenersRegistro();
     }
 
+    /**
+     * Establece la vista de recuperación de contraseña y configura los eventos
+     * necesarios para el proceso de recuperación (preguntas de seguridad y validación).
+     *
+     * @param recuperarContraseniaView Vista del cuestionario de recuperación de contraseña.
+     */
 
     public void setRecuperarContraseniaView(CuestionarioView recuperarContraseniaView) {
         this.recuperarContraseniaView = recuperarContraseniaView;
@@ -68,25 +163,58 @@ public class UsuarioController {
         configurarEventosRecuperacion();
     }
 
+    /**
+     * Establece la vista de eliminación de usuario y configura los eventos
+     * relacionados con el proceso de eliminación de cuentas.
+     *
+     * @param usuarioEliminarView Vista que permite al usuario eliminar su cuenta.
+     */
+
     public void setUsuarioEliminarView(UsuarioEliminarView usuarioEliminarView) {
         this.usuarioEliminarView = usuarioEliminarView;
         configurarEventosEliminar();
     }
+
+    /**
+     * Establece la vista del menú principal del sistema y configura
+     * el evento para cerrar sesión desde dicha vista.
+     *
+     * @param menuPrincipalView Vista principal del sistema una vez que el usuario ha iniciado sesión.
+     */
 
     public void setMenuPrincipalView(MenuPrincipalView menuPrincipalView) {
         this.menuPrincipalView = menuPrincipalView;
         configurarEventoCerrarSesion();
     }
 
+    /**
+     * Establece la vista de registro de usuario y configura los eventos
+     * necesarios para registrar un nuevo usuario en el sistema.
+     *
+     * @param registrarseView Vista del formulario de registro de nuevos usuarios.
+     */
+
     public void setRegistrarseView(RegistrarseView registrarseView) {
         this.registrarseView = registrarseView;
         inicializarListenersRegistro();
     }
 
+    /**
+     * Establece la vista de listado de usuarios y configura los eventos
+     * necesarios para realizar búsquedas de usuarios desde dicha vista.
+     *
+     * @param usuarioListarView Vista donde se listan y buscan usuarios.
+     */
+
     public void setUsuarioListarView(UsuarioListaView usuarioListarView) {
         this.usuarioListaView = usuarioListarView;
         configurarEventosListaUsuarios();
     }
+
+    /**
+     * Configura el evento del botón "¿Olvidaste tu contraseña?" en la vista de login.
+     * Cuando se hace clic, se muestra la vista de recuperación de contraseña si está disponible.
+     */
 
     private void configurarEventoOlvidoContrasena() {
         loginView.getBtnOlvidarContrasenia().addActionListener(e -> {
@@ -98,17 +226,37 @@ public class UsuarioController {
         });
     }
 
+    /**
+     * Configura el evento del botón "Buscar" en la vista de listado de usuarios.
+     * Ejecuta la lógica para buscar usuarios según el criterio ingresado.
+     */
+
     private void configurarEventosListaUsuarios() {
         usuarioListaView.getBtnBuscar().addActionListener(e -> buscarUsuarios());
     }
+
+    /**
+     * Configura el evento del botón "Eliminar Usuario" en la vista de eliminación de usuarios.
+     * Ejecuta la lógica necesaria para validar y eliminar al usuario del sistema.
+     */
 
     private void configurarEventosEliminar() {
         usuarioEliminarView.getBtnEliminarUsuario().addActionListener(e -> eliminarUsuario());
     }
 
+    /**
+     * Configura el evento para cerrar sesión desde el menú principal.
+     * Al seleccionar la opción, se cierra la ventana del menú y se regresa a la vista de login.
+     */
+
     private void configurarEventoCerrarSesion() {
         menuPrincipalView.getMenuItemCerrarSesion().addActionListener(e -> cerrarSesion());
     }
+
+    /**
+     * Configura los eventos de la vista de inicio de sesión.
+     * Incluye los botones para iniciar sesión y abrir la vista de registro.
+     */
 
     private void configurarEventosLogin() {
         loginView.getBtnIniciarSesion().addActionListener(e -> autenticar());
@@ -119,8 +267,22 @@ public class UsuarioController {
         });
     }
 
+    /**
+     * Inicializa los listeners de los botones en la vista de registro de usuario.
+     * Configura la acción para registrar un nuevo usuario y para cancelar el registro.
+     */
+
     public void inicializarListenersRegistro() {
-        registrarseView.getBtnRegistro().addActionListener(e -> crear());
+        registrarseView.getBtnRegistro().addActionListener(e -> {
+            try {
+                crear();
+            } catch (CedulaException | ContraseniaException | FechaException | CamposException | CorreoException ex) {
+                registrarseView.mostrarMensaje("⚠️ " + ex.getMessage());
+            } catch (Exception ex) {
+                registrarseView.mostrarMensaje("⚠️ Error inesperado: " + ex.getMessage());
+                ex.printStackTrace(); // Solo para desarrollo
+            }
+        });
 
         registrarseView.getBtnCancelar().addActionListener(e -> {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(registrarseView.getContentPane());
@@ -129,6 +291,11 @@ public class UsuarioController {
             }
         });
     }
+
+    /**
+     * Realiza la búsqueda de un usuario en base al nombre ingresado en la vista de listado.
+     * Si se encuentra el usuario, lo muestra en la tabla; si no, muestra un mensaje de error.
+     */
 
     private void buscarUsuarios() {
         String nombre = usuarioListaView.getTxtNombre().getText().trim();
@@ -148,6 +315,11 @@ public class UsuarioController {
         }
     }
 
+    /**
+     * Lista todos los usuarios registrados en el sistema y los muestra en la tabla
+     * de la vista de listado de usuarios.
+     */
+
     private void listarUsuarios() {
         List<Usuario> lista = usuarioDAO.listarTodos();
         DefaultTableModel modelo = usuarioListaView.getModelo();
@@ -156,6 +328,12 @@ public class UsuarioController {
             modelo.addRow(new Object[]{u.getUsername(), u.getRol().name()});
         }
     }
+
+    /**
+     * Elimina un usuario del sistema validando el nombre de usuario y su contraseña.
+     * Primero comprueba que las contraseñas coincidan y luego valida que el usuario exista
+     * y que la contraseña ingresada sea correcta.
+     */
 
     private void eliminarUsuario() {
         String nombre = usuarioEliminarView.getTxtNombre().getText();
@@ -186,7 +364,11 @@ public class UsuarioController {
         usuarioEliminarView.getTxtConfirmarContrasenia().setText("");
     }
 
-
+    /**
+     * Cierra la sesión actual del usuario autenticado.
+     * Muestra un cuadro de confirmación antes de cerrar el menú principal
+     * y regresar a la ventana de login.
+     */
 
     public void cerrarSesion() {
         int opcion = JOptionPane.showConfirmDialog(menuPrincipalView, "¿Está seguro que desea cerrar sesión?", "Confirmar", JOptionPane.YES_NO_OPTION);
@@ -199,7 +381,14 @@ public class UsuarioController {
         }
     }
 
-    private void crear() {
+    /**
+     * Registra un nuevo usuario con los datos ingresados en el formulario de registro.
+     * Valida que todos los campos estén completos, que las contraseñas coincidan,
+     * que el nombre de usuario no esté duplicado, y que la fecha de nacimiento sea válida.
+     * Si todo es correcto, crea el usuario, lo guarda en el DAO y cierra la vista de registro.
+     */
+
+    private void crear() throws CedulaException, ContraseniaException, FechaException, CamposException, CorreoException {
         String nombreCompleto = registrarseView.getTxtNombreCompleto().getText();
         String username = registrarseView.getTxtUsuario().getText();
         String contrasenia = new String(registrarseView.getTxtContrasenia().getPassword());
@@ -239,7 +428,7 @@ public class UsuarioController {
             formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate fecha = LocalDate.parse(fechaNacimiento, formatter);
             nuevoUsuario.setFechaNacimiento(fecha);
-        } catch (DateTimeParseException ex) {
+        } catch (DateTimeParseException | FechaException ex) {
             registrarseView.mostrarMensaje("La fecha debe tener el formato dd-MM-yyyy y ser válida.");
             return;
         }
@@ -259,6 +448,12 @@ public class UsuarioController {
         registrarseView.dispose();
     }
 
+    /**
+     * Autentica al usuario utilizando las credenciales ingresadas en la vista de login.
+     * Si la autenticación es exitosa, se guarda el usuario autenticado y se cierra la vista de login.
+     * Si las credenciales son incorrectas, se muestra un mensaje de error.
+     */
+
     private void autenticar() {
         String username = loginView.getTxtUsername().getText();
         String contrasenia = new String(loginView.getTxtContrasenia().getPassword());
@@ -272,9 +467,26 @@ public class UsuarioController {
         }
     }
 
+    /**
+     * Retorna el usuario autenticado actualmente en el sistema.
+     *
+     * @return Usuario autenticado, o null si no hay sesión activa.
+     */
+
     public Usuario getUsuarioAutenticado() {
         return usuario;
     }
+
+    /**
+     * Configura las dependencias necesarias para la recuperación de contraseña,
+     * incluyendo la vista de cuestionario, la vista de cambio de contraseña,
+     * el DAO de preguntas y el manejador de internacionalización.
+     *
+     * @param cuestionarioView Vista para ingresar respuestas a preguntas de seguridad.
+     * @param cuestionarioRecuView Vista para cambiar la contraseña.
+     * @param preguntasDAO DAO que gestiona las preguntas de seguridad.
+     * @param mensajeHandler Manejador de internacionalización de mensajes.
+     */
 
     public void setPreguntasDependencias(CuestionarioView cuestionarioView,
                                          CambiarContraseniaView cuestionarioRecuView,
@@ -283,6 +495,12 @@ public class UsuarioController {
         this.recuperarContraseniaView = cuestionarioView;
         this.mensajeHandler = mensajeHandler;
     }
+
+    /**
+     * Configura los eventos para la vista de recuperación de contraseña.
+     * Incluye la carga dinámica de preguntas de seguridad al ingresar el usuario
+     * y la validación de la respuesta ingresada.
+     */
 
     private void configurarEventosRecuperacion() {
         recuperarContraseniaView.getTxtUsuario().addFocusListener(new java.awt.event.FocusAdapter() {
@@ -329,6 +547,13 @@ public class UsuarioController {
             }
         });
     }
+
+    /**
+     * Modifica la fecha de creación del carrito al momento actual.
+     * Busca el carrito por su código desde la vista y actualiza su fecha.
+     * Muestra un mensaje de éxito o error según el resultado.
+     */
+
     private void modificarFecha() {
         int codigo = Integer.parseInt(carritoModificarView.getTxtCodigo().getText());
         Carrito c = carritoDAO.buscarPorCodigo(codigo);
@@ -340,6 +565,12 @@ public class UsuarioController {
             carritoModificarView.mostrarMensaje("Carrito no encontrado.");
         }
     }
+
+    /**
+     * Modifica los datos del usuario (nombre, correo, teléfono y fecha de nacimiento)
+     * si el usuario existe y la fecha es válida.
+     * Muestra mensajes en la vista si hay errores o si la operación se realiza correctamente.
+     */
 
     private void modificarUsuario() {
         String usuarioBuscar = usuarioModificarView.getTxtBuscarUsuario().getText();
@@ -368,6 +599,12 @@ public class UsuarioController {
             usuarioModificarView.mostrarMensaje("Error al modificar: " + ex.getMessage());
         }
     }
+
+    /**
+     * Configura los eventos de la vista de modificación de usuarios.
+     * Incluye la búsqueda de usuarios y la modificación de sus datos,
+     * además de la acción del botón Cancelar para limpiar y cerrar la ventana.
+     */
 
     public void configurarEventosModificar() {
         usuarioModificarView.getBtnBuscar().addActionListener(e -> {
@@ -424,10 +661,20 @@ public class UsuarioController {
         });
     }
 
+    /**
+     * Establece la vista de modificación de usuario y llama a la configuración de sus eventos.
+     * @param usuarioModificarView Vista usada para modificar usuarios
+     */
+
     public void setUsuarioModificarView(UsuarioModificarView usuarioModificarView) {
         this.usuarioModificarView = usuarioModificarView;
         configurarEventosModificar();
     }
+
+    /**
+     * Configura los eventos para filtrar usuarios en la vista de listado según el filtro seleccionado
+     * (nombre, correo, rol o código). Actualiza la tabla con los resultados encontrados.
+     */
 
     public void configurarEventosLista() {
         usuarioListaView.getBtnBuscar().addActionListener(e -> {
@@ -467,7 +714,10 @@ public class UsuarioController {
         usuarioListaView.getBtnCerrar().addActionListener(e -> usuarioListaView.dispose());
     }
 
-
+    /**
+     * Actualiza la tabla de la vista de usuarios con todos los usuarios registrados en el sistema.
+     * Obtiene los datos desde el DAO y los carga en el modelo de la tabla.
+     */
 
     public void actualizarTablaUsuarios() {
         List<Usuario> lista = usuarioDAO.obtenerTodos();
@@ -485,6 +735,11 @@ public class UsuarioController {
         }
     }
 
+    /**
+     * Filtra la lista de usuarios mostrada en la tabla según el criterio seleccionado en el combo box
+     * (nombre, correo, rol o código) y el texto ingresado por el usuario.
+     * Solo se muestran los usuarios que coincidan parcial o totalmente con el texto ingresado.
+     */
 
     public void filtrarUsuarios() {
         String filtro = usuarioListaView.getCbxFiltro().getSelectedItem().toString();
@@ -524,6 +779,13 @@ public class UsuarioController {
             }
         }
     }
+
+    /**
+     * Busca y retorna una lista de usuarios que coincidan con el filtro proporcionado.
+     * @param filtro Criterio por el cual se va a buscar (nombre, correo, rol o código)
+     * @param valor Texto a comparar contra el campo correspondiente de cada usuario
+     * @return Lista de usuarios que cumplen con el filtro
+     */
 
     private List<Usuario> buscarUsuariosPor(String filtro, String valor) {
         return usuarioDAO.obtenerTodos().stream()

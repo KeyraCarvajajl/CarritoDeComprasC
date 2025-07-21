@@ -4,16 +4,9 @@ import ec.edu.ups.controlador.CarritoController;
 import ec.edu.ups.controlador.PreguntasController;
 import ec.edu.ups.controlador.ProductoController;
 import ec.edu.ups.controlador.UsuarioController;
-import ec.edu.ups.dao.CarritoDAO;
-import ec.edu.ups.dao.PreguntasDAO;
-import ec.edu.ups.dao.ProductoDAO;
-import ec.edu.ups.dao.UsuarioDAO;
-import ec.edu.ups.dao.impl.CarritoDAOMemoria;
-import ec.edu.ups.dao.impl.PreguntasDAOMemoria;
-import ec.edu.ups.dao.impl.ProductoDAOMemoria;
-import ec.edu.ups.dao.impl.UsuarioDAOMemoria;
-import ec.edu.ups.modelo.Rol;
-import ec.edu.ups.modelo.Usuario;
+import ec.edu.ups.dao.*;
+import ec.edu.ups.dao.impl.*;
+import ec.edu.ups.modelo.*;
 import ec.edu.ups.util.MensajeInternacionalizacionHandler;
 import ec.edu.ups.vista.carrito.*;
 import ec.edu.ups.vista.preguntas.CambiarContraseniaView;
@@ -24,22 +17,142 @@ import ec.edu.ups.vista.producto.ProductoListaView;
 import ec.edu.ups.vista.producto.ProductoModificarView;
 import ec.edu.ups.vista.usuario.*;
 
+import java.io.File;
+import java.util.Date;
+import java.util.List;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * Clase principal del sistema de Carrito de Compras.
+ * Inicializa la aplicación, configura la internacionalización,
+ * selecciona el tipo de almacenamiento y muestra la vista de login.
+ *
+ * Esta clase también es responsable de crear las instancias iniciales
+ * de los DAOs, controladores y vistas requeridas para el funcionamiento
+ * del sistema.
+ *
+ * @author Keyra
+ */
 public class Main {
+
+    private static void seleccionarRuta() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Selecciona la carpeta donde se guardarán los archivos");
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        int resultado = fileChooser.showOpenDialog(null);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File carpeta = fileChooser.getSelectedFile();
+            ec.edu.ups.util.RutaArchivo.setRutaBase(carpeta.getAbsolutePath());
+            System.out.println("✅ Carpeta seleccionada: " + carpeta.getAbsolutePath());
+        } else {
+            JOptionPane.showMessageDialog(null, "No se seleccionó ninguna carpeta. Se usará la carpeta por defecto.");
+        }
+    }
+
     @SuppressWarnings("all")
     public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        UsuarioDAO usuarioDAO = new UsuarioDAOMemoria();
-        PreguntasDAO preguntasDAO = new PreguntasDAOMemoria();
+        String[] opciones = {"Memoria", "Archivo de Texto", "Archivo Binario"};
+        String seleccion = (String) JOptionPane.showInputDialog(null,
+                "Seleccione el tipo de almacenamiento:",
+                "Configuración de almacenamiento",
+                JOptionPane.QUESTION_MESSAGE,
+                null, opciones, opciones[0]);
+
+        seleccionarRuta();
+
+
+        UsuarioDAO usuarioDAO = new UsuarioDAOArchivoTexto();
+        ProductoDAO productoDAO = new ProductoDAOArchivoTexto();
+        CarritoDAO carritoDAO = new CarritoDAOArchivoTexto(productoDAO);
+        PreguntasDAO preguntasDAO = new PreguntasDAOArchivoTexto();
+        RespuestaDAO respuestaDAO = new RespuestaDAOArchivoTexto();
+        List<Usuario> usuarios = usuarioDAO.listarTodos();
+        for (Usuario u : usuarios) {
+            System.out.println("Usuario: " + u.getUsername() + " - " + u.getNombre() + " - " + u.getRol());
+        }
+
         MensajeInternacionalizacionHandler mensajeHandler = new MensajeInternacionalizacionHandler("es","EC");
 
+        if (preguntasDAO.obtenerTodas().isEmpty()) {
+            preguntasDAO.guardar(new Preguntas("base", "¿Cuál es tu color favorito?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿Cuál es el nombre de tu primer mascota?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿En qué ciudad naciste?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿Cuál es tu comida favorita?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿Cuál es tu película favorita?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿Cuál es tu canción favorita?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿Qué deporte practicaste en la infancia?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿Cuál es tu libro favorito?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿A qué escuela primaria asististe?"));
+            preguntasDAO.guardar(new Preguntas("base", "¿Cuál es el segundo nombre de tu madre?"));
+        }
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        if (productoDAO.listarTodos().isEmpty()) {
+            productoDAO.crear(new Producto(1, "Manzanas", 0.30));
+            productoDAO.crear(new Producto(2, "Pan", 0.15));
+            productoDAO.crear(new Producto(3, "Leche", 1.20));
+            productoDAO.crear(new Producto(4, "Arroz", 0.50));
+            productoDAO.crear(new Producto(5, "Huevos", 1.80));
+            System.out.println("Productos iniciales cargados.");
+        }
+
+
+        if (carritoDAO.listarTodos().isEmpty()) {
+            Producto p1 = new Producto(1, "Camiseta", 10.0);
+            Producto p2 = new Producto(2, "Zapatos", 25.0);
+
+            Carrito carrito = new Carrito(100, new Date());
+            carrito.agregarProducto(p1, 2); // cantidad 2
+            carrito.agregarProducto(p2, 1); // cantidad 1
+
+            carritoDAO.crear(carrito);
+            System.out.println("Carrito inicial cargado.");
+        }
+
+
+
+        if (respuestaDAO.listarTodos().isEmpty()) {
+            respuestaDAO.guardarRespuesta(new Respuesta("Keyra2006", "¿Nombre de tu primer mascota?", "Toby"));
+            respuestaDAO.guardarRespuesta(new Respuesta("Keyra2006", "¿Nombre de tu escuela?", "Salesiana"));
+            System.out.println("Respuestas guardadas exitosamente.");
+        }
+
+
+        EventQueue.invokeLater(new Runnable() {
+
+            /**
+             * Método que ejecuta la lógica principal del sistema de carrito de compras.
+             *
+             * Este método inicializa todas las vistas y controladores necesarios para el funcionamiento
+             * de la aplicación. Incluye la configuración de la vista de login, registro, recuperación
+             * de contraseña y posterior carga del menú principal si la autenticación es exitosa.
+             *
+             * Se establecen los listeners para cada opción del menú y para los botones principales,
+             * incluyendo internacionalización dinámica, control de visibilidad de ventanas internas
+             * y conexión de vistas con sus respectivos controladores.
+             *
+             * Flujo general del método:
+             * <ul>
+             *     <li>Inicialización de vistas: login, registro, cuestionario, cambiar contraseña, etc.</li>
+             *     <li>Instanciación de controladores: {@code UsuarioController}, {@code PreguntasController}.</li>
+             *     <li>Configuración de eventos para botones de login (registrarse, recuperar contraseña).</li>
+             *     <li>Al cerrar la ventana de login y si la autenticación fue exitosa:</li>
+             *     <ul>
+             *         <li>Inicializa vistas de productos, carritos y usuarios.</li>
+             *         <li>Configura eventos de cada ítem del menú principal.</li>
+             *         <li>Asocia vistas internas al {@code JDesktopPane} de {@code MenuPrincipalView}.</li>
+             *         <li>Habilita la internacionalización dinámica para todos los módulos.</li>
+             *     </ul>
+             * </ul>
+             *
+             * Este método representa el punto de entrada principal de la aplicación tras la autenticación.
+             */
             public void run() {
 
                 LoginView loginView = new LoginView(mensajeHandler);
@@ -149,7 +262,11 @@ public class Main {
                             usuarioController.setUsuarioModificarView(usuarioModificarView);
 
                             principalView.setVisible(true);
-                            // CREAR PRODUCTO
+
+                            /**
+                             * Acción para mostrar la vista de añadir producto.
+                             * Si la ventana no está visible, se añade al JDesktopPane y se muestra.
+                             */
                             principalView.getMenuItemCrearProducto().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -162,7 +279,9 @@ public class Main {
                                 }
                             });
 
-                            // LISTAR PRODUCTOS
+                            /**
+                             * Acción para mostrar la vista de listar productos.
+                             */
                             principalView.getMenuItemBuscarProducto().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -175,7 +294,9 @@ public class Main {
                                 }
                             });
 
-// MODIFICAR PRODUCTO
+                            /**
+                             * Acción para mostrar la vista de modificar productos.
+                             */
                             principalView.getMenuItemModificarProducto().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -188,7 +309,9 @@ public class Main {
                                 }
                             });
 
-// ELIMINAR PRODUCTO
+                            /**
+                             * Acción para mostrar la vista de eliminar productos.
+                             */
                             principalView.getMenuItemEliminarProducto().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -201,7 +324,9 @@ public class Main {
                                 }
                             });
 
-                            // AÑADIR CARRITO
+                            /**
+                             * Acción para mostrar la vista de añadir carrito.
+                             */
                             principalView.getMenuItemAnadirCarrito().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -214,6 +339,9 @@ public class Main {
                                 }
                             });
 
+                            /**
+                             * Acción para mostrar la vista de eliminar carritos.
+                             */
                             principalView.getMenuItemEliminarCarrito().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -226,7 +354,9 @@ public class Main {
                                 }
                             });
 
-
+                            /**
+                             * Acción para mostrar la vista de modificar carritos.
+                             */
                             principalView.getMenuItemModificarCarrito().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -239,6 +369,9 @@ public class Main {
                                 }
                             });
 
+                            /**
+                             * Acción para mostrar la vista de lista de carritos.
+                             */
                             principalView.getMenuItemListaCarrito().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -251,6 +384,9 @@ public class Main {
                                 }
                             });
 
+                            /**
+                             * Acción para mostrar la vista de detalle de carritos.
+                             */
                             principalView.getMenuItemDetalleCarrito().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -263,6 +399,9 @@ public class Main {
                                 }
                             });
 
+                            /**
+                             * Acción para mostrar la vista de eliminación de usuario.
+                             */
                             principalView.getMenuItemEliminarUsuario().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -284,7 +423,9 @@ public class Main {
                                 }
                             });
 
-                            // MODIFICAR USUARIO
+                            /**
+                             * Acción para mostrar la vista de modificación de usuario.
+                             */
                             principalView.getMenuItemModificarUsuario().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -297,7 +438,7 @@ public class Main {
                                 }
                             });
 
-// ELIMINAR USUARIO
+
                             principalView.getMenuItemEliminarUsuario().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -310,6 +451,10 @@ public class Main {
                                 }
                             });
 
+                            /**
+                             * Acción para mostrar la vista de lista de usuarios.
+                             * También actualiza y configura la tabla con datos.
+                             */
                             principalView.getMenuItemListaUsuario().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -351,6 +496,9 @@ public class Main {
                                 }
                             });
 
+                            /**
+                             * Cambia el idioma a inglés y actualiza todas las vistas.
+                             */
                             principalView.getMenuItemIdiomaIngles().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -378,6 +526,9 @@ public class Main {
                                 }
                             });
 
+                            /**
+                             * Cambia el idioma a español y actualiza todas las vistas.
+                             */
                             principalView.getMenuItemIdiomaEspanol().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -405,6 +556,9 @@ public class Main {
                                 }
                             });
 
+                            /**
+                             * Cambia el idioma a francés y actualiza todas las vistas.
+                             */
                             principalView.getMenuItemIdiomaFrances().addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -431,7 +585,6 @@ public class Main {
                                     usuarioModificarView.actualizarTextos(mensajeHandler);
                                 }
                             });
-
                         }
                     }
                 });

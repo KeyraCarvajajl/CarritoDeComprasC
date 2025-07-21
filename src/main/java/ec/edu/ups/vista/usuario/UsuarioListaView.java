@@ -7,19 +7,81 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.net.URL;
 
+/**
+ * Clase UsuarioListaView
+ * ----------------------
+ * Esta clase representa la ventana interna (JInternalFrame) encargada de listar a los usuarios registrados
+ * en el sistema. Permite visualizar los datos en una tabla, realizar búsquedas filtradas por nombre,
+ * correo, rol o código, y admite soporte para internacionalización.
+ *
+ * Funcionalidades principales:
+ * - Carga dinámica de usuarios en una JTable.
+ * - Búsqueda de usuarios por distintos criterios.
+ * - Soporte de internacionalización para cambiar el idioma de la interfaz.
+ *
+ * Esta vista forma parte del módulo de gestión de usuarios del sistema de carrito de compras.
+ *
+ * @author Keyra
+ */
 public class UsuarioListaView extends JInternalFrame {
 
+    /**
+     * Tabla que muestra la lista de usuarios registrados en el sistema.
+     */
     private JTable tablaUsuarios;
+
+    /**
+     * ComboBox para seleccionar el tipo de filtro (nombre, correo, rol, código) al realizar la búsqueda de usuarios.
+     */
     private JComboBox<String> cbxFiltro;
+
+    /**
+     * Botón para listar todos los usuarios en la tabla.
+     */
     private JButton btnListar;
+
+    /**
+     * Botón para cerrar la ventana actual.
+     */
     private JButton btnCerrar;
+
+    /**
+     * Campo de texto donde se ingresa el valor a buscar (nombre, correo, etc.) según el filtro seleccionado.
+     */
     private JTextField txtNombre;
+
+    /**
+     * Etiqueta que indica el campo de búsqueda.
+     */
     private JLabel lblNombre;
+
+    /**
+     * Panel principal que contiene todos los componentes gráficos de la vista.
+     */
     private JPanel panelPrincipal;
+
+    /**
+     * Botón para ejecutar la búsqueda del usuario según el filtro y el texto ingresado.
+     */
     private JButton btnBuscar;
+
+    /**
+     * Modelo de tabla que maneja la estructura de filas y columnas de la JTable de usuarios.
+     */
     private DefaultTableModel modelo;
+
+    /**
+     * Manejador de internacionalización para cambiar dinámicamente los textos según el idioma seleccionado.
+     */
     private MensajeInternacionalizacionHandler mensajeHandler;
 
+    /**
+     * Constructor de la clase UsuarioListaView.
+     * Inicializa los componentes de la ventana, establece propiedades de la ventana interna,
+     * configura el contenido principal, ajusta tamaño y permite la internacionalización de textos.
+     *
+     * @param mensajeHandler El manejador de internacionalización para mostrar los textos en el idioma seleccionado.
+     */
     public UsuarioListaView(MensajeInternacionalizacionHandler mensajeHandler) {
         super();
         this.mensajeHandler = mensajeHandler;
@@ -32,7 +94,6 @@ public class UsuarioListaView extends JInternalFrame {
         setIconifiable(true);
         setResizable(true);
 
-        // Llenar el comboBox de filtro
         cbxFiltro.addItem("Nombre");
         cbxFiltro.addItem("Correo");
         cbxFiltro.addItem("Rol");
@@ -45,6 +106,12 @@ public class UsuarioListaView extends JInternalFrame {
         imagenIcon();
     }
 
+    /**
+     * Actualiza todos los textos visibles de la interfaz gráfica según el idioma
+     * proporcionado por el {@link MensajeInternacionalizacionHandler}.
+     *
+     * @param mensajeHandler El manejador que contiene las traducciones para los distintos idiomas.
+     */
     public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
         lblNombre.setText(mensajeHandler.get("usuario.nombre"));
         btnListar.setText(mensajeHandler.get("boton.listar"));
@@ -53,6 +120,11 @@ public class UsuarioListaView extends JInternalFrame {
         setTitle(mensajeHandler.get("usuario.lista.titulo"));
     }
 
+    /**
+     * Carga y establece los íconos en los botones de la ventana, redimensionándolos
+     * para que se ajusten correctamente al diseño de la interfaz.
+     * Los íconos deben estar ubicados en el paquete de recursos "imagenes".
+     */
     private void imagenIcon() {
         URL btListar = LoginView.class.getClassLoader().getResource("imagenes/listar.png");
         if (btListar != null) {
@@ -89,88 +161,172 @@ public class UsuarioListaView extends JInternalFrame {
 
     }
 
-
+    /**
+     * Obtiene la tabla de usuarios.
+     * @return La tabla que muestra los usuarios.
+     */
     public JTable getTblUsuarios() {
         return tablaUsuarios;
     }
 
+    /**
+     * Obtiene el comboBox para seleccionar el filtro de búsqueda.
+     * @return ComboBox con los tipos de filtro.
+     */
     public JComboBox<String> getCbxFiltro() {
         return cbxFiltro;
     }
 
+    /**
+     * Obtiene el botón de listar (mal nombrado como btnBuscar).
+     * @return Botón para listar usuarios.
+     */
     public JButton getBtnBuscar() {
         return btnListar;
     }
 
+    /**
+     * Obtiene el botón para cerrar la ventana.
+     * @return Botón de cerrar.
+     */
     public JButton getBtnCerrar() {
         return btnCerrar;
     }
 
+    /**
+     * Obtiene el campo de texto para el nombre a buscar.
+     * @return Campo de texto del nombre.
+     */
     public JTextField getTxtNombre() {
         return txtNombre;
     }
 
+    /**
+     * Obtiene el modelo de la tabla de usuarios.
+     * @return Modelo de tabla.
+     */
     public DefaultTableModel getTableModel() {
         return modelo;
     }
 
+    /**
+     * Obtiene el modelo de la tabla.
+     * @return El modelo usado por la tabla de usuarios.
+     */
     public DefaultTableModel getModelo() {
         return modelo;
     }
 
+    /**
+     * Obtiene la tabla completa de usuarios.
+     * @return Componente JTable que muestra los datos.
+     */
     public JTable getTablaUsuarios() {
         return tablaUsuarios;
     }
 
-    public void setTablaUsuarios(JTable tablaUsuarios) {
-        this.tablaUsuarios = tablaUsuarios;
-    }
-
-    public void setCbxFiltro(JComboBox<String> cbxFiltro) {
-        this.cbxFiltro = cbxFiltro;
-    }
-
-    public void setBtnBuscar(JButton btnBuscar) {
-        this.btnListar = btnBuscar;
-    }
-
-    public void setBtnCerrar(JButton btnCerrar) {
-        this.btnCerrar = btnCerrar;
-    }
-
-    public void setTxtNombre(JTextField txtNombre) {
-        this.txtNombre = txtNombre;
-    }
-
+    /**
+     * Obtiene la etiqueta del nombre.
+     * @return JLabel del campo nombre.
+     */
     public JLabel getLblNombre() {
         return lblNombre;
     }
 
-    public void setLblNombre(JLabel lblNombre) {
-        this.lblNombre = lblNombre;
-    }
-
+    /**
+     * Obtiene el panel principal del formulario.
+     * @return Panel principal.
+     */
     public JPanel getPanelPrincipal() {
         return panelPrincipal;
     }
 
-    public void setPanelPrincipal(JPanel panelPrincipal) {
-        this.panelPrincipal = panelPrincipal;
-    }
-
-    public void setModelo(DefaultTableModel modelo) {
-        this.modelo = modelo;
-    }
-
+    /**
+     * Obtiene el manejador de internacionalización actual.
+     * @return Instancia de MensajeInternacionalizacionHandler.
+     */
     public MensajeInternacionalizacionHandler getMensajeHandler() {
         return mensajeHandler;
     }
 
+    /**
+     * Establece el componente JTable que muestra los usuarios.
+     * @param tablaUsuarios La tabla de usuarios.
+     */
+    public void setTablaUsuarios(JTable tablaUsuarios) {
+        this.tablaUsuarios = tablaUsuarios;
+    }
+
+    /**
+     * Establece el comboBox para los filtros.
+     * @param cbxFiltro El comboBox de filtros.
+     */
+    public void setCbxFiltro(JComboBox<String> cbxFiltro) {
+        this.cbxFiltro = cbxFiltro;
+    }
+
+    /**
+     * Establece el botón para buscar (internamente btnListar).
+     * @param btnBuscar Botón de búsqueda.
+     */
+    public void setBtnBuscar(JButton btnBuscar) {
+        this.btnListar = btnBuscar;
+    }
+
+    /**
+     * Establece el botón de cerrar.
+     * @param btnCerrar Botón de cerrar.
+     */
+    public void setBtnCerrar(JButton btnCerrar) {
+        this.btnCerrar = btnCerrar;
+    }
+
+    /**
+     * Establece el campo de texto del nombre.
+     * @param txtNombre Campo de texto de nombre.
+     */
+    public void setTxtNombre(JTextField txtNombre) {
+        this.txtNombre = txtNombre;
+    }
+
+    /**
+     * Establece la etiqueta para el nombre.
+     * @param lblNombre Etiqueta correspondiente al nombre.
+     */
+    public void setLblNombre(JLabel lblNombre) {
+        this.lblNombre = lblNombre;
+    }
+
+    /**
+     * Establece el panel principal.
+     * @param panelPrincipal El panel principal del formulario.
+     */
+    public void setPanelPrincipal(JPanel panelPrincipal) {
+        this.panelPrincipal = panelPrincipal;
+    }
+
+    /**
+     * Establece el modelo de la tabla.
+     * @param modelo Modelo de tabla.
+     */
+    public void setModelo(DefaultTableModel modelo) {
+        this.modelo = modelo;
+    }
+
+    /**
+     * Establece el manejador de internacionalización y actualiza los textos.
+     * @param mensajeHandler El manejador de mensajes.
+     */
     public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
         this.mensajeHandler = mensajeHandler;
     }
 
+    /**
+     * Muestra un mensaje emergente en pantalla.
+     * @param mensaje El mensaje a mostrar en el cuadro de diálogo.
+     */
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
+
 }

@@ -7,21 +7,95 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
+/**
+ * La clase {@code ProductoModificarView} representa una ventana interna (JInternalFrame)
+ * dentro del sistema de carrito de compras que permite modificar, buscar o eliminar productos
+ * existentes. La ventana forma parte del módulo de gestión de productos.
+ * <p>
+ * Incluye campos de entrada para el código, nombre y precio del producto, botones para
+ * realizar las acciones correspondientes, y soporte para internacionalización mediante
+ * la clase {@link MensajeInternacionalizacionHandler}.
+ * </p>
+ *
+ * <p>
+ * Esta clase se integra en la interfaz MDI (Multiple Document Interface) y respeta el patrón
+ * MVC, actuando como la vista para las operaciones de modificación de productos.
+ * </p>
+ *
+ * @author Keyra
+ */
+
 public class ProductoModificarView extends JInternalFrame {
 
+    /**
+     * Panel principal que contiene todos los componentes visuales de la ventana.
+     */
     private JPanel panelPrincipal;
+
+    /**
+     * Campo de texto para ingresar o mostrar el código del producto.
+     */
     private JTextField txtCodigo;
+
+    /**
+     * Campo de texto para ingresar o mostrar el nombre del producto.
+     */
     private JTextField txtNombre;
+
+    /**
+     * Campo de texto para ingresar o mostrar el precio del producto.
+     */
     private JTextField txtPrecio;
+
+    /**
+     * Botón que permite buscar un producto por su código.
+     */
     private JButton btnBuscar;
+
+    /**
+     * Botón que permite eliminar un producto del sistema.
+     */
     private JButton btnEliminar;
+
+    /**
+     * Botón que permite modificar los datos de un producto.
+     */
     private JButton btnModificar;
+
+    /**
+     * Etiqueta que muestra el texto correspondiente al campo de código del producto.
+     */
     private JLabel lblCodigo;
+
+    /**
+     * Etiqueta que muestra el texto correspondiente al campo de nombre del producto.
+     */
     private JLabel lblNombre;
+
+    /**
+     * Etiqueta que muestra el texto correspondiente al campo de precio del producto.
+     */
     private JLabel lblPrecio;
+
+    /**
+     * Etiqueta que indica el título o encabezado de la vista de modificación de productos.
+     */
     private JLabel lblModificarProducto;
+
+    /**
+     * Manejador de internacionalización utilizado para actualizar los textos visibles
+     * según el idioma seleccionado.
+     */
     private MensajeInternacionalizacionHandler mensajeHandler;
 
+    /**
+     * Constructor de la clase ProductoModificarView.
+     * Inicializa los componentes de la ventana para modificar productos,
+     * configura la internacionalización, el diseño y los íconos.
+     *
+     * @param mensajeHandler Manejador de internacionalización que proporciona
+     *                       los textos traducidos según el idioma seleccionado.
+     */
     public ProductoModificarView(MensajeInternacionalizacionHandler mensajeHandler) {
         super(mensajeHandler.get("ventana.producto.modificar"), true, true, false, true);
         this.mensajeHandler = mensajeHandler;
@@ -38,8 +112,12 @@ public class ProductoModificarView extends JInternalFrame {
         imagenIcon();
     }
 
+    /**
+     * Carga y asigna íconos redimensionados a los botones de la ventana.
+     * Establece íconos para los botones Modificar, Eliminar y Buscar.
+     * En caso de error al cargar un ícono, se muestra un mensaje en consola.
+     */
     private void imagenIcon() {
-        // Redimensionar icono "Modificar"
         URL btModificar = LoginView.class.getClassLoader().getResource("imagenes/modificar.png");
         if (btModificar != null) {
             ImageIcon iconBtnModificar = new ImageIcon(btModificar);
@@ -75,6 +153,13 @@ public class ProductoModificarView extends JInternalFrame {
 
     }
 
+    /**
+     * Actualiza los textos visibles en la interfaz gráfica utilizando
+     * las claves definidas en el archivo de internacionalización.
+     *
+     * @param mensajeHandler Manejador de internacionalización para obtener
+     *                       los textos traducidos según el idioma seleccionado.
+     */
     public void actualizarTextos(MensajeInternacionalizacionHandler mensajeHandler) {
         lblModificarProducto.setText(mensajeHandler.get("producto.modificar.titulo"));
         lblCodigo.setText(mensajeHandler.get("producto.codigo"));
@@ -88,75 +173,144 @@ public class ProductoModificarView extends JInternalFrame {
         setTitle(mensajeHandler.get("producto.modificar.titulo"));
     }
 
+    /**
+     * Obtiene el campo de texto del código del producto.
+     * @return JTextField para el código.
+     */
     public JTextField getTxtCodigo() {
         return txtCodigo;
     }
 
-    public void setTxtCodigo(JTextField txtCodigo) {
-        this.txtCodigo = txtCodigo;
-    }
-
+    /**
+     * Obtiene el campo de texto del nombre del producto.
+     * @return JTextField para el nombre.
+     */
     public JTextField getTxtNombre() {
         return txtNombre;
     }
 
-    public void setTxtNombre(JTextField txtNombre) {
-        this.txtNombre = txtNombre;
-    }
-
+    /**
+     * Obtiene el campo de texto del precio del producto.
+     * @return JTextField para el precio.
+     */
     public JTextField getTxtPrecio() {
         return txtPrecio;
     }
 
-    public void setTxtPrecio(JTextField txtPrecio) {
-        this.txtPrecio = txtPrecio;
-    }
-
+    /**
+     * Obtiene el botón para buscar un producto.
+     * @return JButton para buscar.
+     */
     public JButton getBtnBuscar() {
         return btnBuscar;
     }
 
-    public void setBtnBuscar(JButton btnBuscar) {
-        this.btnBuscar = btnBuscar;
-    }
-
+    /**
+     * Obtiene el botón para modificar un producto.
+     * @return JButton para modificar.
+     */
     public JButton getBtnModificar() {
         return btnModificar;
     }
 
-    public void setBtnModificar(JButton btnModificar) {
-        this.btnModificar = btnModificar;
-    }
-
-    public JPanel getPanelPrincipal() {
-        return panelPrincipal;
-    }
-
-    public void setPanelPrincipal(JPanel panelPrincipal) {
-        this.panelPrincipal = panelPrincipal;
-    }
-
+    /**
+     * Obtiene el botón para eliminar un producto.
+     * @return JButton para eliminar.
+     */
     public JButton getBtnEliminar() {
         return btnEliminar;
     }
 
+    /**
+     * Obtiene el panel principal de la vista.
+     * @return JPanel principal.
+     */
+    public JPanel getPanelPrincipal() {
+        return panelPrincipal;
+    }
+
+    /**
+     * Establece el campo de texto del código del producto.
+     * @param txtCodigo JTextField del código.
+     */
+    public void setTxtCodigo(JTextField txtCodigo) {
+        this.txtCodigo = txtCodigo;
+    }
+
+    /**
+     * Establece el campo de texto del nombre del producto.
+     * @param txtNombre JTextField del nombre.
+     */
+    public void setTxtNombre(JTextField txtNombre) {
+        this.txtNombre = txtNombre;
+    }
+
+    /**
+     * Establece el campo de texto del precio del producto.
+     * @param txtPrecio JTextField del precio.
+     */
+    public void setTxtPrecio(JTextField txtPrecio) {
+        this.txtPrecio = txtPrecio;
+    }
+
+    /**
+     * Establece el botón para buscar un producto.
+     * @param btnBuscar JButton de búsqueda.
+     */
+    public void setBtnBuscar(JButton btnBuscar) {
+        this.btnBuscar = btnBuscar;
+    }
+
+    /**
+     * Establece el botón para modificar un producto.
+     * @param btnModificar JButton para modificar.
+     */
+    public void setBtnModificar(JButton btnModificar) {
+        this.btnModificar = btnModificar;
+    }
+
+    /**
+     * Establece el botón para eliminar un producto.
+     * @param btnEliminar JButton para eliminar.
+     */
     public void setBtnEliminar(JButton btnEliminar) {
         this.btnEliminar = btnEliminar;
     }
 
+    /**
+     * Establece el panel principal de la vista.
+     * @param panelPrincipal JPanel principal.
+     */
+    public void setPanelPrincipal(JPanel panelPrincipal) {
+        this.panelPrincipal = panelPrincipal;
+    }
+
+    /**
+     * Establece el manejador de mensajes para internacionalización
+     * y actualiza los textos en la vista.
+     * @param mensajeHandler Manejador de internacionalización.
+     */
+    public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
+        this.mensajeHandler = mensajeHandler;
+        actualizarTextos(mensajeHandler);
+    }
+
+    /**
+     * Muestra un mensaje emergente al usuario.
+     * @param mensaje El mensaje que se desea mostrar.
+     */
     public void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
+
+    /**
+     * Limpia los campos de texto de la vista.
+     * Deja vacíos los campos de código, nombre y precio.
+     */
     public void limpiarCampos() {
         txtCodigo.setText("");
         txtNombre.setText("");
         txtPrecio.setText("");
     }
 
-
-
-    public void setMensajeHandler(MensajeInternacionalizacionHandler mensajeHandler) {
-        this.mensajeHandler = mensajeHandler;
-        actualizarTextos(mensajeHandler);
-    }
 }
