@@ -2,6 +2,7 @@ package ec.edu.ups.dao.impl;
 
 import ec.edu.ups.dao.CarritoDAO;
 import ec.edu.ups.modelo.Carrito;
+import ec.edu.ups.util.RutaArchivo;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.List;
 public class CarritoDAOArchivoBinario implements CarritoDAO {
 
     /** Nombre del archivo donde se guardan los carritos en formato binario. */
-    public static final String ARCHIVO = "carritos.bin";
+    private String archivoRuta;
 
     /** Lista interna que almacena los carritos en memoria. */
     private List<Carrito> carritos;
@@ -31,7 +32,9 @@ public class CarritoDAOArchivoBinario implements CarritoDAO {
      * Constructor que inicializa la lista de carritos cargando los datos desde el archivo binario.
      */
     public CarritoDAOArchivoBinario() {
-        carritos = cargarDesdeArchivo();
+        this.archivoRuta = RutaArchivo.getRutaBase() + File.separator + "carritos.bin";
+        new File("bin").mkdirs(); // ✅ Asegúrate de que la carpeta exista
+        this.carritos = cargarDesdeArchivo();  // ✅ Luego carga los datos
     }
 
     /**
@@ -129,7 +132,7 @@ public class CarritoDAOArchivoBinario implements CarritoDAO {
      * Guarda la lista de carritos en el archivo binario.
      */
     private void guardarEnArchivo() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(archivoRuta))) {
             oos.writeObject(carritos);
         } catch (IOException e) {
             System.err.println("Error al guardar carritos: " + e.getMessage());
@@ -142,12 +145,12 @@ public class CarritoDAOArchivoBinario implements CarritoDAO {
      * @return Lista de carritos leída desde el archivo, o lista vacía si no existe o hay error.
      */
     private List<Carrito> cargarDesdeArchivo() {
-        File archivo = new File(ARCHIVO);
+        File archivo = new File(archivoRuta);
         if (!archivo.exists()) {
             return new ArrayList<>();
         }
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ARCHIVO))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivoRuta))) {
             return (List<Carrito>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error al cargar carritos: " + e.getMessage());

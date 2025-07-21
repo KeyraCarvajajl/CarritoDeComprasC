@@ -18,20 +18,29 @@ import java.util.List;
  * @author Keyra
  * @version 1.0
  */
+import ec.edu.ups.dao.CarritoDAO;
+import ec.edu.ups.dao.impl.CarritoDAOArchivoBinario;
+import ec.edu.ups.modelo.Carrito;
+import ec.edu.ups.modelo.Producto;
+
+import java.util.Date;
+
 public class LeerCarritosBin {
 
-    /**
-     * Método principal que carga los carritos desde el archivo binario y los muestra en consola.
-     *
-     * @param args Argumentos de línea de comandos (no se utilizan).
-     */
-    public static void main(String[] args) {
-        CarritoDAOArchivoBinario dao = new CarritoDAOArchivoBinario();
-        List<Carrito> carritos = dao.listarTodos();
 
-        System.out.println("=== Contenido del archivo carritos.bin ===");
-        for (Carrito c : carritos) {
-            System.out.println(c);
-        }
+    public static void main(String[] args) {
+        CarritoDAO dao = new CarritoDAOArchivoBinario();
+
+        // Crear un carrito y agregar productos
+        Carrito carrito = new Carrito(101, new Date());
+        carrito.agregarProducto(new Producto(1, "Leche", 1.25), 3);
+        carrito.agregarProducto(new Producto(2, "Pan", 0.50), 5);
+
+        // Guardar el carrito
+        dao.crear(carrito);
+
+        // Leer carritos
+        System.out.println("📦 Carritos guardados:");
+        dao.listarTodos().forEach(System.out::println);
     }
 }

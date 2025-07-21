@@ -2,6 +2,7 @@ package ec.edu.ups.dao.impl;
 
 import ec.edu.ups.dao.ProductoDAO;
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.util.RutaArchivo;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -23,14 +24,18 @@ import java.util.List;
 public class ProductoDAOArchivoBinario implements ProductoDAO {
 
     /** Ruta del archivo binario donde se almacenan los productos. */
-    private static final String ARCHIVO = "productos.bin";
+    private String archivoRuta;
 
     /** Lista interna de productos cargados desde el archivo. */
     private List<Producto> productos;
 
-    public ProductoDAOArchivoBinario() {
-        productos = cargarDesdeArchivo();
+    public ProductoDAOArchivoBinario(String rutaArchivo) {
+        this.archivoRuta = rutaArchivo; // ✔️ Usa la ruta que le pasan
+        new File("bin").mkdirs(); // Crea la carpeta si no existe
+        this.productos = cargarDesdeArchivo();  // Carga desde esa ruta
     }
+
+
 
     /**
      * Constructor que carga los productos desde el archivo binario al iniciar la clase.
@@ -132,7 +137,7 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
      * Guarda la lista actual de productos en el archivo binario.
      */
     private void guardarEnArchivo() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(archivoRuta))) {
             oos.writeObject(productos);
         } catch (IOException e) {
             System.err.println("Error al guardar productos: " + e.getMessage());
@@ -145,12 +150,12 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
      * @return Lista de productos leídos o una lista vacía si el archivo no existe o hay error.
      */
     private List<Producto> cargarDesdeArchivo() {
-        File archivo = new File(ARCHIVO);
+        File archivo = new File(archivoRuta);
         if (!archivo.exists()) {
             return new ArrayList<>();
         }
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ARCHIVO))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivoRuta))) {
             return (List<Producto>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error al cargar productos: " + e.getMessage());

@@ -5,6 +5,7 @@ import ec.edu.ups.dao.ProductoDAO;
 import ec.edu.ups.modelo.Carrito;
 import ec.edu.ups.modelo.ItemCarrito;
 import ec.edu.ups.modelo.Producto;
+import ec.edu.ups.util.RutaArchivo;
 
 import java.io.*;
 import java.text.ParseException;
@@ -30,7 +31,7 @@ import java.util.*;
 public class CarritoDAOArchivoTexto implements CarritoDAO {
 
     /** Ruta del archivo donde se almacenan los carritos. */
-    private static final String ARCHIVO = "data/carritos.txt";
+    private String archivoRuta;
 
     /** Formato de fecha utilizado en el archivo de texto. */
     private SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
@@ -46,6 +47,17 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
      */
     public CarritoDAOArchivoTexto(ProductoDAO productoDAO) {
         this.productoDAO = productoDAO;
+        this.archivoRuta = RutaArchivo.getRutaBase() + File.separator + "carritos.txt";
+
+        try {
+            File archivo = new File(archivoRuta);
+            if (!archivo.exists()) {
+                archivo.createNewFile();
+                System.out.println("📄 Archivo carritos.txt creado en: " + archivo.getAbsolutePath());
+            }
+        } catch (IOException e) {
+            System.err.println("❌ Error al crear carritos.txt: " + e.getMessage());
+        }
     }
 
     /**
@@ -55,7 +67,7 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
      */
     @Override
     public void crear(Carrito carrito) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoRuta, true))) {
             for (ItemCarrito item : carrito.obtenerItems()) {
                 Producto producto = item.getProducto();
                 int cantidad = item.getCantidad();
@@ -124,7 +136,7 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
     @Override
     public void eliminar(int codigo) {
         List<Carrito> carritos = listarTodos();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoRuta))) {
             for (Carrito c : carritos) {
                 if (c.getCodigo() != codigo) {
                     for (ItemCarrito item : c.obtenerItems()) {
@@ -150,7 +162,7 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
         List<Carrito> carritos = new ArrayList<>();
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(ARCHIVO))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivoRuta))) {
             String linea;
             Map<Integer, Carrito> mapaCarritos = new HashMap<>();
 
@@ -194,7 +206,7 @@ public class CarritoDAOArchivoTexto implements CarritoDAO {
      */
     @Override
     public void guardar(Carrito carrito) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARCHIVO, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoRuta, true))) {
             for (ItemCarrito item : carrito.obtenerItems()) {
                 String linea = String.format("%d;%d;%d",
                         carrito.getCodigo(),

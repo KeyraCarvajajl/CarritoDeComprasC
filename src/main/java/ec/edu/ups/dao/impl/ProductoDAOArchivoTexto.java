@@ -3,6 +3,7 @@ package ec.edu.ups.dao.impl;
 import ec.edu.ups.dao.ProductoDAO;
 import ec.edu.ups.modelo.Producto;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +26,30 @@ import java.util.List;
 public class ProductoDAOArchivoTexto implements ProductoDAO {
 
     /** Ruta del archivo donde se almacenan los productos en formato de texto. */
-    private static final String ARCHIVO = "data/productos.txt";
+    private static String ARCHIVO = "data/productos.txt";
 
+    static {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Selecciona la carpeta para productos.txt");
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int opcion = fileChooser.showOpenDialog(null);
+
+        if (opcion == JFileChooser.APPROVE_OPTION) {
+            File carpeta = fileChooser.getSelectedFile();
+            ARCHIVO = carpeta.getAbsolutePath() + File.separator + "productos.txt";
+            System.out.println("📄 Archivo productos.txt estará en: " + ARCHIVO);
+
+            // Crear archivo si no existe
+            try {
+                File archivo = new File(ARCHIVO);
+                if (!archivo.exists()) {
+                    archivo.createNewFile();
+                }
+            } catch (IOException e) {
+                System.err.println("❌ Error al crear productos.txt: " + e.getMessage());
+            }
+        }
+    }
     /**
      * Guarda un nuevo producto en el archivo de texto.
      *

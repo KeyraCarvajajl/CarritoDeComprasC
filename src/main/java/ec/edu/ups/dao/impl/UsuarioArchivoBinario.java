@@ -26,7 +26,7 @@ import java.util.List;
 public class UsuarioArchivoBinario implements UsuarioDAO {
 
     /** Ruta del archivo binario donde se almacenan los usuarios. */
-    private static final String ARCHIVO = "usuarios.bin";
+    private static final String ARCHIVO = "bin/usuarios.bin";
 
     /** Lista interna de usuarios cargada desde el archivo. */
     private List<Usuario> usuarios;

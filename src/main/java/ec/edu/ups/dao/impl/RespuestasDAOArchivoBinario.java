@@ -21,10 +21,10 @@ import java.util.List;
  * @author Keyra
  * @version 1.0
  */
-public class RespuestasArchivoBinario implements RespuestaDAO {
+public class RespuestasDAOArchivoBinario implements RespuestaDAO {
 
     /** Ruta del archivo binario donde se almacenan las respuestas. */
-    private static final String ARCHIVO = "respuestas.bin";
+    private String archivoRuta;
 
     /** Lista en memoria que contiene todas las respuestas cargadas. */
     private List<Respuesta> respuestas;
@@ -32,8 +32,10 @@ public class RespuestasArchivoBinario implements RespuestaDAO {
     /**
      * Constructor que carga las respuestas desde el archivo binario al iniciar.
      */
-    public RespuestasArchivoBinario() {
-        respuestas = cargarDesdeArchivo();
+    public RespuestasDAOArchivoBinario(String archivoRuta) {
+        this.archivoRuta = archivoRuta;
+        new File("bin").mkdirs(); // Crea la carpeta si no existe
+        this.respuestas = cargarDesdeArchivo();
     }
 
     /**
@@ -102,7 +104,7 @@ public class RespuestasArchivoBinario implements RespuestaDAO {
      * Guarda todas las respuestas en el archivo binario.
      */
     private void guardarEnArchivo() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(archivoRuta))) {
             oos.writeObject(respuestas);
         } catch (IOException e) {
             System.err.println("Error al guardar respuestas: " + e.getMessage());
@@ -115,12 +117,12 @@ public class RespuestasArchivoBinario implements RespuestaDAO {
      * @return Lista de respuestas, o vacía si el archivo no existe o ocurre un error.
      */
     private List<Respuesta> cargarDesdeArchivo() {
-        File archivo = new File(ARCHIVO);
+        File archivo = new File(archivoRuta);
         if (!archivo.exists()) {
             return new ArrayList<>();
         }
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ARCHIVO))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivoRuta))) {
             return (List<Respuesta>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error al cargar respuestas: " + e.getMessage());
