@@ -1,8 +1,12 @@
 package ec.edu.ups.bin;
 
-import ec.edu.ups.dao.impl.RespuestasArchivoBinario;
+import ec.edu.ups.dao.impl.RespuestasDAOArchivoBinario;
 import ec.edu.ups.modelo.Respuesta;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,19 +23,25 @@ import java.util.List;
  * @version 1.0
  */
 public class LeerRespuestasBin {
-
-    /**
-     * Método principal que carga las respuestas desde el archivo binario y las muestra en consola.
-     *
-     * @param args Argumentos de línea de comandos (no se utilizan).
-     */
     public static void main(String[] args) {
-        RespuestasArchivoBinario dao = new RespuestasArchivoBinario();
-        List<Respuesta> respuestas = dao.listarTodos();
+        String archivoBinario = "bin/respuestas.bin";
 
-        System.out.println("=== Contenido del archivo respuestas.bin ===");
-        for (Respuesta r : respuestas) {
-            System.out.println(r);
+        List<String> preguntas = new ArrayList<>();
+        List<String> respuestas = new ArrayList<>();
+
+
+        // Guardar en binario
+        RespuestasDAOArchivoBinario dao = new RespuestasDAOArchivoBinario(archivoBinario);
+        for (int i = 0; i < preguntas.size() && i < respuestas.size(); i++) {
+            Respuesta respuesta = new Respuesta("base", preguntas.get(i), respuestas.get(i));
+            dao.guardarRespuesta(respuesta);
+        }
+
+        // Imprimir en consola
+        System.out.println("=== Respuestas registradas ===");
+        for (int i = 0; i < preguntas.size() && i < respuestas.size(); i++) {
+            System.out.println("Pregunta: " + preguntas.get(i) + " | Respuesta: " + respuestas.get(i));
         }
     }
 }
+

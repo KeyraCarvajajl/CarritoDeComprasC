@@ -17,8 +17,7 @@ import ec.edu.ups.vista.producto.ProductoListaView;
 import ec.edu.ups.vista.producto.ProductoModificarView;
 import ec.edu.ups.vista.usuario.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import javax.swing.*;
@@ -40,6 +39,22 @@ import java.awt.event.WindowEvent;
  * @author Keyra
  */
 public class Main {
+
+    private static void seleccionarRuta() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Selecciona la carpeta donde se guardarán los archivos");
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        int resultado = fileChooser.showOpenDialog(null);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File carpeta = fileChooser.getSelectedFile();
+            ec.edu.ups.util.RutaArchivo.setRutaBase(carpeta.getAbsolutePath());
+            System.out.println("✅ Carpeta seleccionada: " + carpeta.getAbsolutePath());
+        } else {
+            JOptionPane.showMessageDialog(null, "No se seleccionó ninguna carpeta. Se usará la carpeta por defecto.");
+        }
+    }
+
     @SuppressWarnings("all")
     public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -49,6 +64,9 @@ public class Main {
                 "Configuración de almacenamiento",
                 JOptionPane.QUESTION_MESSAGE,
                 null, opciones, opciones[0]);
+
+        seleccionarRuta();
+
 
         UsuarioDAO usuarioDAO = new UsuarioDAOArchivoTexto();
         ProductoDAO productoDAO = new ProductoDAOArchivoTexto();
@@ -567,7 +585,6 @@ public class Main {
                                     usuarioModificarView.actualizarTextos(mensajeHandler);
                                 }
                             });
-
                         }
                     }
                 });

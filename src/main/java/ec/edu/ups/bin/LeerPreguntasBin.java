@@ -3,35 +3,46 @@ package ec.edu.ups.bin;
 import ec.edu.ups.dao.impl.PreguntasArchivoBinario;
 import ec.edu.ups.modelo.Preguntas;
 
+import java.io.File;
 import java.util.List;
 
 /**
- * Clase de utilidad para leer y mostrar por consola todas las preguntas almacenadas
- * en el archivo binario {@code preguntas.bin}.
- * <p>
- * Esta clase permite verificar que las preguntas de seguridad se hayan guardado correctamente
- * en el sistema de archivo binario utilizado en la aplicación.
- * </p>
- *
- * <p>Se ejecuta únicamente desde la consola, fuera del flujo de la interfaz gráfica.</p>
+ * Clase de utilidad para leer y mostrar preguntas de seguridad desde un archivo binario.
+ * Si no existen preguntas, se cargan 10 preguntas base automáticamente.
  *
  * @author Keyra
- * @version 1.0
  */
 public class LeerPreguntasBin {
 
-    /**
-     * Método principal que carga las preguntas desde el archivo binario y las muestra en consola.
-     *
-     * @param args Argumentos de línea de comandos (no se utilizan).
-     */
     public static void main(String[] args) {
-        PreguntasArchivoBinario dao = new PreguntasArchivoBinario();
-        List<Preguntas> preguntas = dao.obtenerTodas();
+        String ruta = "bin/preguntas.bin";
+        PreguntasArchivoBinario dao = new PreguntasArchivoBinario(ruta);
 
-        System.out.println("=== Contenido del archivo preguntas.bin ===");
+        File archivo = new File(ruta);
+        if (!archivo.exists() || dao.obtenerTodas().isEmpty()) {
+            cargarPreguntasBase(dao);
+        }
+
+        List<Preguntas> preguntas = dao.obtenerTodas();
+        System.out.println("=== Preguntas de seguridad registradas ===");
         for (Preguntas p : preguntas) {
             System.out.println(p);
         }
+    }
+
+    /**
+     * Inserta 10 preguntas predeterminadas con username "base".
+     */
+    private static void cargarPreguntasBase(PreguntasArchivoBinario dao) {
+        dao.guardar(new Preguntas("base", "¿Cuál es tu color favorito?"));
+        dao.guardar(new Preguntas("base", "¿Cuál es el nombre de tu primer mascota?"));
+        dao.guardar(new Preguntas("base", "¿En qué ciudad naciste?"));
+        dao.guardar(new Preguntas("base", "¿Cuál es tu comida favorita?"));
+        dao.guardar(new Preguntas("base", "¿Cuál es tu película favorita?"));
+        dao.guardar(new Preguntas("base", "¿Cuál es tu canción favorita?"));
+        dao.guardar(new Preguntas("base", "¿Qué deporte practicaste en la infancia?"));
+        dao.guardar(new Preguntas("base", "¿Cuál es tu libro favorito?"));
+        dao.guardar(new Preguntas("base", "¿A qué escuela primaria asististe?"));
+        dao.guardar(new Preguntas("base", "¿Cuál es el segundo nombre de tu madre?"));
     }
 }

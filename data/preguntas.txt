@@ -1,10 +1,20 @@
-base|¿Cuál es tu color favorito?
-base|¿Cuál es el nombre de tu primer mascota?
-base|¿En qué ciudad naciste?
-base|¿Cuál es tu comida favorita?
-base|¿Cuál es tu película favorita?
-base|¿Cuál es tu canción favorita?
-base|¿Qué deporte practicaste en la infancia?
-base|¿Cuál es tu libro favorito?
-base|¿A qué escuela primaria asististe?
-base|¿Cuál es el segundo nombre de tu madre?
+¿Cuál es tu color favorito?
+¿Cuál es el nombre de tu primer mascota?
+¿En qué ciudad naciste?
+¿Cuál es tu comida favorita?
+¿Cuál es tu película favorita?
+¿Cuál es tu canción favorita?
+¿Qué deporte practicaste en la infancia?
+¿Cuál es tu libro favorito?
+¿A qué escuela primaria asististe?
+¿Cuál es el segundo nombre de tu madre?
+
+Rojo
+Beso
+Cuenca
+Pizza
+22
+Futbol
+Orgullo y Prejuicio
+Ensueños
+Yolanda

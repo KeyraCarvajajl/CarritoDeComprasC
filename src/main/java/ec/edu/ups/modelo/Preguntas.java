@@ -1,5 +1,7 @@
 package ec.edu.ups.modelo;
 
+import java.io.Serializable;
+
 /**
  * Clase que representa una pregunta de seguridad asociada a un usuario.
  * Se utiliza tanto para el registro como para la recuperación de contraseña.
@@ -8,7 +10,7 @@ package ec.edu.ups.modelo;
  *
  * @author Keyra
  */
-public class Preguntas {
+public class Preguntas implements Serializable {
 
     /**
      * Nombre de usuario al que pertenece la pregunta.
@@ -89,4 +91,11 @@ public class Preguntas {
     public void setRespuesta(String respuesta) {
         this.respuesta = respuesta;
     }
+
+    @Override
+    public String toString() {
+        return pregunta;
+    }
+
+
 }
